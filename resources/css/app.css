@@ -102,6 +102,7 @@
     --titulos-brand: #832a19;
     --titulos-brand-hover: #d55c01;
     --background-brand: #d55c01;
+    --background-page-brand: #fdf7f2;
 }
 
 .dark {
@@ -295,4 +296,8 @@
   height: 12px;
   object-fit: cover;
   border-radius: 2px;
+}
+
+.content-body {
+  background-color: var(--background-page-brand) !important;
 }

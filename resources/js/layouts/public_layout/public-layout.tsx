@@ -72,7 +72,7 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
                 />
             </Header>
 
-            <Content>{children}</Content>
+            <Content className='content-body'>{children}</Content>
 
             <Footer className="public-site-footer">
                 <div className="public-site-footer-grid">
