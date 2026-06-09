@@ -153,6 +153,14 @@
     height: auto;
     background-color: white;
     line-height: normal;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 0 24px;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.08);
 }
 
 .public-site-footer {
@@ -239,6 +247,8 @@
 .public-site-menu.ant-menu-horizontal {
     min-width: 0;
     flex: 1;
+    display: flex;
+    justify-content: center;
     border-bottom: 0;
     background: transparent;
 }
@@ -269,7 +279,7 @@
 
 .public-site-menu.ant-menu-horizontal > .ant-menu-item::after,
 .public-site-menu.ant-menu-horizontal > .ant-menu-submenu::after {
-    border-bottom-color: transparent;
+    border-bottom-color: transparent !important;
 }
 
 /* .public-site-menu.ant-menu-horizontal > .ant-menu-item:hover::after,
