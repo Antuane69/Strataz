@@ -11,7 +11,6 @@ import {
     UserRound,
 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import type { CSSProperties } from 'react';
 
 type BodasMedia = {
     type: 'image' | 'video';
@@ -48,6 +47,8 @@ const bodasMedia: BodasMedia[] = [
         label: 'Momentos en movimiento',
     },
 ];
+
+const bodasBackgroundPath = '/imagenes/galeria/background.webp';
 
 function BodasMediaItem({
     media,
@@ -300,16 +301,14 @@ export default function BodasShowcase() {
     };
 
     return (
-        <section
-            className="bodas-section"
-            style={
-                {
-                    '--bodas-background-image':
-                        "url('/imagenes/galeria/background.webp')",
-                } as CSSProperties
-            }
-        >
-            <div className="bodas-background" aria-hidden="true" />
+        <section className="bodas-section">
+            <div className="bodas-background" aria-hidden="true">
+                <img
+                    src={bodasBackgroundPath}
+                    alt=""
+                    className="bodas-background-image"
+                />
+            </div>
 
             <div className="bodas-shell">
                 <div className="bodas-copy">
