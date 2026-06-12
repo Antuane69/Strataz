@@ -1,5 +1,4 @@
 import { Image, Masonry } from 'antd';
-import './InicioMasonry.css';
 import { useState } from 'react';
 
 type MasonryVariant = 'normal' | 'wide' | 'tall' | 'feature';
@@ -110,13 +109,13 @@ export default function InicioMasonry() {
                 itemRender={({ data }) => (
                     <figure className={`masonry-card masonry-card-${data.variant}`}>
                         <img
-                          src={`/galeria/${data.src}`}
+                          src={`/imagenes/galeria/${data.src}`}
                           alt={data.alt}
                           className="masonry-card-image"
                           loading="lazy"
                           onClick={() => {
                             setVerImagenSeleccionada(true);
-                            setImagenSeleccionada(`/galeria/${data.src}`)
+                            setImagenSeleccionada(`/imagenes/galeria/${data.src}`)
                           }}
                         />
                     </figure>

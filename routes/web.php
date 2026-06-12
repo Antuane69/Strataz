@@ -8,9 +8,17 @@ Route::inertia('/habitaciones', 'public/habitaciones')->name('public.habitacione
 
 Route::inertia('/servicios', 'public/servicios')->name('public.servicios');
 
+Route::inertia('/promociones', 'public/promociones')->name('public.promociones');
+
 Route::inertia('/bodas', 'public/bodas')->name('public.bodas');
 
 Route::inertia('/recomendaciones', 'public/recomendaciones')->name('public.recomendaciones');
+
+Route::inertia('/galeria', 'public/galeria')->name('public.galeria');
+
+Route::inertia('/contacto', 'public/contacto')->name('public.contacto');
+
+Route::redirect('/contactos', '/contacto');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::inertia('dashboard', 'dashboard')->name('dashboard');

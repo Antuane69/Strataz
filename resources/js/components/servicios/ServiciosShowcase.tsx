@@ -12,7 +12,6 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import type { ComponentType, CSSProperties } from 'react';
-import './servicios.css';
 
 type ServicioIcon = 'pool' | 'parking' | 'shop' | 'beach';
 
@@ -54,18 +53,18 @@ const servicios: Servicio[] = [
         media: [
             {
                 type: 'image',
-                src: '/galeria/alberca-punta-de-mita-04.jpg',
+                src: '/imagenes/galeria/alberca-punta-de-mita-04.jpg',
                 alt: 'Alberca del hotel frente al mar',
             },
             {
                 type: 'image',
-                src: '/galeria/alberca-punta-de-mita-02.jpg',
+                src: '/imagenes/galeria/alberca-punta-de-mita-02.jpg',
                 alt: 'Camastros junto a la alberca',
             },
             {
                 type: 'video',
                 src: '/videos/video_prueba1.mp4',
-                poster: '/galeria/dashboard.jpg',
+                poster: '/imagenes/galeria/dashboard.jpg',
                 alt: 'Video de prueba de la alberca',
             },
         ],
@@ -82,18 +81,18 @@ const servicios: Servicio[] = [
         media: [
             {
                 type: 'image',
-                src: '/galeria/areas_comunes_03.jpg',
+                src: '/imagenes/galeria/areas_comunes_03.jpg',
                 alt: 'Área de recepción del hotel',
             },
             {
                 type: 'image',
-                src: '/galeria/playa_05-1.jpg',
+                src: '/imagenes/galeria/playa_05-1.jpg',
                 alt: 'Exterior del hotel en Punta de Mita',
             },
             {
                 type: 'video',
                 src: '/videos/video_prueba1.mp4',
-                poster: '/galeria/areas_comunes_03.jpg',
+                poster: '/imagenes/galeria/areas_comunes_03.jpg',
                 alt: 'Video de prueba del estacionamiento',
             },
         ],
@@ -110,18 +109,18 @@ const servicios: Servicio[] = [
         media: [
             {
                 type: 'image',
-                src: '/galeria/areas_comunes_03.jpg',
+                src: '/imagenes/galeria/areas_comunes_03.jpg',
                 alt: 'Pasillo y área frontal del hotel',
             },
             {
                 type: 'image',
-                src: '/galeria/bodas-Punta-Mita-Hotel-Meson-Mita.jpg',
+                src: '/imagenes/galeria/bodas-Punta-Mita-Hotel-Meson-Mita.jpg',
                 alt: 'Detalles del hotel en Punta de Mita',
             },
             {
                 type: 'video',
                 src: '/videos/video_prueba1.mp4',
-                poster: '/galeria/areas_comunes_03.jpg',
+                poster: '/imagenes/galeria/areas_comunes_03.jpg',
                 alt: 'Video de prueba de tienda de artesanías',
             },
         ],
@@ -138,18 +137,18 @@ const servicios: Servicio[] = [
         media: [
             {
                 type: 'image',
-                src: '/galeria/playa-meson-punta-mita-012.jpg',
+                src: '/imagenes/galeria/playa-meson-punta-mita-012.jpg',
                 alt: 'Playa cerca del hotel',
             },
             {
                 type: 'image',
-                src: '/galeria/playa_13.jpg',
+                src: '/imagenes/galeria/playa_13.jpg',
                 alt: 'Vista del mar en Punta de Mita',
             },
             {
                 type: 'video',
                 src: '/videos/video_prueba1.mp4',
-                poster: '/galeria/playa-meson-punta-mita-012.jpg',
+                poster: '/imagenes/galeria/playa-meson-punta-mita-012.jpg',
                 alt: 'Video de prueba de playa',
             },
         ],

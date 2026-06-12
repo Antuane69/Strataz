@@ -12,7 +12,6 @@ import {
 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
-import './bodas.css';
 
 type BodasMedia = {
     type: 'image' | 'video';
@@ -25,26 +24,26 @@ type BodasMedia = {
 const bodasMedia: BodasMedia[] = [
     {
         type: 'image',
-        src: '/galeria/bodas-Punta-Mita-Hotel-Meson-Mita.jpg',
+        src: '/imagenes/galeria/bodas-Punta-Mita-Hotel-Meson-Mita.jpg',
         alt: 'Pareja de novios caminando frente al mar',
         label: 'Ceremonias frente al mar',
     },
     {
         type: 'image',
-        src: '/galeria/musica-Bodas-Playa-Punta-Mita-Hotel-Meson-Mita.jpg',
+        src: '/imagenes/galeria/musica-Bodas-Playa-Punta-Mita-Hotel-Meson-Mita.jpg',
         alt: 'Recepción de boda con música en vivo',
         label: 'Recepciones al atardecer',
     },
     {
         type: 'image',
-        src: '/galeria/punta-Mita-Weddings-Catering-Hotel-Meson-Mita-1.jpg',
+        src: '/imagenes/galeria/punta-Mita-Weddings-Catering-Hotel-Meson-Mita-1.jpg',
         alt: 'Catering para boda en Punta de Mita',
         label: 'Menús para tus invitados',
     },
     {
         type: 'video',
         src: '/videos/video_prueba1.mp4',
-        poster: '/galeria/musica-Bodas-Playa-Punta-Mita-Hotel-Meson-Mita.jpg',
+        poster: '/imagenes/galeria/musica-Bodas-Playa-Punta-Mita-Hotel-Meson-Mita.jpg',
         alt: 'Video de prueba para bodas en el hotel',
         label: 'Momentos en movimiento',
     },
@@ -306,7 +305,7 @@ export default function BodasShowcase() {
             style={
                 {
                     '--bodas-background-image':
-                        "url('/galeria/background.webp')",
+                        "url('/imagenes/galeria/background.webp')",
                 } as CSSProperties
             }
         >

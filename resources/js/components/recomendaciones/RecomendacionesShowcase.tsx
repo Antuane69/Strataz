@@ -2,7 +2,6 @@ import { Drawer } from 'antd';
 import { Clock, MapPin, X } from 'lucide-react';
 import { useState } from 'react';
 import type { KeyboardEvent } from 'react';
-import './recomendaciones.css';
 
 type RecommendationSection = {
     title: string;
@@ -27,7 +26,7 @@ const recommendations: Recommendation[] = [
         id: 'islas-marietas',
         title: 'Visita las Islas Marietas',
         eyebrow: 'Naturaleza y snorkel',
-        image: '/galeria/playa_13.jpg',
+        image: '/imagenes/galeria/playa_13.jpg',
         imageAlt: 'Mar azul cerca de Punta de Mita',
         distance: 'Aprox. 10 km',
         duration: 'Medio día',
@@ -58,7 +57,7 @@ const recommendations: Recommendation[] = [
         id: 'playa-la-lancha',
         title: 'Surf en Playa La Lancha',
         eyebrow: 'Olas tranquilas',
-        image: '/galeria/playa_04.jpg',
+        image: '/imagenes/galeria/playa_04.jpg',
         imageAlt: 'Playa al atardecer en Riviera Nayarit',
         distance: 'Cerca de Punta de Mita',
         duration: '2 a 3 horas',
@@ -84,7 +83,7 @@ const recommendations: Recommendation[] = [
         id: 'el-anclote',
         title: 'Camina por El Anclote',
         eyebrow: 'Restaurantes y playa',
-        image: '/galeria/playa-meson-punta-mita-05.jpg',
+        image: '/imagenes/galeria/playa-meson-punta-mita-05.jpg',
         imageAlt: 'Vista de playa en Punta de Mita',
         distance: 'A unos pasos',
         duration: 'Libre',
@@ -110,7 +109,7 @@ const recommendations: Recommendation[] = [
         id: 'sayulita',
         title: 'Escapada a Sayulita',
         eyebrow: 'Color y pueblo surf',
-        image: '/galeria/playa_05-1.jpg',
+        image: '/imagenes/galeria/playa_05-1.jpg',
         imageAlt: 'Costa de Riviera Nayarit',
         distance: 'Aprox. 35 min',
         duration: 'Medio día',
@@ -136,7 +135,7 @@ const recommendations: Recommendation[] = [
         id: 'ballenas',
         title: 'Avistamiento de ballenas',
         eyebrow: 'Temporada especial',
-        image: '/galeria/playa-meson-punta-mita-012.jpg',
+        image: '/imagenes/galeria/playa-meson-punta-mita-012.jpg',
         imageAlt: 'Bahía de Punta de Mita',
         distance: 'Tours desde la bahía',
         duration: '2 a 4 horas',
@@ -162,7 +161,7 @@ const recommendations: Recommendation[] = [
         id: 'atardecer',
         title: 'Atardecer en la playa',
         eyebrow: 'Plan sencillo',
-        image: '/galeria/playa_13.jpg',
+        image: '/imagenes/galeria/playa_13.jpg',
         imageAlt: 'Mar abierto al atardecer',
         distance: 'Muy cerca',
         duration: '1 hora',

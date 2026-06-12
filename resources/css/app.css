@@ -1,9 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Josefin+Sans:wght@400;600;700&display=swap');
 @import 'antd/dist/reset.css';
 
 @import 'tailwindcss';
 
 @import 'tw-animate-css';
+
+@import '../js/components/bodas/bodas.css';
+@import '../js/components/contacto/contacto.css';
+@import '../js/components/galeria/galeria.css';
+@import '../js/components/habitaciones/habitaciones.css';
+@import '../js/components/inicio/InicioMasonry.css';
+@import '../js/components/promociones/promociones.css';
+@import '../js/components/public-booking-bar.css';
+@import '../js/components/recomendaciones/recomendaciones.css';
+@import '../js/components/servicios/servicios.css';
+@import '../js/pages/public/inicio.css';
 
 @source '../views';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -298,6 +308,66 @@
   border-radius: 2px;
 }
 
+.public-language-toggle {
+    position: relative;
+    display: inline-flex;
+    width: 126px;
+    height: 30px;
+    flex: 0 0 auto;
+    align-items: center;
+    border: 0;
+    border-radius: 999px;
+    padding: 0 10px 0 34px;
+    background: #b7b4b1;
+    color: #fff;
+    cursor: pointer;
+}
+
+.public-language-toggle-thumb {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: 0 2px 6px rgb(0 0 0 / 0.24);
+    transition: transform 180ms ease;
+}
+
+.public-language-toggle.is-english .public-language-toggle-thumb {
+    transform: translateX(96px);
+}
+
+.public-language-toggle-content {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: 'Josefin Sans', Arial, sans-serif;
+    font-size: 0.84rem;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0;
+}
+
+.public-language-toggle-content .ant-flex {
+    align-items: center !important;
+    gap: 6px !important;
+}
+
 .content-body {
   background-color: var(--background-page-brand) !important;
+}
+
+.public-booking-boundary {
+    position: relative;
+    background: var(--background-page-brand);
+}
+
+@media (max-width: 768px) {
+    .public-booking-boundary {
+        padding-bottom: 86px;
+    }
 }

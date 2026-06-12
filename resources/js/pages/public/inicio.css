@@ -44,7 +44,7 @@
 .inicio-hero-kicker {
     margin: 0 0 10px;
     font-family: 'Josefin Sans', Arial, sans-serif;
-    font-size: clamp(13px, 1.1vw, 16px);
+    font-size: clamp(26px, 1.1vw, 16px);
     font-weight: 600;
     letter-spacing: 0.38em;
     text-transform: uppercase;

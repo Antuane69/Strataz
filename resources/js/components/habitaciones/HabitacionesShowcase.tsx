@@ -14,7 +14,6 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import type { ComponentType, KeyboardEvent } from 'react';
-import './habitaciones.css';
 
 type HabitacionAmenity =
     | 'capacity'
@@ -79,15 +78,15 @@ const habitaciones: Habitacion[] = [
         size: 'Amplia estancia con terraza',
         images: [
             {
-                src: '/galeria/habitacion-doble-hotel-meson-punta-de-mita-05.jpg',
+                src: '/imagenes/galeria/habitacion-doble-hotel-meson-punta-de-mita-05.jpg',
                 alt: 'Habitación doble con cama queen y vista hacia la terraza',
             },
             {
-                src: '/galeria/habitacion-doble-hotel-meson-punta-de-mita-03.jpg',
+                src: '/imagenes/galeria/habitacion-doble-hotel-meson-punta-de-mita-03.jpg',
                 alt: 'Terraza de habitación doble con vista al mar',
             },
             {
-                src: '/galeria/habitacion-doble-hotel-meson-punta-de-mita-09.jpg',
+                src: '/imagenes/galeria/habitacion-doble-hotel-meson-punta-de-mita-09.jpg',
                 alt: 'Baño privado de habitación doble',
             },
         ],
@@ -126,15 +125,15 @@ const habitaciones: Habitacion[] = [
         size: 'Distribución práctica',
         images: [
             {
-                src: '/galeria/double-Room-Meson-Mita-Hotel-Punta-Mita.jpg',
+                src: '/imagenes/galeria/double-Room-Meson-Mita-Hotel-Punta-Mita.jpg',
                 alt: 'Habitación doble estándar con cama matrimonial',
             },
             {
-                src: '/galeria/habitacion-doble-hotel-meson-punta-de-mita-09.jpg',
+                src: '/imagenes/galeria/habitacion-doble-hotel-meson-punta-de-mita-09.jpg',
                 alt: 'Baño privado con regadera',
             },
             {
-                src: '/galeria/areas_comunes_03.jpg',
+                src: '/imagenes/galeria/areas_comunes_03.jpg',
                 alt: 'Áreas comunes del hotel',
             },
         ],
@@ -173,15 +172,15 @@ const habitaciones: Habitacion[] = [
         size: 'Espacio familiar',
         images: [
             {
-                src: '/galeria/habitacion-triple-hotel-meson-punta-de-mita-03.jpg',
+                src: '/imagenes/galeria/habitacion-triple-hotel-meson-punta-de-mita-03.jpg',
                 alt: 'Habitación triple con dos camas',
             },
             {
-                src: '/galeria/double-Room-Meson-Mita-Hotel-Punta-Mita.jpg',
+                src: '/imagenes/galeria/double-Room-Meson-Mita-Hotel-Punta-Mita.jpg',
                 alt: 'Detalle de cama en habitación del hotel',
             },
             {
-                src: '/galeria/playa-meson-punta-mita-012.jpg',
+                src: '/imagenes/galeria/playa-meson-punta-mita-012.jpg',
                 alt: 'Playa frente al hotel',
             },
         ],
@@ -389,7 +388,7 @@ function HabitacionDrawer({
                             <Button
                                 type="primary"
                                 size="large"
-                                href="/contactos"
+                                href="/contacto"
                             >
                                 Consultar disponibilidad
                             </Button>

@@ -1,6 +1,5 @@
 import { Head } from '@inertiajs/react';
 import InicioMasonry from '@/components/inicio/InicioMasonry';
-import './inicio.css';
 
 export default function Inicio() {
     return (
@@ -10,7 +9,7 @@ export default function Inicio() {
             <main className="inicio-page">
                 <section className="inicio-hero" aria-label="Meson de Mita">
                     <img
-                        src="/galeria/dashboard.jpg"
+                        src="/imagenes/galeria/dashboard.jpg"
                         alt="Hotel Meson de Mita"
                         className="inicio-hero-image"
                     />

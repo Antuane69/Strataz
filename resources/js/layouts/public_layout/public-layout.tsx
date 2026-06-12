@@ -1,7 +1,8 @@
 import { Link, usePage } from '@inertiajs/react';
-import { Flex, Image, Layout, Menu, Switch } from 'antd';
+import { Flex, Image, Layout, Menu } from 'antd';
 import { useState } from 'react';
 import type { ReactNode } from 'react';
+import PublicBookingBar from '@/components/public-booking-bar';
 
 const { Header, Content, Footer } = Layout;
 
@@ -41,8 +42,8 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
         },
         { key: '/galeria', label: <Link href="/galeria">GALERIA</Link> },
         {
-            key: '/contactos',
-            label: <Link href="/contactos">CONTACTO | UBICACION</Link>,
+            key: '/contacto',
+            label: <Link href="/contacto">CONTACTO | UBICACION</Link>,
         },
     ];
 
@@ -64,15 +65,30 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
                     className="public-site-menu"
                 />
 
-                <Switch
-                    checked={locale === 'en'}
-                    checkedChildren={<Flag country="us" />}
-                    unCheckedChildren={<Flag country="mex" />}
-                    onChange={(checked) => setLocale(checked ? 'en' : 'es')}
-                />
+                <button
+                    type="button"
+                    className={`public-language-toggle ${
+                        locale === 'en' ? 'is-english' : ''
+                    }`}
+                    onClick={() =>
+                        setLocale((current) =>
+                            current === 'en' ? 'es' : 'en',
+                        )
+                    }
+                    aria-label="Cambiar idioma"
+                >
+                    <span className="public-language-toggle-thumb" />
+                    <span className="public-language-toggle-content">
+                        <Flag country={locale === 'en' ? 'us' : 'mex'} />
+                    </span>
+                </button>
             </Header>
 
-            <Content className='content-body'>{children}</Content>
+            <div className="public-booking-boundary">
+                <PublicBookingBar />
+
+                <Content className="content-body">{children}</Content>
+            </div>
 
             <Footer className="public-site-footer">
                 <div className="public-site-footer-grid">
