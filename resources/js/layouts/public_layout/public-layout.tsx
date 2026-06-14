@@ -71,9 +71,7 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
                         locale === 'en' ? 'is-english' : ''
                     }`}
                     onClick={() =>
-                        setLocale((current) =>
-                            current === 'en' ? 'es' : 'en',
-                        )
+                        setLocale((current) => (current === 'en' ? 'es' : 'en'))
                     }
                     aria-label="Cambiar idioma"
                 >
@@ -108,11 +106,49 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
                         <p>
                             Ave El Anclote 200, 63734 Punta de Mita, Nay.
                             <br />
-                            +52 329 291 6330
-                            <br />
-                            +52 329 291 5161
+                            +52 329 291 6330 +52 329 291 5161
                             <br />
                             reservaciones@hotelmesondemita.com
+                            <br />
+                            <Flex
+                                align="center"
+                                gap={12}
+                                style={{ marginTop: '0.5rem' }}
+                            >
+                                <a
+                                    href="https://www.facebook.com/mesondemita/"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
+                                    <img
+                                        src="/logos/facebook.png"
+                                        className="icono-footer"
+                                        alt="Facebook"
+                                    />
+                                </a>
+                                <a
+                                    href="https://www.instagram.com/hotelmesondemita/"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
+                                    <img
+                                        src="/logos/instagram.png"
+                                        className="icono-footer"
+                                        alt="Instagram"
+                                    />
+                                </a>
+                                <a
+                                    href="https://www.tripadvisor.com.mx/Hotel_Review-g499443-d2179919-Reviews-Hotel_Meson_de_Mita-Punta_de_Mita_Pacific_Coast.html"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
+                                    <img
+                                        src="/logos/tripadvisor.png"
+                                        className="icono-footer-trip"
+                                        alt="Tripadvisor"
+                                    />
+                                </a>
+                            </Flex>
                         </p>
                     </section>
 
@@ -120,7 +156,9 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
                         <h3>Ayuda</h3>
                         <p>
                             <Link href="/faq">FAQ's</Link>
-                            <Link href="/faq">Protocolos COVID-19</Link>
+                            <Link href="/protocolos-covid-19">
+                                Protocolos COVID-19
+                            </Link>
                         </p>
                     </section>
                 </div>

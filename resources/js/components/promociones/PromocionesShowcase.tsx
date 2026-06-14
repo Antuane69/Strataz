@@ -2,7 +2,6 @@ import { Button, Tag } from 'antd';
 import {
     BadgePercent,
     CalendarDays,
-    ChevronRight,
     Gift,
     Heart,
     Mail,
@@ -23,13 +22,7 @@ type PromotionCategory =
     | 'estancias'
     | 'eventos';
 
-type PromotionIcon =
-    | 'beach'
-    | 'couple'
-    | 'family'
-    | 'night'
-    | 'event'
-    | 'gift';
+type PromotionIcon = 'beach' | 'couple' | 'family' | 'night' | 'event' | 'gift';
 
 type Promotion = {
     id: string;
@@ -252,9 +245,7 @@ function PromotionCard({ promotion }: { promotion: Promotion }) {
                     <h2>{promotion.title}</h2>
                 </div>
 
-                <p className="promocion-description">
-                    {promotion.description}
-                </p>
+                <p className="promocion-description">{promotion.description}</p>
 
                 <div className="promocion-meta">
                     <span>
@@ -275,7 +266,7 @@ function PromotionCard({ promotion }: { promotion: Promotion }) {
                     ))}
                 </div>
 
-                <Button
+                {/* <Button
                     type={promotion.featured ? 'primary' : 'default'}
                     size="large"
                     href="/contacto"
@@ -284,7 +275,7 @@ function PromotionCard({ promotion }: { promotion: Promotion }) {
                     iconPosition="end"
                 >
                     Consultar promoción
-                </Button>
+                </Button> */}
             </div>
         </article>
     );
@@ -307,11 +298,13 @@ export default function PromocionesShowcase() {
     return (
         <section className="promociones-section">
             <div className="promociones-intro">
-                <p>Promociones</p>
-                <h1>Ofertas para disfrutar Punta de Mita</h1>
+                {/* <p>Promociones</p> */}
+                <h1>Promociones</h1>
                 <span>
                     Promociones de temporada, beneficios por reserva directa y
                     planes pensados para parejas, familias y celebraciones.
+                    Disfruta de unas vacaciones perfectas en el{' '}
+                    <b>Hotel Mesón de Mita.</b>
                 </span>
             </div>
 
@@ -321,8 +314,7 @@ export default function PromocionesShowcase() {
                     Tarifas especiales
                 </span>
                 <span>
-                    <Palmtree size={18} />
-                    A pasos de la playa
+                    <Palmtree size={18} />A pasos de la playa
                 </span>
                 <span>
                     <Phone size={18} />
@@ -360,9 +352,9 @@ export default function PromocionesShowcase() {
                     <p>¿Buscas una fecha específica?</p>
                     <h2>Pregunta por promociones vigentes</h2>
                     <span>
-                        Las promociones pueden cambiar por temporada,
-                        ocupación y tipo de habitación. Reservaciones puede
-                        ayudarte a encontrar la mejor opción disponible.
+                        Las promociones pueden cambiar por temporada, ocupación
+                        y tipo de habitación. Reservaciones puede ayudarte a
+                        encontrar la mejor opción disponible.
                     </span>
                 </div>
 
@@ -371,9 +363,9 @@ export default function PromocionesShowcase() {
                         type="primary"
                         size="large"
                         href="mailto:reservaciones@hotelmesondemita.com"
-                        icon={<Mail size={18} />}
+                        icon={<Mail size={18} style={{ color: 'white' }} />}
                     >
-                        Escribir al hotel
+                        <span className="text-white!">Escribir al hotel</span>
                     </Button>
                     <Button size="large" href="tel:+523292916330">
                         Llamar ahora

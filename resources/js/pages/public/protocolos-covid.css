@@ -1,0 +1,144 @@
+.protocolos-covid-section {
+    width: 100%;
+    padding: 32px 24px 92px;
+    background: var(--public-page-background);
+}
+
+.protocolos-covid-hero {
+    max-width: 860px;
+    margin: 0 auto 32px;
+    text-align: center;
+}
+
+.protocolos-covid-hero p,
+.protocolos-covid-summary span {
+    margin: 0 0 8px;
+    color: #1f5f65;
+    font-family: 'Josefin Sans', Arial, sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+
+.protocolos-covid-hero h1,
+.protocolos-covid-summary h2 {
+    margin: 0;
+    color: var(--titulos-brand);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 3.25rem;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0;
+}
+
+.protocolos-covid-hero span {
+    display: block;
+    max-width: 760px;
+    margin: 14px auto 0;
+    color: #5e514b;
+    font-family: 'Josefin Sans', Arial, sans-serif;
+    font-size: 1.04rem;
+    line-height: 1.65;
+    letter-spacing: 0;
+}
+
+.protocolos-covid-content {
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+.protocolos-covid-intro {
+    display: grid;
+    gap: 18px;
+    border: 1px solid rgb(131 42 25 / 0.12);
+    border-radius: 8px;
+    padding: 30px;
+    background: rgb(255 255 255 / 0.9);
+    box-shadow: 0 14px 34px rgb(58 31 21 / 0.07);
+}
+
+.protocolos-covid-intro p,
+.protocol-card p {
+    margin: 0;
+    color: #5d514c;
+    font-family: 'Josefin Sans', Arial, sans-serif;
+    font-size: 1.04rem;
+    line-height: 1.72;
+    letter-spacing: 0;
+}
+
+.protocolos-covid-summary {
+    max-width: 720px;
+    margin: 42px auto 24px;
+    text-align: center;
+}
+
+.protocolos-covid-summary h2 {
+    font-size: 2.45rem;
+}
+
+.protocolos-covid-list {
+    display: grid;
+    gap: 18px;
+}
+
+.protocol-card {
+    display: grid;
+    min-width: 0;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 18px;
+    border: 1px solid rgb(31 95 101 / 0.12);
+    border-radius: 8px;
+    padding: 24px;
+    background: rgb(255 255 255 / 0.84);
+    box-shadow: 0 12px 28px rgb(58 31 21 / 0.06);
+}
+
+.protocol-card-icon {
+    display: grid;
+    width: 48px;
+    height: 48px;
+    place-items: center;
+    border-radius: 8px;
+    background: rgb(31 95 101 / 0.08);
+    color: #1f5f65;
+}
+
+.protocol-card h3 {
+    margin: 0 0 10px;
+    color: #2f231d;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.82rem;
+    font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: 0;
+}
+
+@media (max-width: 640px) {
+    .protocolos-covid-section {
+        padding: 40px 14px 64px;
+    }
+
+    .protocolos-covid-hero {
+        text-align: left;
+    }
+
+    .protocolos-covid-hero h1 {
+        font-size: 2.35rem;
+    }
+
+    .protocolos-covid-summary h2 {
+        font-size: 2rem;
+    }
+
+    .protocolos-covid-intro,
+    .protocol-card {
+        padding: 20px;
+    }
+
+    .protocol-card {
+        grid-template-columns: 1fr;
+    }
+}

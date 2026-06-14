@@ -1,9 +1,8 @@
-import { Button, Carousel, Divider, Drawer, Tag } from 'antd';
+import { Button, Carousel, Divider, Drawer, Image, Tag } from 'antd';
 import {
     BedDouble,
     Coffee,
     MapPin,
-    Maximize2,
     ShowerHead,
     Snowflake,
     Tv,
@@ -14,40 +13,12 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import type { ComponentType, KeyboardEvent } from 'react';
-
-type HabitacionAmenity =
-    | 'capacity'
-    | 'bed'
-    | 'ac'
-    | 'tv'
-    | 'wifi'
-    | 'ocean'
-    | 'bath'
-    | 'coffee'
-    | 'terrace';
-
-type HabitacionImage = {
-    src: string;
-    alt: string;
-};
-
-type Habitacion = {
-    id: string;
-    name: string;
-    eyebrow: string;
-    shortDescription: string;
-    description: string;
-    capacity: string;
-    bed: string;
-    size: string;
-    images: HabitacionImage[];
-    highlights: string[];
-    included: string[];
-    amenities: {
-        type: HabitacionAmenity;
-        label: string;
-    }[];
-};
+import type {
+    Habitacion,
+    HabitacionAmenity,
+    HotelCancellationPolicy,
+} from './interfaces';
+import { habitaciones, hotelInfo } from './services/habitacionesMock';
 
 const amenityIcons: Record<
     HabitacionAmenity,
@@ -63,150 +34,6 @@ const amenityIcons: Record<
     coffee: Coffee,
     terrace: MapPin,
 };
-
-const habitaciones: Habitacion[] = [
-    {
-        id: 'doble-vista-mar',
-        name: 'Habitación doble con vista al mar',
-        eyebrow: 'Vista al mar',
-        shortDescription:
-            'Cama matrimonial o queen, aire acondicionado, TV y una terraza para descansar frente a Punta de Mita.',
-        description:
-            'Una habitación luminosa y tranquila para parejas o viajeros que buscan despertar cerca del mar. Combina techo tipo palapa, detalles de madera y una terraza privada ideal para bajar el ritmo después de la playa.',
-        capacity: '2 personas',
-        bed: 'Matrimonial o queen',
-        size: 'Amplia estancia con terraza',
-        images: [
-            {
-                src: '/imagenes/galeria/habitacion-doble-hotel-meson-punta-de-mita-05.jpg',
-                alt: 'Habitación doble con cama queen y vista hacia la terraza',
-            },
-            {
-                src: '/imagenes/galeria/habitacion-doble-hotel-meson-punta-de-mita-03.jpg',
-                alt: 'Terraza de habitación doble con vista al mar',
-            },
-            {
-                src: '/imagenes/galeria/habitacion-doble-hotel-meson-punta-de-mita-09.jpg',
-                alt: 'Baño privado de habitación doble',
-            },
-        ],
-        highlights: [
-            'Vista al mar desde terraza',
-            'Aire acondicionado',
-            'Baño privado',
-            'TV en habitación',
-        ],
-        included: [
-            'Terraza o balcón',
-            'Aire acondicionado',
-            'Televisión',
-            'Baño privado',
-            'Amenidades de baño',
-            'Acceso a áreas comunes del hotel',
-        ],
-        amenities: [
-            { type: 'capacity', label: '2 huéspedes' },
-            { type: 'bed', label: 'Queen' },
-            { type: 'ac', label: 'A/C' },
-            { type: 'tv', label: 'TV' },
-            { type: 'ocean', label: 'Vista' },
-        ],
-    },
-    {
-        id: 'doble-estandar',
-        name: 'Habitación doble estándar',
-        eyebrow: 'Cómoda y fresca',
-        shortDescription:
-            'Una opción práctica para descansar con cama matrimonial, baño privado, aire acondicionado y TV.',
-        description:
-            'Pensada para estancias relajadas y funcionales, esta habitación ofrece lo esencial para descansar bien entre salidas a la playa, recorridos por Punta de Mita y tardes en la alberca.',
-        capacity: '2 personas',
-        bed: 'Matrimonial',
-        size: 'Distribución práctica',
-        images: [
-            {
-                src: '/imagenes/galeria/double-Room-Meson-Mita-Hotel-Punta-Mita.jpg',
-                alt: 'Habitación doble estándar con cama matrimonial',
-            },
-            {
-                src: '/imagenes/galeria/habitacion-doble-hotel-meson-punta-de-mita-09.jpg',
-                alt: 'Baño privado con regadera',
-            },
-            {
-                src: '/imagenes/galeria/areas_comunes_03.jpg',
-                alt: 'Áreas comunes del hotel',
-            },
-        ],
-        highlights: [
-            'Cama matrimonial',
-            'Aire acondicionado',
-            'Baño privado',
-            'Cerca de áreas comunes',
-        ],
-        included: [
-            'Cama matrimonial',
-            'Aire acondicionado',
-            'Televisión',
-            'Baño privado',
-            'Amenidades de baño',
-            'Acceso a alberca y áreas comunes',
-        ],
-        amenities: [
-            { type: 'capacity', label: '2 huéspedes' },
-            { type: 'bed', label: 'Matrimonial' },
-            { type: 'ac', label: 'A/C' },
-            { type: 'tv', label: 'TV' },
-            { type: 'bath', label: 'Baño' },
-        ],
-    },
-    {
-        id: 'triple-familiar',
-        name: 'Habitación triple familiar',
-        eyebrow: 'Para compartir',
-        shortDescription:
-            'Dos camas, baño privado, aire acondicionado y espacio cómodo para viajes en familia o amigos.',
-        description:
-            'Una habitación flexible para quienes viajan acompañados y quieren mantenerse cerca sin sacrificar comodidad. Su distribución permite guardar equipaje, descansar y salir rápido hacia la playa o la alberca.',
-        capacity: '3 personas',
-        bed: 'Dos camas',
-        size: 'Espacio familiar',
-        images: [
-            {
-                src: '/imagenes/galeria/habitacion-triple-hotel-meson-punta-de-mita-03.jpg',
-                alt: 'Habitación triple con dos camas',
-            },
-            {
-                src: '/imagenes/galeria/double-Room-Meson-Mita-Hotel-Punta-Mita.jpg',
-                alt: 'Detalle de cama en habitación del hotel',
-            },
-            {
-                src: '/imagenes/galeria/playa-meson-punta-mita-012.jpg',
-                alt: 'Playa frente al hotel',
-            },
-        ],
-        highlights: [
-            'Hasta 3 huéspedes',
-            'Dos camas',
-            'Aire acondicionado',
-            'Baño privado',
-        ],
-        included: [
-            'Dos camas',
-            'Aire acondicionado',
-            'Televisión',
-            'Baño privado',
-            'Amenidades de baño',
-            'Acceso a playa cercana y áreas comunes',
-        ],
-        amenities: [
-            { type: 'capacity', label: '3 huéspedes' },
-            { type: 'bed', label: '2 camas' },
-            { type: 'ac', label: 'A/C' },
-            { type: 'tv', label: 'TV' },
-            { type: 'bath', label: 'Baño' },
-        ],
-    },
-];
 
 function AmenityIcon({
     amenity,
@@ -253,9 +80,9 @@ function HabitacionCard({
                     className="habitacion-card-image"
                     loading="lazy"
                 />
-                <span className="habitacion-card-eyebrow">
+                {/* <span className="habitacion-card-eyebrow">
                     {habitacion.eyebrow}
-                </span>
+                </span> */}
             </div>
 
             <div className="habitacion-card-body">
@@ -280,6 +107,46 @@ function HabitacionCard({
     );
 }
 
+function CancellationPolicyTable({
+    policy,
+}: {
+    policy: HotelCancellationPolicy;
+}) {
+    return (
+        <div className="habitacion-detail-section">
+            <div className="habitacion-cancellation-heading">
+                <h3>Política de cancelaciones</h3>
+                <span>Depósito de reservación</span>
+            </div>
+
+            <p className="habitacion-drawer-description">
+                {policy.description}
+            </p>
+
+            <div className="habitacion-cancellation-table-wrap">
+                <table className="habitacion-cancellation-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Semanas antes de llegada</th>
+                            <th scope="col">Reembolso</th>
+                            <th scope="col">Crédito</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {policy.rows.map((row) => (
+                            <tr key={row.weeksBeforeArrival}>
+                                <th scope="row">{row.weeksBeforeArrival}</th>
+                                <td>{row.refund}</td>
+                                <td>{row.credit}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    );
+}
+
 function HabitacionDrawer({
     habitacion,
     open,
@@ -289,6 +156,14 @@ function HabitacionDrawer({
     open: boolean;
     onClose: () => void;
 }) {
+    const [previewOpen, setPreviewOpen] = useState(false);
+    const [previewIndex, setPreviewIndex] = useState(0);
+
+    const openImagePreview = (index: number) => {
+        setPreviewIndex(index);
+        setPreviewOpen(true);
+    };
+
     return (
         <Drawer
             open={open}
@@ -316,31 +191,55 @@ function HabitacionDrawer({
                         className="habitacion-drawer-hero"
                         aria-label={habitacion.name}
                     >
-                        <Carousel
-                            autoplay
-                            arrows
-                            draggable
-                            className="habitacion-carousel"
+                        <Image.PreviewGroup
+                            items={habitacion.images.map((image) => ({
+                                src: image.src,
+                                alt: image.alt,
+                            }))}
+                            preview={{
+                                open: previewOpen,
+                                current: previewIndex,
+                                onOpenChange: (isOpen) =>
+                                    setPreviewOpen(isOpen),
+                                onChange: (current) => setPreviewIndex(current),
+                            }}
                         >
-                            {habitacion.images.map((image) => (
-                                <div key={image.src}>
-                                    <img
-                                        src={image.src}
-                                        alt={image.alt}
-                                        className="habitacion-hero-image"
-                                    />
-                                </div>
-                            ))}
-                        </Carousel>
+                            <Carousel
+                                autoplay
+                                arrows
+                                draggable
+                                className="habitacion-carousel"
+                            >
+                                {habitacion.images.map((image, index) => (
+                                    <div key={image.src}>
+                                        <button
+                                            type="button"
+                                            className="habitacion-hero-preview-button"
+                                            onClick={() =>
+                                                openImagePreview(index)
+                                            }
+                                            aria-label={`Abrir imagen ${index + 1} de ${habitacion.name}`}
+                                        >
+                                            <img
+                                                src={image.src}
+                                                alt={image.alt}
+                                                className="habitacion-hero-image"
+                                            />
+                                            <span>Ver imagen</span>
+                                        </button>
+                                    </div>
+                                ))}
+                            </Carousel>
+                        </Image.PreviewGroup>
                     </section>
 
                     <section className="habitacion-drawer-main">
                         <div className="habitacion-drawer-title">
-                            <p>{habitacion.eyebrow}</p>
+                            {/* <p>{habitacion.eyebrow}</p> */}
                             <h2>{habitacion.name}</h2>
                         </div>
 
-                        <div className="habitacion-drawer-summary">
+                        {/* <div className="habitacion-drawer-summary">
                             <div>
                                 <UsersRound size={20} />
                                 <span>{habitacion.capacity}</span>
@@ -353,7 +252,7 @@ function HabitacionDrawer({
                                 <Maximize2 size={20} />
                                 <span>{habitacion.size}</span>
                             </div>
-                        </div>
+                        </div> */}
 
                         <p className="habitacion-drawer-description">
                             {habitacion.description}
@@ -362,7 +261,7 @@ function HabitacionDrawer({
                         <Divider />
 
                         <div className="habitacion-detail-section">
-                            <h3>Lo más destacado</h3>
+                            <h3>Características</h3>
                             <div className="habitacion-highlight-list">
                                 {habitacion.highlights.map((highlight) => (
                                     <Tag
@@ -376,12 +275,51 @@ function HabitacionDrawer({
                         </div>
 
                         <div className="habitacion-detail-section">
-                            <h3>Qué incluye</h3>
+                            <h3>Amenidades</h3>
                             <ul className="habitacion-included-list">
                                 {habitacion.included.map((item) => (
                                     <li key={item}>{item}</li>
                                 ))}
                             </ul>
+                        </div>
+
+                        <div className="habitacion-detail-section">
+                            <h3>Información del hotel</h3>
+                            <div className="habitacion-stay-info-grid">
+                                <div>
+                                    <span>Entrada</span>
+                                    <strong>{hotelInfo.checkIn}</strong>
+                                </div>
+                                <div>
+                                    <span>Salida</span>
+                                    <strong>{hotelInfo.checkOut}</strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="habitacion-detail-section">
+                            <h3>Política de pagos</h3>
+                            <p className="habitacion-drawer-description">
+                                {hotelInfo.paymentPolicy}
+                            </p>
+                        </div>
+
+                        <CancellationPolicyTable
+                            policy={hotelInfo.cancellationPolicy}
+                        />
+
+                        <div className="habitacion-detail-section">
+                            <h3>No arribo</h3>
+                            <p className="habitacion-drawer-description">
+                                {hotelInfo.noShowPolicy}
+                            </p>
+                        </div>
+
+                        <div className="habitacion-detail-section">
+                            <h3>Personas extra</h3>
+                            <p className="habitacion-drawer-description">
+                                {hotelInfo.extraGuestPolicy}
+                            </p>
                         </div>
 
                         <div className="habitacion-drawer-actions">
@@ -390,7 +328,7 @@ function HabitacionDrawer({
                                 size="large"
                                 href="/contacto"
                             >
-                                Consultar disponibilidad
+                                Reservar
                             </Button>
                             <Button size="large" href="tel:+523292916330">
                                 Llamar al hotel
@@ -411,11 +349,18 @@ export default function HabitacionesShowcase() {
     return (
         <section className="habitaciones-section">
             <div className="habitaciones-intro">
-                <p>Habitaciones</p>
-                <h1>Descansa cerca del mar</h1>
+                {/* <p>Habitaciones</p> */}
+                <h1>Habitaciones</h1>
                 <span>
-                    Espacios cómodos para parejas, familias y escapadas
-                    tranquilas en Punta de Mita.
+                    El hotel Mesón de Mita cuenta con 25 cómodas habitaciones
+                    dentro de un ambiente de relax rodeado de jardines con
+                    alberca junto al mar. Las habitaciones cada una con propia
+                    personalidad, son espaciosas llenas de luz y color además de
+                    emitir un ambiente de confort y estilo mexicano. La
+                    proximidad que mantiene el hotel con la playa, la vista
+                    espectacular de las Islas Marietas y la tranquilidad del
+                    entorno, se mezclan en armonía para hacer de este sitio el
+                    paraíso terrenal.
                 </span>
             </div>
 

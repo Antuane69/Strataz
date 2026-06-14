@@ -18,6 +18,10 @@ Route::inertia('/galeria', 'public/galeria')->name('public.galeria');
 
 Route::inertia('/contacto', 'public/contacto')->name('public.contacto');
 
+Route::inertia('/faq', 'public/faq')->name('public.faq');
+
+Route::inertia('/protocolos-covid-19', 'public/protocolos-covid')->name('public.protocolos-covid');
+
 Route::redirect('/contactos', '/contacto');
 
 Route::middleware(['auth', 'verified'])->group(function () {

@@ -13,7 +13,9 @@
 @import '../js/components/public-booking-bar.css';
 @import '../js/components/recomendaciones/recomendaciones.css';
 @import '../js/components/servicios/servicios.css';
+@import '../js/pages/public/faq.css';
 @import '../js/pages/public/inicio.css';
+@import '../js/pages/public/protocolos-covid.css';
 
 @source '../views';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -112,7 +114,14 @@
     --titulos-brand: #832a19;
     --titulos-brand-hover: #d55c01;
     --background-brand: #d55c01;
-    --background-page-brand: #fdf7f2;
+    --background-page-brand: #FFFCF7;
+    --public-page-background:
+        linear-gradient(
+            180deg,
+            rgb(255 255 255 / 0.74),
+            rgb(253 247 242 / 0.96)
+        ),
+        var(--background-page-brand);
 }
 
 .dark {
@@ -185,7 +194,10 @@
     display: grid;
     max-width: 1710px;
     margin: 0 auto;
-    grid-template-columns: minmax(360px, 1.12fr) minmax(320px, 0.92fr) minmax(220px, 0.8fr);
+    grid-template-columns: minmax(360px, 1.12fr) minmax(320px, 0.92fr) minmax(
+            220px,
+            0.8fr
+        );
     gap: 84px;
 }
 
@@ -275,7 +287,9 @@
 
 .public-site-menu.ant-menu-horizontal > .ant-menu-item a,
 .public-site-menu.ant-menu-horizontal > .ant-menu-item .ant-menu-title-content,
-.public-site-menu.ant-menu-horizontal > .ant-menu-submenu .ant-menu-title-content {
+.public-site-menu.ant-menu-horizontal
+    > .ant-menu-submenu
+    .ant-menu-title-content {
     color: inherit;
 }
 
@@ -301,11 +315,11 @@
 } */
 
 .language-flag {
-  display: block;
-  width: 18px;
-  height: 12px;
-  object-fit: cover;
-  border-radius: 2px;
+    display: block;
+    width: 18px;
+    height: 12px;
+    object-fit: cover;
+    border-radius: 2px;
 }
 
 .public-language-toggle {
@@ -358,7 +372,7 @@
 }
 
 .content-body {
-  background-color: var(--background-page-brand) !important;
+    background-color: var(--background-page-brand) !important;
 }
 
 .public-booking-boundary {
@@ -370,4 +384,21 @@
     .public-booking-boundary {
         padding-bottom: 86px;
     }
+}
+
+.icono-footer {
+    width: 20px;
+    height: 20px;
+    color: white !important;
+}
+
+.icono-footer-trip {
+    width: 25px;
+    height: 25px;
+    color: white !important;
+}
+
+.icono-footer,
+.icono-footer-trip {
+    filter: invert(1);
 }

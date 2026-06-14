@@ -1,8 +1,6 @@
-import { Button } from 'antd';
 import {
     BusFront,
     CarFront,
-    ChevronRight,
     ExternalLink,
     Mail,
     MapPin,
@@ -102,18 +100,14 @@ const arrivalRoutes: ArrivalRoute[] = [
 ];
 
 export default function ContactoShowcase() {
-    const handleContactRequest = () => {
-        window.dispatchEvent(new CustomEvent('meson:open-contact-drawer'));
-    };
-
     return (
         <section className="contacto-section">
             <div className="contacto-hero">
-                <p>Contacto</p>
-                <h1>Ubicaciones</h1>
+                {/* <p>Contacto</p> */}
+                <h1>Contacto y Ubicación</h1>
                 <span>
-                    Encuéntranos en el corazón de Punta de Mita, a unos pasos
-                    de la playa y de la zona de El Anclote.
+                    Encuéntranos en el corazón de Punta de Mita, a unos pasos de
+                    la playa y de la zona de El Anclote.
                 </span>
             </div>
 
@@ -143,17 +137,6 @@ export default function ContactoShowcase() {
                         </a>
                     );
                 })}
-
-                <Button
-                    type="primary"
-                    size="large"
-                    className="contacto-drawer-button"
-                    icon={<ChevronRight size={17} />}
-                    iconPosition="end"
-                    onClick={handleContactRequest}
-                >
-                    Contactar
-                </Button>
             </div>
 
             <div className="contacto-map-section">
@@ -164,9 +147,8 @@ export default function ContactoShowcase() {
                     </p>
                     <h2>Estamos sobre Ave El Anclote</h2>
                     <span>
-                        Este mapa marca la ubicación del hotel para que tus
-                        huéspedes puedan abrir la ruta desde Google Maps sin
-                        salir perdidos entre indicaciones largas.
+                        Este mapa marca la ubicación del hotel para que puedas
+                        encontrarnos sin ningun problema.
                     </span>
                     <a href={mapsUrl} target="_blank" rel="noreferrer">
                         Abrir ruta en Google Maps
@@ -187,12 +169,11 @@ export default function ContactoShowcase() {
 
             <div className="contacto-arrival-section">
                 <div className="contacto-arrival-intro">
-                    <p>Cómo llegar</p>
-                    <h2>Rutas simples para llegar al hotel</h2>
-                    <span>
+                    <h2>Cómo llegar al hotel</h2>
+                    {/* <span>
                         Estos bloques dejan lista la estructura para que puedas
                         cambiar el texto final por las instrucciones oficiales.
-                    </span>
+                    </span> */}
                 </div>
 
                 <div className="contacto-arrival-grid">

@@ -3,7 +3,7 @@
     width: 100%;
     overflow: hidden;
     padding: 86px 28px 96px;
-    background: #e8f2f3;
+    background: var(--public-page-background);
 }
 
 .bodas-background {
@@ -27,8 +27,8 @@
     z-index: 1;
     background: linear-gradient(
         90deg,
-        rgb(232 242 243 / 0.34),
-        rgb(232 242 243 / 0.06)
+        rgb(253 247 242 / 0.34),
+        rgb(253 247 242 / 0.06)
     );
     content: '';
     pointer-events: none;

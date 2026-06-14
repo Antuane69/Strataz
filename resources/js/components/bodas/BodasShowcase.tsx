@@ -7,7 +7,6 @@ import {
     MessageCircle,
     Phone,
     Play,
-    Sparkles,
     UserRound,
 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
@@ -244,8 +243,7 @@ function BodasReservaDrawer({
                 <p>Reserva tu fecha</p>
                 <h2>Cuéntanos sobre tu boda</h2>
                 <span>
-                    Déjanos tus datos y el primer boceto de tu celebración. Este
-                    formulario es visual por ahora.
+                    Déjanos tus datos y el primer boceto de tu celebración.
                 </span>
             </div>
 
@@ -312,10 +310,10 @@ export default function BodasShowcase() {
 
             <div className="bodas-shell">
                 <div className="bodas-copy">
-                    <p className="bodas-kicker">
+                    {/* <p className="bodas-kicker">
                         <Sparkles size={18} />
                         Celebraciones frente al mar
-                    </p>
+                    </p> */}
 
                     <h1>
                         Bodas en la playa, Hotel en Punta de Mita.

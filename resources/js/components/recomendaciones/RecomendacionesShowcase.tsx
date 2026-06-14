@@ -215,7 +215,7 @@ function RecommendationCard({
                     className="recomendacion-card-image"
                     loading="lazy"
                 />
-                <span>{recommendation.eyebrow}</span>
+                {/* <span>{recommendation.eyebrow}</span> */}
             </div>
 
             <div className="recomendacion-card-body">
@@ -326,11 +326,10 @@ export default function RecomendacionesShowcase() {
     return (
         <section className="recomendaciones-section">
             <div className="recomendaciones-intro">
-                <p>Recomendaciones</p>
-                <h1>Qué hacer cerca de Punta de Mita</h1>
+                {/* <p>Recomendaciones</p> */}
+                <h1>Recomendaciones</h1>
                 <span>
-                    Planes sencillos para descubrir mar, pueblos cercanos y
-                    rincones naturales durante tu estancia.
+                  Punta de Mita es un pueblito bastante pequeño, pero con mucho encanto, te enamoraras de su playa y sus hermosos atardeceres. En Hotel Mesón de Mita queremos asegurarnos de que durante tu estancia aproveches al máximo de todos los atractivos disponibles en la zona y vivas unas vacaciones llenas de bonitas experiencias.
                 </span>
             </div>
 

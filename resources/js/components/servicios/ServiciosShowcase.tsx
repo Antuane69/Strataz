@@ -1,7 +1,6 @@
-import { Button, Carousel, Modal, Tag } from 'antd';
+import { Carousel, Image, Tag } from 'antd';
 import {
     CarFront,
-    ChevronRight,
     Gift,
     Image as ImageIcon,
     Play,
@@ -262,66 +261,8 @@ function ServicioCard({
                         <Tag key={tag}>{tag}</Tag>
                     ))}
                 </div>
-
-                <Button
-                    type="text"
-                    className="servicio-preview-action"
-                    onClick={() => onPreview(servicio, 0)}
-                    icon={<ChevronRight size={17} />}
-                    iconPosition="end"
-                >
-                    Ver galería
-                </Button>
             </div>
         </article>
-    );
-}
-
-function ServicioPreview({
-    servicio,
-    initialIndex,
-    onClose,
-}: {
-    servicio?: Servicio;
-    initialIndex: number;
-    onClose: () => void;
-}) {
-    return (
-        <Modal
-            open={Boolean(servicio)}
-            onCancel={onClose}
-            footer={null}
-            centered
-            width="min(960px, calc(100vw - 32px))"
-            className="servicio-preview-modal"
-            destroyOnHidden
-        >
-            {servicio && (
-                <div className="servicio-preview">
-                    <div className="servicio-preview-title">
-                        <p>{servicio.eyebrow}</p>
-                        <h2>{servicio.name}</h2>
-                    </div>
-
-                    <Carousel
-                        arrows
-                        draggable
-                        initialSlide={initialIndex}
-                        className="servicio-preview-carousel"
-                    >
-                        {servicio.media.map((media) => (
-                            <div key={`preview-${servicio.id}-${media.src}`}>
-                                <ServicioMediaItem
-                                    media={media}
-                                    className="servicio-preview-media"
-                                    controls={media.type === 'video'}
-                                />
-                            </div>
-                        ))}
-                    </Carousel>
-                </div>
-            )}
-        </Modal>
     );
 }
 
@@ -336,50 +277,87 @@ export default function ServiciosShowcase() {
         setPreviewIndex(mediaIndex);
     };
 
+    const previewItems =
+        previewServicio?.media.map((media) => ({
+            src:
+                media.type === 'video'
+                    ? (media.poster ?? media.src)
+                    : media.src,
+            alt: media.alt,
+        })) ?? [];
+
     return (
-        <section className="servicios-section">
-            <div className="servicios-intro">
-                <p>Servicios</p>
-                <h1>Todo listo para disfrutar Punta de Mita</h1>
-                <span>
-                    Amenidades sencillas, útiles y pensadas para que tu estancia
-                    se sienta cómoda desde que llegas.
-                </span>
-            </div>
+        <Image.PreviewGroup
+            items={previewItems}
+            preview={{
+                open: Boolean(previewServicio),
+                current: previewIndex,
+                onOpenChange: (isOpen) => {
+                    if (!isOpen) {
+                        setPreviewServicio(undefined);
+                    }
+                },
+                onChange: (current) => setPreviewIndex(current),
+                imageRender: (originalNode, { current }) => {
+                    const media = previewServicio?.media[current];
 
-            <div
-                className="servicios-trust-row"
-                aria-label="Resumen de servicios"
-            >
-                <span>
-                    <ShieldCheck size={18} />
-                    Estacionamiento privado
-                </span>
-                <span>
-                    <Waves size={18} />
-                    Alberca junto al mar
-                </span>
-                <span>
-                    <Gift size={18} />
-                    Souvenirs y artesanías
-                </span>
-            </div>
+                    if (!media || media.type === 'image') {
+                        return originalNode;
+                    }
 
-            <div className="servicios-grid">
-                {servicios.map((servicio) => (
-                    <ServicioCard
-                        key={servicio.id}
-                        servicio={servicio}
-                        onPreview={openPreview}
-                    />
-                ))}
-            </div>
+                    return (
+                        <video
+                            key={`${previewServicio.id}-${media.src}-${current}`}
+                            className="servicio-preview-media"
+                            src={media.src}
+                            poster={media.poster}
+                            controls
+                            autoPlay
+                            playsInline
+                            preload="metadata"
+                        />
+                    );
+                },
+            }}
+        >
+            <section className="servicios-section">
+                <div className="servicios-intro">
+                    {/* <p>Servicios</p> */}
+                    <h1>Servicios</h1>
+                    <span>
+                        Amenidades sencillas, útiles y pensadas para que tu
+                        estancia se sienta cómoda desde que llegas.
+                    </span>
+                </div>
 
-            <ServicioPreview
-                servicio={previewServicio}
-                initialIndex={previewIndex}
-                onClose={() => setPreviewServicio(undefined)}
-            />
-        </section>
+                <div
+                    className="servicios-trust-row"
+                    aria-label="Resumen de servicios"
+                >
+                    <span>
+                        <ShieldCheck size={18} />
+                        Estacionamiento privado
+                    </span>
+                    <span>
+                        <Waves size={18} />
+                        Alberca junto al mar
+                    </span>
+                    <span>
+                        <Gift size={18} />
+                        Souvenirs y artesanías
+                    </span>
+                </div>
+
+                <div className="servicios-grid">
+                    {servicios.map((servicio) => (
+                        <ServicioCard
+                            key={servicio.id}
+                            servicio={servicio}
+                            onPreview={openPreview}
+                        />
+                    ))}
+                </div>
+            </section>
+        </Image.PreviewGroup>
     );
 }

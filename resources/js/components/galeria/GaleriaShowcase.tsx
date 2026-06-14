@@ -239,8 +239,8 @@ export default function GaleriaShowcase() {
     return (
         <section className="galeria-section">
             <div className="galeria-intro">
-                <p>Galería</p>
-                <h1>Momentos de Mesón de Mita</h1>
+                {/* <p>Galería</p> */}
+                <h1>Galería</h1>
                 <span>
                     Playa, habitaciones, celebraciones y rincones para imaginar
                     tu próxima estancia en Punta de Mita.
@@ -254,7 +254,7 @@ export default function GaleriaShowcase() {
                             <Images size={18} />
                             {filteredImages.length} fotos
                         </p>
-                        <h2>Explora por ambiente</h2>
+                        <h2>Explora Nuestras Instalaciones</h2>
                     </div>
 
                     <div
