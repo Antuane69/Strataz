@@ -84,7 +84,7 @@
     display: grid;
     min-width: 0;
     overflow: hidden;
-    grid-column: span 6;
+    grid-column: span 4;
     grid-template-rows: auto 1fr;
     border: 1px solid rgb(131 42 25 / 0.12);
     border-radius: 8px;

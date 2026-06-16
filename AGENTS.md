@@ -6,6 +6,8 @@ Guia corta para trabajar en este proyecto sin gastar contexto de mas.
 
 Laravel + Inertia + React + TypeScript + Tailwind CSS + Ant Design. Autenticacion con Fortify. Rutas frontend generadas con Wayfinder. El proyecto usa Laravel 13.x y PHP 8.3 segun `composer.json`.
 
+NO LEVANTES SERVIDOR LOCAL NI INTENTES LEVANTARLO, HAZ LAS DEMAS PRUEBAS QUE SEAN NECESARIAS SIN LEVANTAR SERVIDOR LOCAL
+
 ## Leer primero
 
 - `README.md`: manual del proyecto y ejemplos.

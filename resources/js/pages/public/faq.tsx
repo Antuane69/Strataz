@@ -3,7 +3,6 @@ import { Button, Collapse, Drawer, Form, Input } from 'antd';
 import type { CollapseProps } from 'antd';
 import {
     ChevronRight,
-    HelpCircle,
     Mail,
     MessageSquareText,
     Phone,
@@ -105,7 +104,6 @@ export default function Faq() {
                     aria-label="Preguntas frecuentes"
                 >
                     <div className="faq-panel">
-
                         <Collapse
                             accordion
                             defaultActiveKey={[faqItems[0].question]}

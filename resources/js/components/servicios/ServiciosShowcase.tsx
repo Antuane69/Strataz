@@ -1,158 +1,29 @@
 import { Carousel, Image, Tag } from 'antd';
 import {
     CarFront,
+    Fish,
     Gift,
-    Image as ImageIcon,
-    Play,
     ShieldCheck,
     ShoppingBag,
     Sparkles,
+    Utensils,
+    Volleyball,
     Waves,
 } from 'lucide-react';
 import { useState } from 'react';
 import type { ComponentType, CSSProperties } from 'react';
-
-type ServicioIcon = 'pool' | 'parking' | 'shop' | 'beach';
-
-type ServicioMedia = {
-    type: 'image' | 'video';
-    src: string;
-    poster?: string;
-    alt: string;
-};
-
-type Servicio = {
-    id: string;
-    name: string;
-    eyebrow: string;
-    description: string;
-    icon: ServicioIcon;
-    accent: string;
-    tags: string[];
-    media: ServicioMedia[];
-};
+import type { Servicio, ServicioIcon, ServicioMedia } from './interfaces';
+import { serviciosMock } from './services/servicesMock';
 
 const serviceIcons: Record<ServicioIcon, ComponentType<{ size?: number }>> = {
     pool: Waves,
     parking: CarFront,
     shop: ShoppingBag,
     beach: Sparkles,
+    sports: Volleyball,
+    food: Utensils,
+    fish: Fish,
 };
-
-const servicios: Servicio[] = [
-    {
-        id: 'alberca',
-        name: 'Alberca junto al mar',
-        eyebrow: 'Relajación',
-        description:
-            'Contamos con alberca junto al mar, desde donde podrás disfrutar de la paz y tranquilidad de nuestras instalaciones.',
-        icon: 'pool',
-        accent: '#1f6f79',
-        tags: ['Vista al mar', 'Camastros', 'Ambiente tranquilo'],
-        media: [
-            {
-                type: 'image',
-                src: '/imagenes/galeria/alberca-punta-de-mita-04.jpg',
-                alt: 'Alberca del hotel frente al mar',
-            },
-            {
-                type: 'image',
-                src: '/imagenes/galeria/alberca-punta-de-mita-02.jpg',
-                alt: 'Camastros junto a la alberca',
-            },
-            {
-                type: 'video',
-                src: '/videos/video_prueba1.mp4',
-                poster: '/imagenes/galeria/dashboard.jpg',
-                alt: 'Video de prueba de la alberca',
-            },
-        ],
-    },
-    {
-        id: 'estacionamiento',
-        name: 'Estacionamiento',
-        eyebrow: 'Comodidad',
-        description:
-            'El hotel cuenta con área de estacionamiento privado gratuito las 24 horas del día. Recomendamos confirmar disponibilidad del servicio.',
-        icon: 'parking',
-        accent: '#8a4b22',
-        tags: ['Privado', '24 horas', 'Sin costo'],
-        media: [
-            {
-                type: 'image',
-                src: '/imagenes/galeria/areas_comunes_03.jpg',
-                alt: 'Área de recepción del hotel',
-            },
-            {
-                type: 'image',
-                src: '/imagenes/galeria/playa_05-1.jpg',
-                alt: 'Exterior del hotel en Punta de Mita',
-            },
-            {
-                type: 'video',
-                src: '/videos/video_prueba1.mp4',
-                poster: '/imagenes/galeria/areas_comunes_03.jpg',
-                alt: 'Video de prueba del estacionamiento',
-            },
-        ],
-    },
-    {
-        id: 'tienda-artesanias',
-        name: 'Tienda de artesanías',
-        eyebrow: 'Detalles locales',
-        description:
-            'En la parte frontal del hotel encontrarás una tienda de artesanías para adquirir pequeños souvenirs que recuerden tu estancia.',
-        icon: 'shop',
-        accent: '#a33f1d',
-        tags: ['Souvenirs', 'Artesanías', 'Regalos'],
-        media: [
-            {
-                type: 'image',
-                src: '/imagenes/galeria/areas_comunes_03.jpg',
-                alt: 'Pasillo y área frontal del hotel',
-            },
-            {
-                type: 'image',
-                src: '/imagenes/galeria/bodas-Punta-Mita-Hotel-Meson-Mita.jpg',
-                alt: 'Detalles del hotel en Punta de Mita',
-            },
-            {
-                type: 'video',
-                src: '/videos/video_prueba1.mp4',
-                poster: '/imagenes/galeria/areas_comunes_03.jpg',
-                alt: 'Video de prueba de tienda de artesanías',
-            },
-        ],
-    },
-    {
-        id: 'playa',
-        name: 'Playa a unos pasos',
-        eyebrow: 'Punta de Mita',
-        description:
-            'Disfruta la cercanía con la playa para caminar, descansar bajo las palmeras y vivir el ritmo tranquilo de la bahía.',
-        icon: 'beach',
-        accent: '#235d48',
-        tags: ['Caminatas', 'Palmeras', 'Bahía'],
-        media: [
-            {
-                type: 'image',
-                src: '/imagenes/galeria/playa-meson-punta-mita-012.jpg',
-                alt: 'Playa cerca del hotel',
-            },
-            {
-                type: 'image',
-                src: '/imagenes/galeria/playa_13.jpg',
-                alt: 'Vista del mar en Punta de Mita',
-            },
-            {
-                type: 'video',
-                src: '/videos/video_prueba1.mp4',
-                poster: '/imagenes/galeria/playa-meson-punta-mita-012.jpg',
-                alt: 'Video de prueba de playa',
-            },
-        ],
-    },
-];
 
 function ServicioMediaItem({
     media,
@@ -223,7 +94,7 @@ function ServicioCard({
                                     media={media}
                                     className="servicio-media"
                                 />
-                                <span className="servicio-media-overlay">
+                                {/* <span className="servicio-media-overlay">
                                     {media.type === 'video' ? (
                                         <Play size={18} />
                                     ) : (
@@ -233,7 +104,7 @@ function ServicioCard({
                                     {media.type === 'video'
                                         ? 'video'
                                         : 'imagen'}
-                                </span>
+                                </span> */}
                             </button>
                         </div>
                     ))}
@@ -349,7 +220,7 @@ export default function ServiciosShowcase() {
                 </div>
 
                 <div className="servicios-grid">
-                    {servicios.map((servicio) => (
+                    {serviciosMock.map((servicio) => (
                         <ServicioCard
                             key={servicio.id}
                             servicio={servicio}

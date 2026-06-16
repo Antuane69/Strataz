@@ -35,13 +35,14 @@
 .contacto-arrival-intro span {
     display: block;
     max-width: 900px;
-    text-align: center;
     margin: 14px auto 0;
     color: #5e514b;
     font-family: 'Josefin Sans', Arial, sans-serif;
     font-size: 1.04rem;
     line-height: 1.65;
     letter-spacing: 0;
+    text-align: justify;
+    text-align-last: center;
 }
 
 .contacto-info-bar {
@@ -174,6 +175,7 @@
     font-size: 1.02rem;
     line-height: 1.65;
     letter-spacing: 0;
+    text-align: justify;
 }
 
 .contacto-map-copy a {
@@ -226,7 +228,10 @@
 }
 
 .contacto-arrival-card {
+    display: flex;
     min-width: 0;
+    overflow: hidden;
+    flex-direction: column;
     border: 1px solid rgb(131 42 25 / 0.12);
     border-radius: 8px;
     padding: 24px;
@@ -237,8 +242,14 @@
 .contacto-arrival-heading {
     display: flex;
     min-width: 0;
+    min-height: 50px !important;
     align-items: flex-start;
     gap: 14px;
+}
+
+.contacto-arrival-heading > div {
+    min-width: 0;
+    flex: 1 1 auto;
 }
 
 .contacto-arrival-heading > span {
@@ -264,6 +275,7 @@
 }
 
 .contacto-arrival-heading h3 {
+    min-height: 2.6em;
     margin: 0;
     color: #2f231d;
     font-family: 'Cormorant Garamond', Georgia, serif;
@@ -271,6 +283,26 @@
     font-weight: 600;
     line-height: 1.04;
     letter-spacing: 0;
+    overflow-wrap: anywhere;
+    hyphens: auto;
+}
+
+.contacto-arrival-card > span {
+    display: block;
+    min-width: 0;
+    margin-top: 18px;
+    color: #5e514b;
+    font-family: 'Josefin Sans', Arial, sans-serif;
+    font-size: 0.98rem;
+    line-height: 1.62;
+    letter-spacing: 0;
+    text-align: justify;
+    overflow-wrap: anywhere;
+    hyphens: auto;
+}
+
+.contacto-arrival-card > ol + span {
+    margin-top: 20px;
 }
 
 .contacto-arrival-card ol {
@@ -291,6 +323,9 @@
     font-size: 0.98rem;
     line-height: 1.5;
     letter-spacing: 0;
+    text-align: justify;
+    overflow-wrap: anywhere;
+    hyphens: auto;
 }
 
 .contacto-arrival-card li::before {
@@ -319,6 +354,11 @@
 
     .contacto-arrival-grid {
         grid-template-columns: 1fr;
+    }
+
+    .contacto-arrival-heading,
+    .contacto-arrival-heading h3 {
+        min-height: 0;
     }
 }
 
@@ -355,6 +395,7 @@
     .contacto-arrival-intro span,
     .contacto-map-copy span {
         font-size: 0.98rem;
+        text-align-last: left;
     }
 
     .contacto-info-bar {

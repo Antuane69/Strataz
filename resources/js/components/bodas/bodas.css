@@ -222,8 +222,7 @@
     background: #fff;
 }
 
-.bodas-carousel .slick-arrow,
-.bodas-preview-carousel .slick-arrow {
+.bodas-carousel .slick-arrow {
     top: 50%;
     z-index: 2;
     display: flex !important;
@@ -241,18 +240,15 @@
     transform: translateY(-50%);
 }
 
-.bodas-carousel .slick-prev,
-.bodas-preview-carousel .slick-prev {
+.bodas-carousel .slick-prev {
     left: 14px;
 }
 
-.bodas-carousel .slick-next,
-.bodas-preview-carousel .slick-next {
+.bodas-carousel .slick-next {
     right: 14px;
 }
 
-.bodas-carousel .slick-arrow::before,
-.bodas-preview-carousel .slick-arrow::before {
+.bodas-carousel .slick-arrow::before {
     display: block;
     width: auto;
     height: auto;
@@ -264,41 +260,12 @@
     transform: none;
 }
 
-.bodas-preview-modal .ant-modal-content {
-    overflow: hidden;
-    border-radius: 8px;
-    padding: 0;
-    background: #211612;
-}
-
-.bodas-preview-modal .ant-modal-close {
-    top: 14px;
-    right: 14px;
-    display: grid;
-    width: 40px;
-    height: 40px;
-    place-items: center;
-    border-radius: 999px;
-    background: rgb(255 255 255 / 0.92);
-    color: #2f231d;
-    box-shadow: 0 12px 26px rgb(0 0 0 / 0.16);
-}
-
-.bodas-preview-carousel,
-.bodas-preview-carousel .slick-slider,
-.bodas-preview-carousel .slick-list,
-.bodas-preview-carousel .slick-track,
-.bodas-preview-carousel .slick-slide > div {
-    height: min(68vh, 620px);
-    min-height: 340px;
-    background: #211612;
-}
-
 .bodas-preview-media {
     display: block;
-    width: 100%;
-    height: min(68vh, 620px);
-    min-height: 340px;
+    width: min(92vw, 1080px);
+    max-width: 100%;
+    max-height: 82vh;
+    border-radius: 8px;
     object-fit: contain;
     background: #211612;
 }
@@ -436,14 +403,9 @@
         text-overflow: ellipsis;
     }
 
-    .bodas-preview-carousel,
-    .bodas-preview-carousel .slick-slider,
-    .bodas-preview-carousel .slick-list,
-    .bodas-preview-carousel .slick-track,
-    .bodas-preview-carousel .slick-slide > div,
     .bodas-preview-media {
-        height: min(60vh, 440px);
-        min-height: 260px;
+        width: calc(100vw - 32px);
+        max-height: 74vh;
     }
 
     .bodas-reserva-drawer .ant-drawer-body {

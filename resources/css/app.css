@@ -11,6 +11,7 @@
 @import '../js/components/inicio/InicioMasonry.css';
 @import '../js/components/promociones/promociones.css';
 @import '../js/components/public-booking-bar.css';
+@import '../js/components/public-newsletter-bar.css';
 @import '../js/components/recomendaciones/recomendaciones.css';
 @import '../js/components/servicios/servicios.css';
 @import '../js/pages/public/faq.css';
@@ -114,7 +115,7 @@
     --titulos-brand: #832a19;
     --titulos-brand-hover: #d55c01;
     --background-brand: #d55c01;
-    --background-page-brand: #FFFCF7;
+    --background-page-brand: #fffcf7;
     --public-page-background:
         linear-gradient(
             180deg,

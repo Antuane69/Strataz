@@ -22,6 +22,7 @@ export type HotelCancellationPolicyRow = {
 
 export type HotelCancellationPolicy = {
     description: string;
+    description_end: string;
     rows: HotelCancellationPolicyRow[];
 };
 

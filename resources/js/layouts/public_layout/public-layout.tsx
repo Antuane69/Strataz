@@ -3,6 +3,7 @@ import { Flex, Image, Layout, Menu } from 'antd';
 import { useState } from 'react';
 import type { ReactNode } from 'react';
 import PublicBookingBar from '@/components/public-booking-bar';
+import PublicNewsletterBar from '@/components/public-newsletter-bar';
 
 const { Header, Content, Footer } = Layout;
 
@@ -87,6 +88,8 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
 
                 <Content className="content-body">{children}</Content>
             </div>
+
+            <PublicNewsletterBar />
 
             <Footer className="public-site-footer">
                 <div className="public-site-footer-grid">

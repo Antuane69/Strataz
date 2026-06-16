@@ -1,4 +1,4 @@
-import { Button, Carousel, Drawer, Form, Input, Modal } from 'antd';
+import { Button, Carousel, Drawer, Form, Image, Input } from 'antd';
 import type { CarouselRef } from 'antd/es/carousel';
 import {
     CalendarHeart,
@@ -10,42 +10,8 @@ import {
     UserRound,
 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-
-type BodasMedia = {
-    type: 'image' | 'video';
-    src: string;
-    poster?: string;
-    alt: string;
-    label: string;
-};
-
-const bodasMedia: BodasMedia[] = [
-    {
-        type: 'image',
-        src: '/imagenes/galeria/bodas-Punta-Mita-Hotel-Meson-Mita.jpg',
-        alt: 'Pareja de novios caminando frente al mar',
-        label: 'Ceremonias frente al mar',
-    },
-    {
-        type: 'image',
-        src: '/imagenes/galeria/musica-Bodas-Playa-Punta-Mita-Hotel-Meson-Mita.jpg',
-        alt: 'Recepción de boda con música en vivo',
-        label: 'Recepciones al atardecer',
-    },
-    {
-        type: 'image',
-        src: '/imagenes/galeria/punta-Mita-Weddings-Catering-Hotel-Meson-Mita-1.jpg',
-        alt: 'Catering para boda en Punta de Mita',
-        label: 'Menús para tus invitados',
-    },
-    {
-        type: 'video',
-        src: '/videos/video_prueba1.mp4',
-        poster: '/imagenes/galeria/musica-Bodas-Playa-Punta-Mita-Hotel-Meson-Mita.jpg',
-        alt: 'Video de prueba para bodas en el hotel',
-        label: 'Momentos en movimiento',
-    },
-];
+import type { BodasMedia } from './interfaces';
+import { bodasMedia } from './services/bodasMock';
 
 const bodasBackgroundPath = '/imagenes/galeria/background.webp';
 
@@ -183,45 +149,6 @@ function BodasCarousel({
     );
 }
 
-function BodasPreview({
-    initialIndex,
-    open,
-    onClose,
-}: {
-    initialIndex: number;
-    open: boolean;
-    onClose: () => void;
-}) {
-    return (
-        <Modal
-            open={open}
-            onCancel={onClose}
-            footer={null}
-            centered
-            width="min(980px, calc(100vw - 32px))"
-            className="bodas-preview-modal"
-            destroyOnHidden
-        >
-            <Carousel
-                arrows
-                draggable
-                initialSlide={initialIndex}
-                className="bodas-preview-carousel"
-            >
-                {bodasMedia.map((media) => (
-                    <div key={`preview-${media.src}`}>
-                        <BodasMediaItem
-                            media={media}
-                            className="bodas-preview-media"
-                            controls={media.type === 'video'}
-                        />
-                    </div>
-                ))}
-            </Carousel>
-        </Modal>
-    );
-}
-
 function BodasReservaDrawer({
     open,
     onClose,
@@ -298,73 +225,108 @@ export default function BodasShowcase() {
         setIsPreviewOpen(true);
     };
 
-    return (
-        <section className="bodas-section">
-            <div className="bodas-background" aria-hidden="true">
-                <img
-                    src={bodasBackgroundPath}
-                    alt=""
-                    className="bodas-background-image"
-                />
-            </div>
+    const previewItems = bodasMedia.map((media) => ({
+        src: media.type === 'video' ? (media.poster ?? media.src) : media.src,
+        alt: media.alt,
+    }));
 
-            <div className="bodas-shell">
-                <div className="bodas-copy">
-                    {/* <p className="bodas-kicker">
+    return (
+        <Image.PreviewGroup
+            items={previewItems}
+            preview={{
+                open: isPreviewOpen,
+                current: previewIndex,
+                onOpenChange: (isOpen) => setIsPreviewOpen(isOpen),
+                onChange: (current) => setPreviewIndex(current),
+                imageRender: (originalNode, { current }) => {
+                    const media = bodasMedia[current];
+
+                    if (!media || media.type === 'image') {
+                        return originalNode;
+                    }
+
+                    return (
+                        <video
+                            key={`${media.src}-${current}`}
+                            className="bodas-preview-media"
+                            src={media.src}
+                            poster={media.poster}
+                            controls
+                            autoPlay
+                            playsInline
+                            preload="metadata"
+                        />
+                    );
+                },
+            }}
+        >
+            <section className="bodas-section">
+                <div className="bodas-background" aria-hidden="true">
+                    <img
+                        src={bodasBackgroundPath}
+                        alt=""
+                        className="bodas-background-image"
+                    />
+                </div>
+
+                <div className="bodas-shell">
+                    <div className="bodas-copy">
+                        {/* <p className="bodas-kicker">
                         <Sparkles size={18} />
                         Celebraciones frente al mar
                     </p> */}
 
-                    <h1>
-                        Bodas en la playa, Hotel en Punta de Mita.
-                        <span>Haz realidad la celebración de tus sueños.</span>
-                    </h1>
+                        <h1>
+                            Bodas en la playa, Hotel en Punta de Mita.
+                            <span>
+                                Haz realidad la celebración de tus sueños.
+                            </span>
+                        </h1>
 
-                    <p className="bodas-description">
-                        Ponemos a tu disposición un coordinador de bodas
-                        personal, quien se encargará de que todo luzca como
-                        siempre has soñado, desde organización, decoración y
-                        selección del menú que deleitará a tus invitados. Conoce
-                        nuestros paquetes o personaliza tu evento perfecto.
-                    </p>
+                        <p className="bodas-description">
+                            Ponemos a tu disposición un coordinador de bodas
+                            personal, quien se encargará de que todo luzca como
+                            siempre has soñado, desde organización, decoración y
+                            selección del menú que deleitará a tus invitados.
+                            Conoce nuestros paquetes o personaliza tu evento
+                            perfecto.
+                        </p>
 
-                    <div
-                        className="bodas-highlights"
-                        aria-label="Servicios para bodas"
-                    >
-                        <span>
-                            <CalendarHeart size={18} />
-                            Coordinación personal
-                        </span>
-                        <span>
-                            <MessageCircle size={18} />
-                            Evento personalizado
-                        </span>
+                        <div
+                            className="bodas-highlights"
+                            aria-label="Servicios para bodas"
+                        >
+                            <span>
+                                <CalendarHeart size={18} />
+                                Coordinación personal
+                            </span>
+                            <span>
+                                <MessageCircle size={18} />
+                                Evento personalizado
+                            </span>
+                        </div>
+
+                        <Button
+                            type="primary"
+                            size="large"
+                            className="bodas-reservar-button"
+                            onClick={() => setIsDrawerOpen(true)}
+                        >
+                            RESERVAR
+                        </Button>
                     </div>
 
-                    <Button
-                        type="primary"
-                        size="large"
-                        className="bodas-reservar-button"
-                        onClick={() => setIsDrawerOpen(true)}
-                    >
-                        RESERVAR
-                    </Button>
+                    <BodasCarousel
+                        paused={isPreviewOpen}
+                        onPreview={openPreview}
+                    />
                 </div>
 
-                <BodasCarousel paused={isPreviewOpen} onPreview={openPreview} />
-            </div>
-
-            <BodasPreview
-                initialIndex={previewIndex}
-                open={isPreviewOpen}
-                onClose={() => setIsPreviewOpen(false)}
-            />
-
-            <BodasReservaDrawer
-                open={isDrawerOpen}
-                onClose={() => setIsDrawerOpen(false)}
-            />
-        </section>
+                <BodasReservaDrawer
+                    open={isDrawerOpen}
+                    onClose={() => setIsDrawerOpen(false)}
+                />
+            </section>
+        </Image.PreviewGroup>
     );
 }

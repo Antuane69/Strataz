@@ -1,33 +1,6 @@
-import {
-    BusFront,
-    CarFront,
-    ExternalLink,
-    Mail,
-    MapPin,
-    Navigation,
-    Phone,
-    Plane,
-} from 'lucide-react';
-import type { ComponentType } from 'react';
-
-type IconComponent = ComponentType<{ size?: number }>;
-
-type ContactInfo = {
-    id: string;
-    label: string;
-    lines: string[];
-    href: string;
-    external?: boolean;
-    icon: IconComponent;
-};
-
-type ArrivalRoute = {
-    id: string;
-    eyebrow: string;
-    title: string;
-    icon: IconComponent;
-    steps: string[];
-};
+import { ExternalLink, Mail, MapPin, Navigation, Phone } from 'lucide-react';
+import type { ContactInfo } from './interfaces';
+import { arrivalRoutes } from './services/contactosMock';
 
 const mapsUrl =
     'https://www.google.com.mx/maps/place/HOTEL+MESON+DE+MITA/@20.7718392,-105.5196837,17z/data=!3m1!4b1!4m8!3m7!1s0x8421134f5a0645e3:0xc48cf5e4f110a5b3!5m2!4m1!1i2!8m2!3d20.7718342!4d-105.517495';
@@ -57,45 +30,6 @@ const contactInfo: ContactInfo[] = [
         lines: ['reservaciones@hotelmesondemita.com'],
         href: 'mailto:reservaciones@hotelmesondemita.com',
         icon: Mail,
-    },
-];
-
-const arrivalRoutes: ArrivalRoute[] = [
-    {
-        id: 'via-aerea',
-        eyebrow: 'Vía aérea',
-        title: 'Desde el aeropuerto',
-        icon: Plane,
-        steps: [
-            'Llega al Aeropuerto Internacional de Puerto Vallarta.',
-            'Toma transporte privado, taxi autorizado o auto rentado hacia Punta de Mita.',
-            'Sigue la ruta por Bahía de Banderas hasta incorporarte a la zona de El Anclote.',
-            'Al entrar a Ave El Anclote, avanza hasta el número 200.',
-        ],
-    },
-    {
-        id: 'auto',
-        eyebrow: 'Vía terrestre',
-        title: 'En coche o autopista',
-        icon: CarFront,
-        steps: [
-            'Conduce por la carretera hacia Cruz de Huanacaxtle y Punta de Mita.',
-            'Continúa siguiendo los señalamientos a El Anclote.',
-            'Antes de llegar a la playa, ubica Ave El Anclote y avanza al acceso del hotel.',
-            'Puedes usar el mapa para abrir la ruta exacta desde tu punto de salida.',
-        ],
-    },
-    {
-        id: 'autobus',
-        eyebrow: 'Transporte público',
-        title: 'En autobús o camión',
-        icon: BusFront,
-        steps: [
-            'Desde Puerto Vallarta, busca la ruta con dirección a Punta de Mita.',
-            'Baja cerca de la zona de El Anclote o en el punto más próximo al hotel.',
-            'Camina hacia Ave El Anclote o toma un taxi local para el tramo final.',
-            'Confirma horarios y paradas el día de tu viaje.',
-        ],
     },
 ];
 
@@ -195,13 +129,42 @@ export default function ContactoShowcase() {
                                     </div>
                                 </div>
 
-                                <ol>
-                                    {route.steps.map((step) => (
-                                        <li key={`${route.id}-${step}`}>
-                                            {step}
-                                        </li>
-                                    ))}
-                                </ol>
+                                {route.description && (
+                                    <span className="contacto-arrival-description">
+                                        {route.description}
+                                    </span>
+                                )}
+
+                                {route.companias && (
+                                    <>
+                                        <span>
+                                            Compañías aéreas que operan en el
+                                            Aeropuerto Internacional Gustavo
+                                            Díaz Ordaz:
+                                        </span>
+                                        <ol>
+                                            {route.companias.map((compania) => (
+                                                <li
+                                                    key={`${route.id}-${compania}`}
+                                                >
+                                                    {compania}
+                                                </li>
+                                            ))}
+                                        </ol>
+                                    </>
+                                )}
+
+                                {route.footer && <span>{route.footer}</span>}
+
+                                {route.steps && (
+                                    <ol>
+                                        {route.steps.map((step) => (
+                                            <li key={`${route.id}-${step}`}>
+                                                {step}
+                                            </li>
+                                        ))}
+                                    </ol>
+                                )}
                             </article>
                         );
                     })}
