@@ -1,4 +1,4 @@
-export type ServicioIcon = 'pool' | 'parking' | 'shop' | 'beach' | 'sports' | "food" | "fish";
+export type ServicioIcon = 'pool' | 'parking' | 'shop' | 'beach' | 'sports' | "food" | "fish" | "sparks" | "boda" | "consierge";
 
 export type ServicioMedia = {
     type: 'image' | 'video';
@@ -7,11 +7,13 @@ export type ServicioMedia = {
     alt: string;
 };
 
+import type { ReactNode } from 'react';
+
 export type Servicio = {
     id: string;
     name: string;
     eyebrow: string;
-    description: string;
+    description: ReactNode;
     icon: ServicioIcon;
     accent: string;
     tags: string[];

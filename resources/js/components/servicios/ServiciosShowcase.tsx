@@ -9,6 +9,8 @@ import {
     Utensils,
     Volleyball,
     Waves,
+    Gem,
+    ConciergeBell
 } from 'lucide-react';
 import { useState } from 'react';
 import type { ComponentType, CSSProperties } from 'react';
@@ -23,6 +25,9 @@ const serviceIcons: Record<ServicioIcon, ComponentType<{ size?: number }>> = {
     sports: Volleyball,
     food: Utensils,
     fish: Fish,
+    sparks: Sparkles,
+    boda: Gem,
+    consierge: ConciergeBell
 };
 
 function ServicioMediaItem({
@@ -122,7 +127,9 @@ function ServicioCard({
                     </div>
                 </div>
 
-                <p className="servicio-description">{servicio.description}</p>
+                <div className="servicio-description">
+                    {servicio.description}
+                </div>
 
                 <div
                     className="servicio-tags"

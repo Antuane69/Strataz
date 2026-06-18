@@ -9,9 +9,40 @@ export type HabitacionAmenity =
     | 'coffee'
     | 'terrace';
 
+export type HabitacionRoomAmenityIcon =
+    | 'ac'
+    | 'smart-tv'
+    | 'wifi'
+    | 'safe'
+    | 'fan'
+    | 'private-bath'
+    | 'cleaning'
+    | 'towels'
+    | 'bath-kit'
+    | 'terrace'
+    | 'minibar'
+    | 'coffee'
+    | 'iron'
+    | 'pool-towels'
+    | 'hair-dryer'
+    | 'makeup-mirror'
+    | 'stove'
+    | 'kitchenware';
+
+export type HabitacionRoomAmenity = {
+    type: HabitacionRoomAmenityIcon;
+    name: string;
+    description: string;
+};
+
 export type HabitacionImage = {
     src: string;
     alt: string;
+};
+
+export type HabitacionImageStats = {
+    beds: number;
+    maxGuests: number;
 };
 
 export type HotelCancellationPolicyRow = {
@@ -44,9 +75,11 @@ export type Habitacion = {
     capacity: string;
     bed: string;
     size: string;
+    imageStats: HabitacionImageStats;
     images: HabitacionImage[];
     highlights: string[];
-    included: string[];
+    roomAmenities: HabitacionRoomAmenity[];
+    requestAmenities?: HabitacionRoomAmenity[];
     amenities: {
         type: HabitacionAmenity;
         label: string;

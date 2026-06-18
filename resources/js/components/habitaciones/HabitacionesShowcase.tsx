@@ -1,22 +1,43 @@
 import { Button, Carousel, Divider, Drawer, Image, Tag } from 'antd';
 import {
+    AirVent,
+    Ban,
     BedDouble,
+    CalendarDays,
+    Clock3,
     Coffee,
+    CreditCard,
+    DoorOpen,
+    Droplets,
+    Fan,
+    Flame,
+    HandPlatter,
+    Info,
     MapPin,
+    Monitor,
+    PackageCheck,
+    Refrigerator,
+    ScanFace,
     ShowerHead,
     Snowflake,
+    Sparkles,
+    Shirt,
     Tv,
+    Utensils,
     UsersRound,
+    Vault,
     Waves,
     Wifi,
     X,
 } from 'lucide-react';
 import { useState } from 'react';
-import type { ComponentType, KeyboardEvent } from 'react';
+import type { ComponentType, KeyboardEvent, ReactNode } from 'react';
 import type {
     Habitacion,
     HabitacionAmenity,
+    HabitacionRoomAmenityIcon,
     HotelCancellationPolicy,
+    HotelInfo,
 } from './interfaces';
 import { habitaciones, hotelInfo } from './services/habitacionesMock';
 
@@ -35,6 +56,30 @@ const amenityIcons: Record<
     terrace: MapPin,
 };
 
+const roomAmenityIcons: Record<
+    HabitacionRoomAmenityIcon,
+    ComponentType<{ size?: number }>
+> = {
+    ac: AirVent,
+    'smart-tv': Monitor,
+    wifi: Wifi,
+    safe: Vault,
+    fan: Fan,
+    'private-bath': ShowerHead,
+    cleaning: Sparkles,
+    towels: HandPlatter,
+    'bath-kit': Droplets,
+    terrace: Waves,
+    minibar: Refrigerator,
+    coffee: Coffee,
+    iron: Shirt,
+    'pool-towels': PackageCheck,
+    'hair-dryer': AirVent,
+    'makeup-mirror': ScanFace,
+    stove: Flame,
+    kitchenware: Utensils,
+};
+
 function AmenityIcon({
     amenity,
 }: {
@@ -47,6 +92,112 @@ function AmenityIcon({
             <Icon size={17} />
             <span>{amenity.label}</span>
         </span>
+    );
+}
+
+function RoomAmenityCard({
+    amenity,
+    compact = false,
+}: {
+    amenity: Habitacion['roomAmenities'][number];
+    compact?: boolean;
+}) {
+    const Icon = roomAmenityIcons[amenity.type];
+
+    return (
+        <article
+            className={`habitacion-room-amenity-card ${
+                compact ? 'habitacion-room-amenity-card-compact' : ''
+            }`}
+        >
+            <span className="habitacion-room-amenity-icon">
+                <Icon size={32} />
+            </span>
+            <div>
+                <h4>{amenity.name}</h4>
+                <p>{amenity.description}</p>
+            </div>
+        </article>
+    );
+}
+
+function RoomAmenitiesSection({ habitacion }: { habitacion: Habitacion }) {
+    return (
+        <section
+            className="habitacion-room-amenities-section"
+            aria-labelledby={`${habitacion.id}-room-amenities-title`}
+        >
+            <div className="habitacion-room-amenities-heading">
+                {/* <Sparkles size={18} /> */}
+                <h3 id={`${habitacion.id}-room-amenities-title`}>
+                    Amenidades en tu habitación
+                </h3>
+                <p>
+                    Todo lo que necesitas para una estancia cómoda y placentera.
+                </p>
+            </div>
+
+            <div className="habitacion-room-amenities-grid">
+                {habitacion.roomAmenities.map((amenity) => (
+                    <RoomAmenityCard
+                        key={`${habitacion.id}-${amenity.type}-${amenity.name}`}
+                        amenity={amenity}
+                    />
+                ))}
+            </div>
+
+            {habitacion.requestAmenities &&
+                habitacion.requestAmenities.length > 0 && (
+                    <div className="habitacion-room-amenities-request">
+                        <div className="habitacion-room-amenities-request-heading">
+                            <Info size={18} />
+                            <div>
+                                <strong>Accesorios bajo solicitud</strong>
+                                <span>
+                                    Sujetos a disponibilidad, solicítalos en
+                                    recepción.
+                                </span>
+                            </div>
+                        </div>
+                        <div className="habitacion-room-amenities-request-grid">
+                            {habitacion.requestAmenities.map((amenity) => (
+                                <RoomAmenityCard
+                                    key={`${habitacion.id}-request-${amenity.type}-${amenity.name}`}
+                                    amenity={amenity}
+                                    compact
+                                />
+                            ))}
+                        </div>
+                    </div>
+                )}
+        </section>
+    );
+}
+
+function formatBedCount(count: number) {
+    return `${count} ${count === 1 ? 'cama' : 'camas'}`;
+}
+
+function formatGuestCapacity(count: number) {
+    return `Hasta ${count} ${count === 1 ? 'huésped' : 'huéspedes'}`;
+}
+
+function splitPolicyText(text: string) {
+    return text
+        .split(/\n+/)
+        .map((line) => line.trim())
+        .filter(Boolean);
+}
+
+function PolicyTextRows({ text }: { text: string }) {
+    const rows = splitPolicyText(text);
+
+    return (
+        <div className="habitacion-policy-text-rows">
+            {rows.map((row, index) => (
+                <p key={`${row}-${index}`}>{row}</p>
+            ))}
+        </div>
     );
 }
 
@@ -63,6 +214,10 @@ function HabitacionCard({
             onSelect(habitacion);
         }
     };
+    const bedCountLabel = formatBedCount(habitacion.imageStats.beds);
+    const guestCapacityLabel = formatGuestCapacity(
+        habitacion.imageStats.maxGuests,
+    );
 
     return (
         <article
@@ -71,7 +226,7 @@ function HabitacionCard({
             tabIndex={0}
             onClick={() => onSelect(habitacion)}
             onKeyDown={handleKeyDown}
-            aria-label={`Ver detalles de ${habitacion.name}`}
+            aria-label={`Ver detalles de ${habitacion.name}. ${bedCountLabel}. ${guestCapacityLabel}.`}
         >
             <div className="habitacion-card-image-wrap">
                 <img
@@ -80,6 +235,16 @@ function HabitacionCard({
                     className="habitacion-card-image"
                     loading="lazy"
                 />
+                <div className="habitacion-card-image-stats" aria-hidden="true">
+                    <span className="habitacion-card-image-stat">
+                        <BedDouble size={16} />
+                        <span>{bedCountLabel}</span>
+                    </span>
+                    <span className="habitacion-card-image-stat">
+                        <UsersRound size={16} />
+                        <span>{guestCapacityLabel}</span>
+                    </span>
+                </div>
                 {/* <span className="habitacion-card-eyebrow">
                     {habitacion.eyebrow}
                 </span> */}
@@ -113,37 +278,124 @@ function CancellationPolicyTable({
     policy: HotelCancellationPolicy;
 }) {
     return (
-        <div className="habitacion-detail-section">
-            <div className="habitacion-cancellation-heading">
-                <h3>Política de cancelaciones</h3>
-                <span>Depósito de reservación</span>
-            </div>
-
-            <p className="habitacion-drawer-description">
-                {policy.description}
-            </p>
-
-            <div className="habitacion-cancellation-table-wrap">
-                <table className="habitacion-cancellation-table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Semanas antes de llegada</th>
-                            <th scope="col">Reembolso</th>
-                            <th scope="col">Crédito</th>
+        <div className="habitacion-cancellation-table-wrap">
+            <table className="habitacion-cancellation-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Semanas antes de llegada</th>
+                        <th scope="col">Reembolso</th>
+                        <th scope="col">Crédito</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {policy.rows.map((row) => (
+                        <tr key={row.weeksBeforeArrival}>
+                            <th scope="row">{row.weeksBeforeArrival}</th>
+                            <td>{row.refund}</td>
+                            <td>{row.credit}</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {policy.rows.map((row) => (
-                            <tr key={row.weeksBeforeArrival}>
-                                <th scope="row">{row.weeksBeforeArrival}</th>
-                                <td>{row.refund}</td>
-                                <td>{row.credit}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
+                    ))}
+                </tbody>
+            </table>
         </div>
+    );
+}
+
+function PolicyCard({
+    title,
+    icon: Icon,
+    tone = 'teal',
+    className = '',
+    children,
+}: {
+    title: string;
+    icon: ComponentType<{ size?: number }>;
+    tone?: 'teal' | 'gold' | 'coral' | 'blue';
+    className?: string;
+    children: ReactNode;
+}) {
+    return (
+        <article
+            className={`habitacion-policy-card habitacion-policy-card-${tone} ${className}`}
+        >
+            <div className="habitacion-policy-card-heading">
+                <span className="habitacion-policy-icon">
+                    <Icon size={22} />
+                </span>
+                <h4>{title}</h4>
+            </div>
+            {children}
+        </article>
+    );
+}
+
+function HotelPolicies({ info }: { info: HotelInfo }) {
+    return (
+        <section
+            className="habitacion-policy-board"
+            aria-labelledby="habitacion-policy-board-title"
+        >
+            <div className="habitacion-policy-board-heading">
+                <h3 id="habitacion-policy-board-title">
+                    Políticas de reservación
+                </h3>
+                <span>Todo lo necesario para tu estancia</span>
+            </div>
+
+            <div className="habitacion-policy-grid">
+                <PolicyCard title="Horarios" icon={Clock3}>
+                    <div className="habitacion-policy-time-list">
+                        <div>
+                            <DoorOpen size={20} />
+                            <span>Check-in</span>
+                            <strong>{info.checkIn}</strong>
+                        </div>
+                        <div>
+                            <DoorOpen size={20} />
+                            <span>Check-out</span>
+                            <strong>{info.checkOut}</strong>
+                        </div>
+                    </div>
+                </PolicyCard>
+
+                <PolicyCard
+                    title="Política de pago"
+                    icon={CreditCard}
+                    tone="gold"
+                >
+                    <PolicyTextRows text={info.paymentPolicy} />
+                </PolicyCard>
+
+                <PolicyCard
+                    title="Política de cancelación"
+                    icon={CalendarDays}
+                    className="habitacion-policy-card-wide"
+                >
+                    <PolicyTextRows
+                        text={info.cancellationPolicy.description}
+                    />
+                    <CancellationPolicyTable policy={info.cancellationPolicy} />
+                    <div className="habitacion-policy-note">
+                        <Info size={18} />
+                        <PolicyTextRows
+                            text={info.cancellationPolicy.description_end}
+                        />
+                    </div>
+                </PolicyCard>
+
+                <PolicyCard title="Política de no show" icon={Ban} tone="coral">
+                    <PolicyTextRows text={info.noShowPolicy} />
+                </PolicyCard>
+
+                <PolicyCard
+                    title="Personas extra"
+                    icon={UsersRound}
+                    tone="blue"
+                >
+                    <PolicyTextRows text={info.extraGuestPolicy} />
+                </PolicyCard>
+            </div>
+        </section>
     );
 }
 
@@ -168,7 +420,7 @@ function HabitacionDrawer({
         <Drawer
             open={open}
             onClose={onClose}
-            width="min(700px, 100vw)"
+            width="min(700px, 180vw)"
             placement="right"
             destroyOnHidden
             className="habitacion-drawer"
@@ -258,8 +510,8 @@ function HabitacionDrawer({
                             {habitacion.description}
                         </p>
 
-                        <Divider />
-
+                        <br/>
+                        
                         <div className="habitacion-detail-section">
                             <h3>Características</h3>
                             <div className="habitacion-highlight-list">
@@ -274,53 +526,11 @@ function HabitacionDrawer({
                             </div>
                         </div>
 
-                        <div className="habitacion-detail-section">
-                            <h3>Amenidades</h3>
-                            <ul className="habitacion-included-list">
-                                {habitacion.included.map((item) => (
-                                    <li key={item}>{item}</li>
-                                ))}
-                            </ul>
-                        </div>
+                        <Divider />
 
-                        <div className="habitacion-detail-section">
-                            <h3>Información del hotel</h3>
-                            <div className="habitacion-stay-info-grid">
-                                <div>
-                                    <span>Entrada</span>
-                                    <strong>{hotelInfo.checkIn}</strong>
-                                </div>
-                                <div>
-                                    <span>Salida</span>
-                                    <strong>{hotelInfo.checkOut}</strong>
-                                </div>
-                            </div>
-                        </div>
+                        <RoomAmenitiesSection habitacion={habitacion} />
 
-                        <div className="habitacion-detail-section">
-                            <h3>Política de pagos</h3>
-                            <p className="habitacion-drawer-description">
-                                {hotelInfo.paymentPolicy}
-                            </p>
-                        </div>
-
-                        <CancellationPolicyTable
-                            policy={hotelInfo.cancellationPolicy}
-                        />
-
-                        <div className="habitacion-detail-section">
-                            <h3>No arribo</h3>
-                            <p className="habitacion-drawer-description">
-                                {hotelInfo.noShowPolicy}
-                            </p>
-                        </div>
-
-                        <div className="habitacion-detail-section">
-                            <h3>Personas extra</h3>
-                            <p className="habitacion-drawer-description">
-                                {hotelInfo.extraGuestPolicy}
-                            </p>
-                        </div>
+                        <HotelPolicies info={hotelInfo} />
 
                         <div className="habitacion-drawer-actions">
                             <Button

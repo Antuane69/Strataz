@@ -109,7 +109,7 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
                         <p>
                             Ave El Anclote 200, 63734 Punta de Mita, Nay.
                             <br />
-                            +52 329 291 6330 +52 329 291 5161
+                            <b style={{ color: "var(--titulos-brand)" }}>+52 329 291 6330</b> <b style={{ color: "var(--titulos-brand)" }}>+52 329 291 5161</b>
                             <br />
                             reservaciones@hotelmesondemita.com
                             <br />
@@ -146,6 +146,17 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
                                     rel="noreferrer"
                                 >
                                     <img
+                                        src="/logos/whatsapp.png"
+                                        className="icono-footer-whats"
+                                        alt="Whatsapp"
+                                    />
+                                </a>
+                                <a
+                                    href="https://www.tripadvisor.com.mx/Hotel_Review-g499443-d2179919-Reviews-Hotel_Meson_de_Mita-Punta_de_Mita_Pacific_Coast.html"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
+                                    <img
                                         src="/logos/tripadvisor.png"
                                         className="icono-footer-trip"
                                         alt="Tripadvisor"
@@ -158,7 +169,7 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
                     <section className="public-site-footer-column">
                         <h3>Ayuda</h3>
                         <p>
-                            <Link href="/faq">FAQ's</Link>
+                            <Link href="/faq">Preguntas Frecuentes</Link>
                             <Link href="/protocolos-covid-19">
                                 Protocolos COVID-19
                             </Link>
