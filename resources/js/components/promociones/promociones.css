@@ -187,12 +187,13 @@
 
 .promocion-card-media {
     position: relative;
-    min-height: 252px;
+    height: clamp(236px, 23vw, 268px);
     overflow: hidden;
     background: #211612;
 }
 
 .promocion-card-featured .promocion-card-media {
+    height: 100%;
     min-height: 100%;
 }
 
@@ -200,7 +201,6 @@
     display: block;
     width: 100%;
     height: 100%;
-    min-height: 252px;
     object-fit: cover;
     transition: transform 420ms ease;
 }
@@ -238,11 +238,10 @@
     display: block;
     color: var(--titulos-brand);
     font-family: 'Josefin Sans', Arial, sans-serif;
-    font-size: 1.72rem;
+    font-size: clamp(1.18rem, 2vw, 1.72rem);
     font-weight: 700;
     line-height: 1;
     letter-spacing: 0;
-    white-space: nowrap;
 }
 
 .promocion-deal-badge small {
@@ -261,7 +260,7 @@
 }
 
 .promocion-card-featured .promocion-deal-badge strong {
-    font-size: 2.08rem;
+    font-size: clamp(1.32rem, 2.3vw, 2.08rem);
 }
 
 .promocion-eyebrow-badge {
@@ -346,6 +345,106 @@
     letter-spacing: 0;
 }
 
+.promocion-pricing {
+    margin-top: 18px;
+    /* border: 1px solid */
+        /* color-mix(in srgb, var(--promocion-accent) 14%, transparent); */
+    /* border-radius: 8px; */
+    /* padding: 14px; */
+    /* background: rgb(255 255 255 / 0.72); */
+}
+
+.promocion-pricing-heading {
+    margin: 0 0 10px;
+    color: var(--promocion-accent);
+    font-family: 'Josefin Sans', Arial, sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+
+.promocion-price-groups {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
+    gap: 10px;
+}
+
+.promocion-price-group {
+    display: grid;
+    align-content: start;
+    gap: 9px;
+    min-width: 0;
+}
+
+.promocion-price-group h3 {
+    margin: 0;
+    color: #2f231d;
+    font-family: 'Josefin Sans', Arial, sans-serif;
+    font-size: 0.92rem;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: 0;
+}
+
+.promocion-price-description {
+    margin: 0;
+    color: #6a5c55;
+    font-family: 'Josefin Sans', Arial, sans-serif;
+    font-size: 0.88rem;
+    line-height: 1.45;
+    letter-spacing: 0;
+}
+
+.promocion-price-list {
+    display: grid;
+    gap: 8px;
+}
+
+.promocion-price-row {
+    display: grid;
+    min-width: 0;
+    align-items: center;
+    gap: 4px 10px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    border-radius: 8px;
+    padding: 10px 11px 8px;
+    background: color-mix(in srgb, var(--promocion-accent) 7%, #fff);
+}
+
+.promocion-price-row span {
+    min-width: 0;
+    color: #5e514b;
+    font-family: 'Josefin Sans', Arial, sans-serif;
+    font-size: 0.86rem;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: 0;
+}
+
+.promocion-price-row strong {
+    color: var(--titulos-brand);
+    font-family: 'Josefin Sans', Arial, sans-serif;
+    font-size: 0.94rem;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: 0;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.promocion-price-row small {
+    grid-column: 1 / -1;
+    color: #786963;
+    font-family: 'Josefin Sans', Arial, sans-serif;
+    font-size: 0.76rem;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+
 .promocion-benefits {
     display: grid;
     margin: 20px 0 0;
@@ -379,7 +478,8 @@
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-top: 20px;
+    margin-top: auto;
+    padding-top: 20px;
 }
 
 .promocion-tags .ant-tag {
@@ -534,6 +634,7 @@
     .promocion-card-media,
     .promocion-card-featured .promocion-card-media,
     .promocion-card-media img {
+        height: 236px;
         min-height: 236px;
     }
 
@@ -543,6 +644,16 @@
 
     .promocion-card-heading h2 {
         font-size: 2rem;
+    }
+
+    .promocion-price-groups,
+    .promocion-price-row {
+        grid-template-columns: 1fr;
+    }
+
+    .promocion-price-row strong {
+        text-align: left;
+        white-space: normal;
     }
 
     .promocion-action.ant-btn,

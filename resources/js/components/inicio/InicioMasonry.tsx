@@ -150,12 +150,12 @@ export default function InicioMasonry() {
     return (
         <section className="inicio-masonry-section">
             <div className="inicio-masonry-intro">
-                <p>Tu estancia empieza aqui</p>
-                <h2>Explora Meson de Mita</h2>
+                <h2>Explora Mesón de Mita</h2>
                 <span>
-                    Elige el camino que quieres tomar: descansar frente al mar,
-                    descubrir servicios, revisar promociones o imaginar tu
-                    celebracion en la playa.
+                    Tu experiencia comienza aquí, descubre todo lo que
+                    tenemos para ti: Descanso junto al mar, Servicios y
+                    actividades para disfrutar Punta de Mita, Promociones
+                    exclusivas y Celebraciones especiales frente a la playa.
                 </span>
             </div>
 

@@ -14,39 +14,13 @@ import {
 } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import type { ComponentType, CSSProperties } from 'react';
-
-type PromotionCategory =
-    | 'todos'
-    | 'parejas'
-    | 'familias'
-    | 'estancias'
-    | 'eventos';
-
-type PromotionIcon = 'beach' | 'couple' | 'family' | 'night' | 'event' | 'gift';
-
-type Promotion = {
-    id: string;
-    title: string;
-    eyebrow: string;
-    category: Exclude<PromotionCategory, 'todos'>;
-    image: string;
-    imageAlt: string;
-    description: string;
-    highlight: string;
-    dealValue: string;
-    dealLabel: string;
-    validity: string;
-    icon: PromotionIcon;
-    accent: string;
-    tags: string[];
-    benefits: string[];
-    featured?: boolean;
-};
-
-type PromotionTab = {
-    key: PromotionCategory;
-    label: string;
-};
+import type {
+    Promotion,
+    PromotionCategory,
+    PromotionIcon,
+    PromotionTab,
+} from './interface';
+import { promotions } from './services/promocionesMock';
 
 const promotionIcons: Record<
     PromotionIcon,
@@ -65,143 +39,8 @@ const promotionTabs: PromotionTab[] = [
     { key: 'parejas', label: 'Parejas' },
     { key: 'familias', label: 'Familias' },
     { key: 'estancias', label: 'Estancias' },
+    { key: 'experiencias', label: 'Experiencias' },
     { key: 'eventos', label: 'Eventos' },
-];
-
-const promotions: Promotion[] = [
-    {
-        id: 'escapada-mar',
-        title: 'Escapada frente al mar',
-        eyebrow: 'Promoción destacada',
-        category: 'parejas',
-        image: '/imagenes/galeria/playa-meson-punta-mita-012.jpg',
-        imageAlt: 'Playa frente al Hotel Mesón de Mita',
-        description:
-            'Una estancia tranquila para bajar el ritmo, caminar por la playa y despertar cerca del mar.',
-        highlight: 'Hasta 20% de descuento',
-        dealValue: '20% OFF',
-        dealLabel: 'entre semana',
-        validity: 'Domingo a jueves',
-        icon: 'beach',
-        accent: '#1f6f79',
-        tags: ['Vista al mar', 'Entre semana', 'Sujeto a disponibilidad'],
-        benefits: [
-            'Tarifa especial en habitación doble',
-            'Salida tardía según disponibilidad',
-            'Atención directa por reservaciones',
-        ],
-        featured: true,
-    },
-    {
-        id: 'romance-punta-mita',
-        title: 'Plan romance en Punta de Mita',
-        eyebrow: 'Para dos',
-        category: 'parejas',
-        image: '/imagenes/galeria/habitacion-doble-hotel-meson-punta-de-mita-03.jpg',
-        imageAlt: 'Habitación doble con terraza del hotel',
-        description:
-            'Ideal para una escapada de pareja con habitación cómoda y tardes cerca de la bahía.',
-        highlight: 'Detalle de bienvenida',
-        dealValue: '$1,850',
-        dealLabel: 'desde por noche',
-        validity: 'Fechas seleccionadas',
-        icon: 'couple',
-        accent: '#a33f1d',
-        tags: ['Parejas', 'Habitación doble', 'Reserva directa'],
-        benefits: [
-            'Habitación doble para dos personas',
-            'Detalle especial al llegar',
-            'Apoyo para organizar una cena cercana',
-        ],
-    },
-    {
-        id: 'familia-playa',
-        title: 'Familia junto a la playa',
-        eyebrow: 'Viajes en grupo',
-        category: 'familias',
-        image: '/imagenes/galeria/habitacion-triple-hotel-meson-punta-de-mita-03.jpg',
-        imageAlt: 'Habitación triple familiar',
-        description:
-            'Una opción sencilla para compartir habitación, aprovechar la alberca y salir caminando al mar.',
-        highlight: 'Tarifa familiar',
-        dealValue: '$2,650',
-        dealLabel: 'habitación triple',
-        validity: 'Temporada baja',
-        icon: 'family',
-        accent: '#235d48',
-        tags: ['Hasta 3 huéspedes', 'Alberca', 'Playa cercana'],
-        benefits: [
-            'Tarifa preferente en habitación triple',
-            'Acceso a áreas comunes y alberca',
-            'Estacionamiento sujeto a disponibilidad',
-        ],
-    },
-    {
-        id: 'tercera-noche',
-        title: 'Quédate una noche más',
-        eyebrow: 'Estancias largas',
-        category: 'estancias',
-        image: '/imagenes/galeria/alberca-punta-de-mita-04.jpg',
-        imageAlt: 'Alberca del hotel junto al mar',
-        description:
-            'Para quienes quieren quedarse sin prisa y disfrutar más días de Punta de Mita.',
-        highlight: 'Beneficio en 3 noches',
-        dealValue: '3x2',
-        dealLabel: 'noches selectas',
-        validity: 'Reserva anticipada',
-        icon: 'night',
-        accent: '#8a4b22',
-        tags: ['3 noches', 'Descanso', 'Reserva anticipada'],
-        benefits: [
-            'Mejor tarifa al reservar más noches',
-            'Flexibilidad de habitación según disponibilidad',
-            'Contacto directo para ajustar fechas',
-        ],
-    },
-    {
-        id: 'bodas-eventos',
-        title: 'Celebración frente al mar',
-        eyebrow: 'Bodas y eventos',
-        category: 'eventos',
-        image: '/imagenes/galeria/bodas-Punta-Mita-Hotel-Meson-Mita.jpg',
-        imageAlt: 'Boda frente al mar en Punta de Mita',
-        description:
-            'Un punto de partida para quienes imaginan una celebración íntima cerca de la playa.',
-        highlight: 'Cotización especial',
-        dealValue: '$18,000',
-        dealLabel: 'desde evento íntimo',
-        validity: 'Fechas por confirmar',
-        icon: 'event',
-        accent: '#7f3f77',
-        tags: ['Bodas', 'Grupos', 'Coordinación'],
-        benefits: [
-            'Contacto con coordinación de eventos',
-            'Opciones para grupos pequeños',
-            'Seguimiento personalizado por fecha',
-        ],
-    },
-    {
-        id: 'reserva-directa',
-        title: 'Beneficio por reserva directa',
-        eyebrow: 'Exclusivo web',
-        category: 'estancias',
-        image: '/imagenes/galeria/areas_comunes_03.jpg',
-        imageAlt: 'Área común y recepción del hotel',
-        description:
-            'Pregunta por promociones disponibles al reservar directamente con el hotel.',
-        highlight: 'Mejor atención directa',
-        dealValue: '10% OFF',
-        dealLabel: 'reserva directa',
-        validity: 'Todo el año',
-        icon: 'gift',
-        accent: '#d55c01',
-        tags: ['Web', 'Teléfono', 'Correo'],
-        benefits: [
-            'Comunicación directa con reservaciones',
-            'Confirmación personalizada',
-            'Opciones según temporada y ocupación',
-        ],
-    },
 ];
 
 function getPromotionCount(category: PromotionCategory): number {
@@ -213,8 +52,44 @@ function getPromotionCount(category: PromotionCategory): number {
         .length;
 }
 
+function getPromotionPriceGroups(
+    promotion: Promotion,
+): NonNullable<Promotion['priceGroups']> {
+    if (promotion.priceGroups?.length) {
+        return promotion.priceGroups;
+    }
+
+    return [
+        {
+            prices: [
+                {
+                    label: promotion.dealLabel ?? 'Promocion',
+                    amount: promotion.dealValue ?? promotion.highlight,
+                },
+            ],
+        },
+    ];
+}
+
+function formatPriceAmount({
+    amount,
+    prefix,
+}: {
+    amount: string;
+    prefix?: string;
+}) {
+    return prefix ? `${prefix} ${amount}` : amount;
+}
+
 function PromotionCard({ promotion }: { promotion: Promotion }) {
     const Icon = promotionIcons[promotion.icon];
+    const priceGroups = getPromotionPriceGroups(promotion);
+    const prices = priceGroups.flatMap((group) => group.prices);
+    const primaryPrice = prices[0] ?? {
+        label: 'Promocion',
+        amount: promotion.highlight,
+    };
+    const hasMultiplePrices = prices.length > 1;
 
     return (
         <article
@@ -230,8 +105,12 @@ function PromotionCard({ promotion }: { promotion: Promotion }) {
                     loading="lazy"
                 />
                 <div className="promocion-deal-badge">
-                    <strong>{promotion.dealValue}</strong>
-                    <small>{promotion.dealLabel}</small>
+                    <strong>{formatPriceAmount(primaryPrice)}</strong>
+                    <small>
+                        {hasMultiplePrices
+                            ? `${prices.length} opciones`
+                            : primaryPrice.label}
+                    </small>
                 </div>
                 <span className="promocion-eyebrow-badge">
                     <Icon size={17} />
@@ -247,12 +126,57 @@ function PromotionCard({ promotion }: { promotion: Promotion }) {
 
                 <p className="promocion-description">{promotion.description}</p>
 
-                <div className="promocion-meta">
-                    <span>
-                        <CalendarDays size={17} />
-                        {promotion.validity}
-                    </span>
-                </div>
+                {promotion.validity && (
+                    <div className="promocion-meta">
+                        <span>
+                            <CalendarDays size={17} />
+                            {promotion.validity}
+                        </span>
+                    </div>
+                )}
+
+                <section
+                    className="promocion-pricing"
+                    aria-label={`Precios de ${promotion.title}`}
+                >
+                    <p className="promocion-pricing-heading">
+                        {promotion.priceHeading ??
+                            (hasMultiplePrices
+                                ? 'Opciones disponibles'
+                                : 'Precio')}
+                    </p>
+                    <div className="promocion-price-groups">
+                        {priceGroups.map((group, groupIndex) => (
+                            <div
+                                className="promocion-price-group"
+                                key={`${promotion.id}-${group.title ?? groupIndex}`}
+                            >
+                                {group.title && <h3>{group.title}</h3>}
+                                {group.description && (
+                                    <p className="promocion-price-description">
+                                        {group.description}
+                                    </p>
+                                )}
+                                <div className="promocion-price-list">
+                                    {group.prices.map((price) => (
+                                        <div
+                                            className="promocion-price-row"
+                                            key={`${promotion.id}-${group.title ?? 'precio'}-${price.label}-${price.amount}`}
+                                        >
+                                            <span>{price.label}</span>
+                                            <strong>
+                                                {formatPriceAmount(price)}
+                                            </strong>
+                                            {price.note && (
+                                                <small>{price.note}</small>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </section>
 
                 <ul className="promocion-benefits">
                     {promotion.benefits.map((benefit) => (
