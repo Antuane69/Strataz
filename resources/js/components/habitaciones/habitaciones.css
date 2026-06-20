@@ -266,6 +266,22 @@
     max-width: 110vw;
 }
 
+.habitacion-drawer-root-scoped.ant-drawer {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+}
+
+.habitacion-drawer-root-scoped .ant-drawer-mask,
+.habitacion-drawer-root-scoped .ant-drawer-wrap {
+    position: absolute;
+}
+
+.habitacion-drawer-root-scoped .ant-drawer-content-wrapper {
+    width: min(560px, 100%) !important;
+    max-width: 100%;
+}
+
 .habitacion-drawer .ant-drawer-content {
     background: #fffaf6;
 }
@@ -298,6 +314,10 @@
     color: #2f231d;
     box-shadow: 0 12px 26px rgb(0 0 0 / 0.16);
     cursor: pointer;
+}
+
+.habitacion-drawer-scoped .habitacion-drawer-close {
+    position: absolute;
 }
 
 .habitacion-drawer-close:hover {

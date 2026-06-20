@@ -1,4 +1,4 @@
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import AppLogoIcon from '@/components/app-logo-icon';
 import { home } from '@/routes';
 import type { AuthLayoutProps } from '@/types';
@@ -8,6 +8,17 @@ export default function AuthSimpleLayout({
     title,
     description,
 }: AuthLayoutProps) {
+    const { component } = usePage();
+    const isContentEditor = component.startsWith('auth/habitaciones/');
+
+    if (isContentEditor) {
+        return (
+            <div className="min-h-svh bg-background p-4 text-foreground md:p-6">
+                {children}
+            </div>
+        );
+    }
+
     return (
         <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-background p-6 md:p-10">
             <div className="w-full max-w-sm">

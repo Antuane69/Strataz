@@ -112,7 +112,8 @@
     --sidebar-border: oklch(0.922 0 0);
     --sidebar-ring: oklch(0.87 0 0);
 
-    --titulos-brand: #832a19;
+    /* --titulos-brand: #832a19; */
+    --titulos-brand: black;
     --titulos-brand-hover: #d55c01;
     --background-brand: #d55c01;
     --background-brand-footer: rgb(253 247 242 / 0.72);

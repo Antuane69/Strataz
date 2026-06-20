@@ -35,11 +35,14 @@ import type { ComponentType, KeyboardEvent, ReactNode } from 'react';
 import type {
     Habitacion,
     HabitacionAmenity,
+    HabitacionImage,
+    HabitacionesPageContent,
+    HabitacionesPageText,
     HabitacionRoomAmenityIcon,
     HotelCancellationPolicy,
     HotelInfo,
 } from './interfaces';
-import { habitaciones, hotelInfo } from './services/habitacionesMock';
+import { mapHabitacionesContent } from './services/mapHabitacionesContent';
 
 const amenityIcons: Record<
     HabitacionAmenity,
@@ -79,6 +82,32 @@ const roomAmenityIcons: Record<
     stove: Flame,
     kitchenware: Utensils,
 };
+
+function HabitacionMedia({
+    media,
+    className,
+    controls = false,
+}: {
+    media: HabitacionImage;
+    className: string;
+    controls?: boolean;
+}) {
+    if (media.type === 'video') {
+        return (
+            <video
+                className={className}
+                src={media.src}
+                poster={media.poster ?? undefined}
+                controls={controls}
+                muted={!controls}
+                playsInline
+                preload="metadata"
+            />
+        );
+    }
+
+    return <img src={media.src} alt={media.alt} className={className} />;
+}
 
 function AmenityIcon({
     amenity,
@@ -121,7 +150,13 @@ function RoomAmenityCard({
     );
 }
 
-function RoomAmenitiesSection({ habitacion }: { habitacion: Habitacion }) {
+function RoomAmenitiesSection({
+    habitacion,
+    text,
+}: {
+    habitacion: Habitacion;
+    text: HabitacionesPageText;
+}) {
     return (
         <section
             className="habitacion-room-amenities-section"
@@ -130,11 +165,9 @@ function RoomAmenitiesSection({ habitacion }: { habitacion: Habitacion }) {
             <div className="habitacion-room-amenities-heading">
                 {/* <Sparkles size={18} /> */}
                 <h3 id={`${habitacion.id}-room-amenities-title`}>
-                    Amenidades en tu habitación
+                    {text.room_amenities_title}
                 </h3>
-                <p>
-                    Todo lo que necesitas para una estancia cómoda y placentera.
-                </p>
+                <p>{text.room_amenities_body}</p>
             </div>
 
             <div className="habitacion-room-amenities-grid">
@@ -152,11 +185,8 @@ function RoomAmenitiesSection({ habitacion }: { habitacion: Habitacion }) {
                         <div className="habitacion-room-amenities-request-heading">
                             <Info size={18} />
                             <div>
-                                <strong>Accesorios bajo solicitud</strong>
-                                <span>
-                                    Sujetos a disponibilidad, solicítalos en
-                                    recepción.
-                                </span>
+                                <strong>{text.request_amenities_title}</strong>
+                                <span>{text.request_amenities_body}</span>
                             </div>
                         </div>
                         <div className="habitacion-room-amenities-request-grid">
@@ -174,12 +204,14 @@ function RoomAmenitiesSection({ habitacion }: { habitacion: Habitacion }) {
     );
 }
 
-function formatBedCount(count: number) {
-    return `${count} ${count === 1 ? 'cama' : 'camas'}`;
+function formatBedCount(count: number, text: HabitacionesPageText) {
+    return `${count} ${count === 1 ? text.bed_singular : text.bed_plural}`;
 }
 
-function formatGuestCapacity(count: number) {
-    return `Hasta ${count} ${count === 1 ? 'huésped' : 'huéspedes'}`;
+function formatGuestCapacity(count: number, text: HabitacionesPageText) {
+    return `${text.guest_capacity_prefix} ${count} ${
+        count === 1 ? text.guest_singular : text.guest_plural
+    }`;
 }
 
 function splitPolicyText(text: string) {
@@ -204,9 +236,11 @@ function PolicyTextRows({ text }: { text: string }) {
 function HabitacionCard({
     habitacion,
     onSelect,
+    text,
 }: {
     habitacion: Habitacion;
     onSelect: (habitacion: Habitacion) => void;
+    text: HabitacionesPageText;
 }) {
     const handleKeyDown = (event: KeyboardEvent<HTMLElement>) => {
         if (event.key === 'Enter' || event.key === ' ') {
@@ -214,10 +248,12 @@ function HabitacionCard({
             onSelect(habitacion);
         }
     };
-    const bedCountLabel = formatBedCount(habitacion.imageStats.beds);
+    const bedCountLabel = formatBedCount(habitacion.imageStats.beds, text);
     const guestCapacityLabel = formatGuestCapacity(
         habitacion.imageStats.maxGuests,
+        text,
     );
+    const coverMedia = habitacion.images[0];
 
     return (
         <article
@@ -226,14 +262,12 @@ function HabitacionCard({
             tabIndex={0}
             onClick={() => onSelect(habitacion)}
             onKeyDown={handleKeyDown}
-            aria-label={`Ver detalles de ${habitacion.name}. ${bedCountLabel}. ${guestCapacityLabel}.`}
+            aria-label={`${text.details_label} ${habitacion.name}. ${bedCountLabel}. ${guestCapacityLabel}.`}
         >
             <div className="habitacion-card-image-wrap">
-                <img
-                    src={habitacion.images[0].src}
-                    alt={habitacion.images[0].alt}
+                <HabitacionMedia
+                    media={coverMedia}
                     className="habitacion-card-image"
-                    loading="lazy"
                 />
                 <div className="habitacion-card-image-stats" aria-hidden="true">
                     <span className="habitacion-card-image-stat">
@@ -256,7 +290,7 @@ function HabitacionCard({
 
                 <div
                     className="habitacion-amenities"
-                    aria-label="Amenidades principales"
+                    aria-label={text.main_amenities_label}
                 >
                     {habitacion.amenities.map((amenity) => (
                         <AmenityIcon
@@ -266,7 +300,7 @@ function HabitacionCard({
                     ))}
                 </div>
 
-                <span className="habitacion-card-link">Ver detalles +</span>
+                <span className="habitacion-card-link">{text.card_cta}</span>
             </div>
         </article>
     );
@@ -274,17 +308,19 @@ function HabitacionCard({
 
 function CancellationPolicyTable({
     policy,
+    text,
 }: {
     policy: HotelCancellationPolicy;
+    text: HabitacionesPageText;
 }) {
     return (
         <div className="habitacion-cancellation-table-wrap">
             <table className="habitacion-cancellation-table">
                 <thead>
                     <tr>
-                        <th scope="col">Semanas antes de llegada</th>
-                        <th scope="col">Reembolso</th>
-                        <th scope="col">Crédito</th>
+                        <th scope="col">{text.arrival_weeks_label}</th>
+                        <th scope="col">{text.refund_label}</th>
+                        <th scope="col">{text.credit_label}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -329,7 +365,13 @@ function PolicyCard({
     );
 }
 
-function HotelPolicies({ info }: { info: HotelInfo }) {
+function HotelPolicies({
+    info,
+    text,
+}: {
+    info: HotelInfo;
+    text: HabitacionesPageText;
+}) {
     return (
         <section
             className="habitacion-policy-board"
@@ -337,29 +379,29 @@ function HotelPolicies({ info }: { info: HotelInfo }) {
         >
             <div className="habitacion-policy-board-heading">
                 <h3 id="habitacion-policy-board-title">
-                    Políticas de reservación
+                    {text.policies_title}
                 </h3>
-                <span>Todo lo necesario para tu estancia</span>
+                <span>{text.policies_subtitle}</span>
             </div>
 
             <div className="habitacion-policy-grid">
-                <PolicyCard title="Horarios" icon={Clock3}>
+                <PolicyCard title={text.schedule_policy_title} icon={Clock3}>
                     <div className="habitacion-policy-time-list">
                         <div>
                             <DoorOpen size={20} />
-                            <span>Check-in</span>
+                            <span>{text.check_in_label}</span>
                             <strong>{info.checkIn}</strong>
                         </div>
                         <div>
                             <DoorOpen size={20} />
-                            <span>Check-out</span>
+                            <span>{text.check_out_label}</span>
                             <strong>{info.checkOut}</strong>
                         </div>
                     </div>
                 </PolicyCard>
 
                 <PolicyCard
-                    title="Política de pago"
+                    title={text.payment_policy_title}
                     icon={CreditCard}
                     tone="gold"
                 >
@@ -367,14 +409,17 @@ function HotelPolicies({ info }: { info: HotelInfo }) {
                 </PolicyCard>
 
                 <PolicyCard
-                    title="Política de cancelación"
+                    title={text.cancellation_policy_title}
                     icon={CalendarDays}
                     className="habitacion-policy-card-wide"
                 >
                     <PolicyTextRows
                         text={info.cancellationPolicy.description}
                     />
-                    <CancellationPolicyTable policy={info.cancellationPolicy} />
+                    <CancellationPolicyTable
+                        policy={info.cancellationPolicy}
+                        text={text}
+                    />
                     <div className="habitacion-policy-note">
                         <Info size={18} />
                         <PolicyTextRows
@@ -383,12 +428,16 @@ function HotelPolicies({ info }: { info: HotelInfo }) {
                     </div>
                 </PolicyCard>
 
-                <PolicyCard title="Política de no show" icon={Ban} tone="coral">
+                <PolicyCard
+                    title={text.no_show_policy_title}
+                    icon={Ban}
+                    tone="coral"
+                >
                     <PolicyTextRows text={info.noShowPolicy} />
                 </PolicyCard>
 
                 <PolicyCard
-                    title="Personas extra"
+                    title={text.extra_guest_policy_title}
                     icon={UsersRound}
                     tone="blue"
                 >
@@ -403,16 +452,28 @@ function HabitacionDrawer({
     habitacion,
     open,
     onClose,
+    hotelInfo,
+    text,
+    scoped = false,
 }: {
     habitacion?: Habitacion;
     open: boolean;
     onClose: () => void;
+    hotelInfo: HotelInfo;
+    text: HabitacionesPageText;
+    scoped?: boolean;
 }) {
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewIndex, setPreviewIndex] = useState(0);
+    const previewImages =
+        habitacion?.images.filter((image) => image.type !== 'video') ?? [];
 
-    const openImagePreview = (index: number) => {
-        setPreviewIndex(index);
+    const openImagePreview = (image: HabitacionImage) => {
+        const index = previewImages.findIndex(
+            (preview) => preview.src === image.src,
+        );
+
+        setPreviewIndex(Math.max(index, 0));
         setPreviewOpen(true);
     };
 
@@ -420,11 +481,18 @@ function HabitacionDrawer({
         <Drawer
             open={open}
             onClose={onClose}
-            width="min(700px, 180vw)"
+            width={scoped ? 'min(560px, 100%)' : 'min(700px, 180vw)'}
             placement="right"
             destroyOnHidden
-            className="habitacion-drawer"
-            rootClassName="habitacion-drawer-root"
+            getContainer={scoped ? false : undefined}
+            rootStyle={scoped ? { position: 'absolute' } : undefined}
+            maskStyle={scoped ? { position: 'absolute' } : undefined}
+            className={`habitacion-drawer ${
+                scoped ? 'habitacion-drawer-scoped' : ''
+            }`}
+            rootClassName={`habitacion-drawer-root ${
+                scoped ? 'habitacion-drawer-root-scoped' : ''
+            }`}
             closable={false}
             title={null}
         >
@@ -444,7 +512,7 @@ function HabitacionDrawer({
                         aria-label={habitacion.name}
                     >
                         <Image.PreviewGroup
-                            items={habitacion.images.map((image) => ({
+                            items={previewImages.map((image) => ({
                                 src: image.src,
                                 alt: image.alt,
                             }))}
@@ -462,23 +530,32 @@ function HabitacionDrawer({
                                 draggable
                                 className="habitacion-carousel"
                             >
-                                {habitacion.images.map((image, index) => (
-                                    <div key={image.src}>
-                                        <button
-                                            type="button"
-                                            className="habitacion-hero-preview-button"
-                                            onClick={() =>
-                                                openImagePreview(index)
-                                            }
-                                            aria-label={`Abrir imagen ${index + 1} de ${habitacion.name}`}
-                                        >
-                                            <img
-                                                src={image.src}
-                                                alt={image.alt}
+                                {habitacion.images.map((image) => (
+                                    <div key={image.id ?? image.src}>
+                                        {image.type === 'video' ? (
+                                            <HabitacionMedia
+                                                media={image}
                                                 className="habitacion-hero-image"
+                                                controls
                                             />
-                                            <span>Ver imagen</span>
-                                        </button>
+                                        ) : (
+                                            <button
+                                                type="button"
+                                                className="habitacion-hero-preview-button"
+                                                onClick={() =>
+                                                    openImagePreview(image)
+                                                }
+                                                aria-label={`${text.image_preview_label} ${habitacion.name}`}
+                                            >
+                                                <HabitacionMedia
+                                                    media={image}
+                                                    className="habitacion-hero-image"
+                                                />
+                                                <span>
+                                                    {text.image_preview_label}
+                                                </span>
+                                            </button>
+                                        )}
                                     </div>
                                 ))}
                             </Carousel>
@@ -510,10 +587,10 @@ function HabitacionDrawer({
                             {habitacion.description}
                         </p>
 
-                        <br/>
-                        
+                        <br />
+
                         <div className="habitacion-detail-section">
-                            <h3>Características</h3>
+                            <h3>{text.feature_heading}</h3>
                             <div className="habitacion-highlight-list">
                                 {habitacion.highlights.map((highlight) => (
                                     <Tag
@@ -528,9 +605,12 @@ function HabitacionDrawer({
 
                         <Divider />
 
-                        <RoomAmenitiesSection habitacion={habitacion} />
+                        <RoomAmenitiesSection
+                            habitacion={habitacion}
+                            text={text}
+                        />
 
-                        <HotelPolicies info={hotelInfo} />
+                        <HotelPolicies info={hotelInfo} text={text} />
 
                         <div className="habitacion-drawer-actions">
                             <Button
@@ -538,10 +618,10 @@ function HabitacionDrawer({
                                 size="large"
                                 href="/contacto"
                             >
-                                Reservar
+                                {text.reserve_cta}
                             </Button>
                             <Button size="large" href="tel:+523292916330">
-                                Llamar al hotel
+                                {text.call_cta}
                             </Button>
                         </div>
                     </section>
@@ -551,27 +631,29 @@ function HabitacionDrawer({
     );
 }
 
-export default function HabitacionesShowcase() {
+type HabitacionesShowcaseProps = {
+    content?: HabitacionesPageContent | null;
+    locale?: string | null;
+    drawerScope?: 'page' | 'preview';
+};
+
+export default function HabitacionesShowcase({
+    content,
+    locale,
+    drawerScope = 'page',
+}: HabitacionesShowcaseProps = {}) {
     const [selectedHabitacion, setSelectedHabitacion] = useState<
         Habitacion | undefined
     >();
+    const mappedContent = mapHabitacionesContent(content, locale);
+    const { habitaciones, hotelInfo, text } = mappedContent;
 
     return (
         <section className="habitaciones-section">
             <div className="habitaciones-intro">
-                {/* <p>Habitaciones</p> */}
-                <h1>Habitaciones</h1>
-                <span>
-                    El hotel Mesón de Mita cuenta con 25 cómodas habitaciones
-                    dentro de un ambiente de relax rodeado de jardines con
-                    alberca junto al mar. Las habitaciones cada una con propia
-                    personalidad, son espaciosas llenas de luz y color además de
-                    emitir un ambiente de confort y estilo mexicano. La
-                    proximidad que mantiene el hotel con la playa, la vista
-                    espectacular de las Islas Marietas y la tranquilidad del
-                    entorno, se mezclan en armonía para hacer de este sitio el
-                    paraíso terrenal.
-                </span>
+                {/* <p>{text.page_title}</p> */}
+                <h1>{text.intro_title}</h1>
+                <span>{text.intro_body}</span>
             </div>
 
             <div className="habitaciones-grid">
@@ -580,6 +662,7 @@ export default function HabitacionesShowcase() {
                         key={habitacion.id}
                         habitacion={habitacion}
                         onSelect={setSelectedHabitacion}
+                        text={text}
                     />
                 ))}
             </div>
@@ -588,6 +671,9 @@ export default function HabitacionesShowcase() {
                 habitacion={selectedHabitacion}
                 open={Boolean(selectedHabitacion)}
                 onClose={() => setSelectedHabitacion(undefined)}
+                hotelInfo={hotelInfo}
+                text={text}
+                scoped={drawerScope === 'preview'}
             />
         </section>
     );
