@@ -24,8 +24,7 @@ const heroSlides: HeroSlide[] = [
     {
         eyebrow: '',
         title: 'HOTEL MESÓN DE MITA',
-        description:
-            'Tu hotel frente al mar en Punta de Mita.',
+        description: 'Tu hotel frente al mar en Punta de Mita.',
     },
     {
         eyebrow: 'DISFRUTA LOS COLORES ÚNICOS DEL PACÍFICO',
@@ -103,8 +102,14 @@ function InicioAmenities() {
             <div className="inicio-amenities-content">
                 <div className="inicio-amenities-intro">
                     <p>Disfruta de servicios pensados para tu comodidad</p>
-                    <h2 id="inicio-amenities-title">Todo lo que necesitas</h2>
-                    <h2 id="inicio-amenities-title">frente al mar</h2>
+                    <h2 id="inicio-amenities-title">
+                        <span className="inicio-amenities-title-main">
+                            Todo lo que necesitas,
+                        </span>
+                        <span className="inicio-amenities-title-script">
+                            frente al mar
+                        </span>
+                    </h2>
                     {/* <span>
                         Tu experiencia comienza aquí, descubre todo lo que
                         tenemos para ti: Descanso junto al mar, Servicios y

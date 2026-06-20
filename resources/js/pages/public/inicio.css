@@ -161,8 +161,8 @@
     box-shadow: 0 14px 32px rgb(0 0 0 / 0.24);
 }
 
-.inicio-hero-primary-action:hover{
-  color: white !important;
+.inicio-hero-primary-action:hover {
+    color: white !important;
 }
 
 .inicio-hero-secondary-action {
@@ -234,16 +234,43 @@
 }
 
 .inicio-amenities-intro h2 {
+    display: block;
     margin: 0;
     color: #2f231d;
     font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: clamp(2.35rem, 4.4vw, 4rem);
+    font-size: clamp(3.35rem, 5.8vw, 5.8rem);
     font-weight: 500;
     line-height: 1;
     letter-spacing: 0;
 }
 
-.inicio-amenities-intro span {
+.inicio-amenities-intro h2 .inicio-amenities-title-main,
+.inicio-amenities-intro h2 .inicio-amenities-title-script {
+    display: block;
+}
+
+.inicio-amenities-intro h2 .inicio-amenities-title-main {
+    color: #171717;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: inherit;
+    font-weight: 500;
+    line-height: 0.98;
+}
+
+.inicio-amenities-intro h2 .inicio-amenities-title-script {
+    margin-top: 4px;
+    color: #1f6674;
+    font-family:
+        'Segoe Script', 'Snell Roundhand', 'Lucida Handwriting',
+        'Brush Script MT', cursive;
+    font-size: clamp(3.75rem, 6vw, 6.3rem);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 0.84;
+}
+
+.inicio-amenities-intro > span {
     display: block;
     max-width: 820px;
     margin: 16px auto 0;
@@ -382,7 +409,12 @@
     }
 
     .inicio-amenities-intro h2 {
-        font-size: 2.55rem;
+        font-size: clamp(2.7rem, 11vw, 4rem);
+    }
+
+    .inicio-amenities-intro h2 .inicio-amenities-title-script {
+        margin-top: 6px;
+        font-size: clamp(3rem, 15vw, 4.7rem);
     }
 
     .inicio-amenities-grid {
