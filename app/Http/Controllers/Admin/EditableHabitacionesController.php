@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UpdateEditableHabitacionesRequest;
 use App\Models\EditablePage;
 use App\Support\EditablePages\HabitacionesPageDefaults;
+use App\Support\EditablePages\MediaUploadLimits;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
@@ -34,7 +35,7 @@ class EditableHabitacionesController extends Controller
             ],
             'uploadConfig' => [
                 'accept' => 'image/*,video/mp4,video/quicktime,video/webm',
-                'max_size_mb' => 24,
+                'max_size_mb' => MediaUploadLimits::maxFileSizeMegabytes(),
             ],
         ]);
     }

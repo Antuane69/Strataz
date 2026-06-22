@@ -183,3 +183,32 @@ export type HabitacionesPageContent = {
     };
     rooms: EditableHabitacion[];
 };
+
+export type EditablePagePayload = {
+  id: number;
+  slug: string;
+  title: string;
+  content: HabitacionesPageContent;
+  is_published: boolean;
+  updated_at?: string | null;
+};
+
+export type UploadConfig = {
+  accept: string;
+  max_size_mb: number;
+};
+
+export type MediaUploadGroup = {
+  room_id: string;
+  media_id: string;
+  name: string;
+  file: File;
+};
+
+export type FormData = {
+  _method: 'put';
+  title: string;
+  is_published: boolean;
+  content: HabitacionesPageContent;
+  media_uploads: MediaUploadGroup[];
+};

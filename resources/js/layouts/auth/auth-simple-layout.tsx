@@ -13,7 +13,7 @@ export default function AuthSimpleLayout({
 
     if (isContentEditor) {
         return (
-            <div className="min-h-svh bg-background p-4 text-foreground md:p-6">
+            <div className="h-svh overflow-hidden bg-background p-4 text-foreground md:p-6">
                 {children}
             </div>
         );

@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\EditablePage;
 use App\Models\User;
 use App\Support\EditablePages\HabitacionesPageDefaults;
+use App\Support\EditablePages\MediaUploadLimits;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
@@ -49,6 +50,21 @@ class EditableHabitacionesPageTest extends TestCase
         $response = $this->actingAs($user)->get(route('admin.habitaciones.edit'));
 
         $response->assertForbidden();
+    }
+
+    public function test_admin_editor_reports_safe_media_upload_limit(): void
+    {
+        $user = User::factory()->create([
+            'is_admin' => true,
+        ]);
+
+        $response = $this->actingAs($user)->get(route('admin.habitaciones.edit'));
+
+        $response
+            ->assertOk()
+            ->assertInertia(fn (Assert $page) => $page
+                ->component('auth/habitaciones/edit')
+                ->where('uploadConfig.max_size_mb', MediaUploadLimits::maxFileSizeMegabytes()));
     }
 
     public function test_admin_can_update_habitaciones_content(): void
@@ -135,5 +151,46 @@ class EditableHabitacionesPageTest extends TestCase
         } finally {
             File::delete($targetPath);
         }
+    }
+
+    public function test_admin_cannot_upload_habitacion_media_above_safe_limit(): void
+    {
+        $user = User::factory()->create([
+            'is_admin' => true,
+        ]);
+        $content = HabitacionesPageDefaults::content();
+        $roomId = $content['rooms'][0]['id'];
+        $mediaId = 'large-video-test';
+
+        $content['rooms'][0]['media'][] = [
+            'id' => $mediaId,
+            'type' => 'video',
+            'src' => 'blob:test-preview',
+            'poster' => null,
+            'alt' => [
+                'es' => 'Video grande',
+                'en' => 'Video grande',
+            ],
+        ];
+
+        $response = $this->actingAs($user)->put(route('admin.habitaciones.update'), [
+            'title' => 'Habitaciones CMS',
+            'is_published' => true,
+            'content' => $content,
+            'media_uploads' => [
+                [
+                    'room_id' => $roomId,
+                    'media_id' => $mediaId,
+                    'name' => 'Video grande',
+                    'file' => UploadedFile::fake()->create(
+                        'habitacion.mp4',
+                        MediaUploadLimits::maxFileSizeKilobytes() + 1,
+                        'video/mp4',
+                    ),
+                ],
+            ],
+        ]);
+
+        $response->assertSessionHasErrors('media_uploads.0.file');
     }
 }

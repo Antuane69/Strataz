@@ -1,58 +1,50 @@
 import { localizedText, normalizeLocale } from '@/lib/editable-content';
 import type { LocaleCode } from '@/types';
-import type {
-    Habitacion,
-    HabitacionesPageContent,
-    HabitacionesPageText,
-    HotelInfo,
-} from '../interfaces';
-import {
-    habitaciones as fallbackHabitaciones,
-    hotelInfo as fallbackHotelInfo,
-} from './habitacionesMock';
+import type { Habitacion, HabitacionesPageContent, HabitacionesPageText, HotelInfo } from '../interfaces';
+import { habitaciones as fallbackHabitaciones, hotelInfo as fallbackHotelInfo } from './habitacionesMock';
 
 type MappedHabitacionesContent = {
-    locale: LocaleCode;
-    text: HabitacionesPageText;
-    habitaciones: Habitacion[];
-    hotelInfo: HotelInfo;
+  locale: LocaleCode;
+  text: HabitacionesPageText;
+  habitaciones: Habitacion[];
+  hotelInfo: HotelInfo;
 };
 
 const fallbackText: HabitacionesPageText = {
-    page_title: 'Habitaciones',
-    intro_title: 'Habitaciones',
-    intro_body:
-        'El hotel Meson de Mita cuenta con 25 comodas habitaciones dentro de un ambiente de relax rodeado de jardines con alberca junto al mar.',
-    card_cta: 'Ver detalles +',
-    details_label: 'Ver detalles',
-    main_amenities_label: 'Amenidades principales',
-    image_preview_label: 'Ver imagen',
-    feature_heading: 'Caracteristicas',
-    room_amenities_title: 'Amenidades en tu habitacion',
-    room_amenities_body:
-        'Todo lo que necesitas para una estancia comoda y placentera.',
-    request_amenities_title: 'Accesorios bajo solicitud',
-    request_amenities_body:
-        'Sujetos a disponibilidad, solicitalos en recepcion.',
-    policies_title: 'Politicas de reservacion',
-    policies_subtitle: 'Todo lo necesario para tu estancia',
-    schedule_policy_title: 'Horarios',
-    payment_policy_title: 'Politica de pago',
-    cancellation_policy_title: 'Politica de cancelacion',
-    no_show_policy_title: 'Politica de no show',
-    extra_guest_policy_title: 'Personas extra',
-    arrival_weeks_label: 'Semanas antes de llegada',
-    refund_label: 'Reembolso',
-    credit_label: 'Credito',
-    check_in_label: 'Check-in',
-    check_out_label: 'Check-out',
-    reserve_cta: 'Reservar',
-    call_cta: 'Llamar al hotel',
-    bed_singular: 'cama',
-    bed_plural: 'camas',
-    guest_singular: 'huesped',
-    guest_plural: 'huespedes',
-    guest_capacity_prefix: 'Hasta',
+  page_title: 'Habitaciones',
+  intro_title: 'Habitaciones',
+  intro_body:
+      'El hotel Meson de Mita cuenta con 25 comodas habitaciones dentro de un ambiente de relax rodeado de jardines con alberca junto al mar.',
+  card_cta: 'Ver detalles +',
+  details_label: 'Ver detalles',
+  main_amenities_label: 'Amenidades principales',
+  image_preview_label: 'Ver imagen',
+  feature_heading: 'Caracteristicas',
+  room_amenities_title: 'Amenidades en tu habitacion',
+  room_amenities_body:
+      'Todo lo que necesitas para una estancia comoda y placentera.',
+  request_amenities_title: 'Accesorios bajo solicitud',
+  request_amenities_body:
+      'Sujetos a disponibilidad, solicitalos en recepcion.',
+  policies_title: 'Politicas de reservacion',
+  policies_subtitle: 'Todo lo necesario para tu estancia',
+  schedule_policy_title: 'Horarios',
+  payment_policy_title: 'Politica de pago',
+  cancellation_policy_title: 'Politica de cancelacion',
+  no_show_policy_title: 'Politica de no show',
+  extra_guest_policy_title: 'Personas extra',
+  arrival_weeks_label: 'Semanas antes de llegada',
+  refund_label: 'Reembolso',
+  credit_label: 'Credito',
+  check_in_label: 'Check-in',
+  check_out_label: 'Check-out',
+  reserve_cta: 'Reservar',
+  call_cta: 'Llamar al hotel',
+  bed_singular: 'cama',
+  bed_plural: 'camas',
+  guest_singular: 'huesped',
+  guest_plural: 'huespedes',
+  guest_capacity_prefix: 'Hasta',
 };
 
 export function mapHabitacionesContent(

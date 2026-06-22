@@ -1,0 +1,42 @@
+.app-alert {
+    overflow: hidden;
+    border: 1px solid rgb(17 24 39 / 0.08);
+    border-radius: 12px;
+    box-shadow: 0 18px 42px rgb(15 23 42 / 0.16);
+}
+
+.app-alert::before {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 4px;
+    content: '';
+}
+
+.app-alert-success::before {
+    background: #16a34a;
+}
+
+.app-alert-info::before {
+    background: #2563eb;
+}
+
+.app-alert-warning::before {
+    background: #d97706;
+}
+
+.app-alert-error::before {
+    background: #dc2626;
+}
+
+.app-alert .ant-notification-notice-message {
+    color: #171717;
+    font-weight: 700;
+}
+
+.app-alert .ant-notification-notice-description {
+    color: #525252;
+    line-height: 1.55;
+    white-space: pre-line;
+}

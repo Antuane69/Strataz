@@ -1,8 +1,4 @@
-import type {
-    Habitacion,
-    HabitacionRoomAmenity,
-    HotelInfo,
-} from '../interfaces';
+import type { Habitacion, HabitacionRoomAmenity, HotelInfo } from '../interfaces';
 
 export const hotelInfo: HotelInfo = {
     checkIn: '2:00 PM',

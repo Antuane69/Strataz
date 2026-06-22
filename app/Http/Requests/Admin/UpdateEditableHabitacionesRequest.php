@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Support\EditablePages\MediaUploadLimits;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -129,7 +130,7 @@ class UpdateEditableHabitacionesRequest extends FormRequest
             'media_uploads.*.room_id' => ['required_with:media_uploads.*.file', 'string', 'max:100'],
             'media_uploads.*.media_id' => ['required_with:media_uploads.*.file', 'string', 'max:120'],
             'media_uploads.*.name' => ['required_with:media_uploads.*.file', 'string', 'max:120'],
-            'media_uploads.*.file' => ['required', 'file', 'mimes:jpg,jpeg,png,webp,gif,mp4,mov,webm', 'max:24576'],
+            'media_uploads.*.file' => ['required', 'file', 'mimes:jpg,jpeg,png,webp,gif,mp4,mov,webm', 'max:'.MediaUploadLimits::maxFileSizeKilobytes()],
         ];
     }
 }
