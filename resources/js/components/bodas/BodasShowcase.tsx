@@ -10,10 +10,14 @@ import {
     UserRound,
 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import type { BodasMedia } from './interfaces';
-import { bodasMedia } from './services/bodasMock';
+import type { ComponentType } from 'react';
+import type { BodasHighlightIcon, BodasMedia, BodasPageContent, BodasPageText } from './interfaces';
+import { mapBodasContent } from './services/mapBodasContent';
 
-const bodasBackgroundPath = '/imagenes/galeria/background.webp';
+const highlightIcons: Record<BodasHighlightIcon, ComponentType<{ size?: number }>> = {
+    'calendar-heart': CalendarHeart,
+    'message-circle': MessageCircle,
+};
 
 function BodasMediaItem({
     media,
@@ -61,7 +65,7 @@ function BodasMediaItem({
                 ref={videoRef}
                 className={className}
                 src={media.src}
-                poster={media.poster}
+                poster={media.poster ?? undefined}
                 muted={!controls}
                 playsInline
                 preload="metadata"
@@ -83,18 +87,20 @@ function BodasMediaItem({
 }
 
 function BodasCarousel({
+    mediaItems,
     paused,
     onPreview,
 }: {
+    mediaItems: BodasMedia[];
     paused: boolean;
     onPreview: (index: number) => void;
 }) {
     const carouselRef = useRef<CarouselRef>(null);
     const [currentSlide, setCurrentSlide] = useState(0);
-    const activeMedia = bodasMedia[currentSlide];
+    const activeMedia = mediaItems[currentSlide] ?? mediaItems[0];
 
     useEffect(() => {
-        if (paused || activeMedia.type === 'video') {
+        if (!activeMedia || paused || activeMedia.type === 'video') {
             return;
         }
 
@@ -103,7 +109,7 @@ function BodasCarousel({
         }, 5800);
 
         return () => window.clearTimeout(timer);
-    }, [activeMedia.type, currentSlide, paused]);
+    }, [activeMedia, currentSlide, paused]);
 
     const goNext = () => {
         carouselRef.current?.next();
@@ -118,7 +124,7 @@ function BodasCarousel({
                 afterChange={setCurrentSlide}
                 className="bodas-carousel"
             >
-                {bodasMedia.map((media, index) => (
+                {mediaItems.map((media, index) => (
                     <div key={`${media.type}-${media.src}`}>
                         <button
                             type="button"
@@ -152,9 +158,11 @@ function BodasCarousel({
 function BodasReservaDrawer({
     open,
     onClose,
+    text,
 }: {
     open: boolean;
     onClose: () => void;
+    text: BodasPageText;
 }) {
     return (
         <Drawer
@@ -167,67 +175,71 @@ function BodasReservaDrawer({
             destroyOnHidden
         >
             <div className="bodas-form-intro">
-                <p>Reserva tu fecha</p>
-                <h2>Cuéntanos sobre tu boda</h2>
-                <span>
-                    Déjanos tus datos y el primer boceto de tu celebración.
-                </span>
+                <p>{text.drawer_kicker}</p>
+                <h2>{text.drawer_title}</h2>
+                <span>{text.drawer_description}</span>
             </div>
 
             <Form layout="vertical" className="bodas-form" requiredMark={false}>
-                <Form.Item label="Nombre">
+                <Form.Item label={text.name_label}>
                     <Input
                         size="large"
                         prefix={<UserRound size={18} />}
-                        placeholder="Tu nombre"
+                        placeholder={text.name_placeholder}
                     />
                 </Form.Item>
 
-                <Form.Item label="Correo">
+                <Form.Item label={text.email_label}>
                     <Input
                         size="large"
                         prefix={<Mail size={18} />}
-                        placeholder="correo@ejemplo.com"
+                        placeholder={text.email_placeholder}
                     />
                 </Form.Item>
 
-                <Form.Item label="Teléfono">
+                <Form.Item label={text.phone_label}>
                     <Input
                         size="large"
                         prefix={<Phone size={18} />}
-                        placeholder="+52"
+                        placeholder={text.phone_placeholder}
                     />
                 </Form.Item>
 
-                <Form.Item label="Mensaje">
+                <Form.Item label={text.message_label}>
                     <Input.TextArea
                         rows={5}
                         size="large"
-                        placeholder="Cuéntanos fecha tentativa, número de invitados o el estilo que imaginas."
+                        placeholder={text.message_placeholder}
                     />
                 </Form.Item>
 
                 <Button type="primary" size="large" block htmlType="button">
-                    Enviar solicitud
+                    {text.submit_label}
                 </Button>
             </Form>
         </Drawer>
     );
 }
 
-export default function BodasShowcase() {
+type BodasShowcaseProps = {
+  content?: BodasPageContent | null;
+  locale?: string | null;
+};
+
+export default function BodasShowcase({ content, locale }: BodasShowcaseProps = {}) {
     const [previewIndex, setPreviewIndex] = useState(0);
     const [isPreviewOpen, setIsPreviewOpen] = useState(false);
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    const { background, highlights, media, text } = mapBodasContent(content, locale);
 
     const openPreview = (index: number) => {
         setPreviewIndex(index);
         setIsPreviewOpen(true);
     };
 
-    const previewItems = bodasMedia.map((media) => ({
-        src: media.type === 'video' ? (media.poster ?? media.src) : media.src,
-        alt: media.alt,
+    const previewItems = media.map((item) => ({
+        src: item.type === 'video' ? (item.poster ?? item.src) : item.src,
+        alt: item.alt,
     }));
 
     return (
@@ -239,18 +251,18 @@ export default function BodasShowcase() {
                 onOpenChange: (isOpen) => setIsPreviewOpen(isOpen),
                 onChange: (current) => setPreviewIndex(current),
                 imageRender: (originalNode, { current }) => {
-                    const media = bodasMedia[current];
+                    const item = media[current];
 
-                    if (!media || media.type === 'image') {
+                    if (!item || item.type === 'image') {
                         return originalNode;
                     }
 
                     return (
                         <video
-                            key={`${media.src}-${current}`}
+                            key={`${item.src}-${current}`}
                             className="bodas-preview-media"
-                            src={media.src}
-                            poster={media.poster}
+                            src={item.src}
+                            poster={item.poster ?? undefined}
                             controls
                             autoPlay
                             playsInline
@@ -262,48 +274,50 @@ export default function BodasShowcase() {
         >
             <section className="bodas-section">
                 <div className="bodas-background" aria-hidden="true">
-                    <img
-                        src={bodasBackgroundPath}
-                        alt=""
-                        className="bodas-background-image"
-                    />
+                    {background.type === 'video' ? (
+                        <video
+                            src={background.src}
+                            poster={background.poster ?? undefined}
+                            className="bodas-background-image"
+                            muted
+                            loop
+                            autoPlay
+                            playsInline
+                        />
+                    ) : (
+                        <img
+                            src={background.src}
+                            alt={background.alt}
+                            className="bodas-background-image"
+                        />
+                    )}
                 </div>
 
                 <div className="bodas-shell">
                     <div className="bodas-copy">
-                        {/* <p className="bodas-kicker">
-                        <Sparkles size={18} />
-                        Celebraciones frente al mar
-                    </p> */}
-
                         <h1>
-                            Bodas en la playa, Hotel en Punta de Mita.
-                            <span>
-                                Haz realidad la celebración de tus sueños.
-                            </span>
+                            {text.hero_title}
+                            <span>{text.hero_subtitle}</span>
                         </h1>
 
                         <p className="bodas-description">
-                            Ponemos a tu disposición un coordinador de bodas
-                            personal, quien se encargará de que todo luzca como
-                            siempre has soñado, desde organización, decoración y
-                            selección del menú que deleitará a tus invitados.
-                            Conoce nuestros paquetes o personaliza tu evento
-                            perfecto.
+                            {text.hero_description}
                         </p>
 
                         <div
                             className="bodas-highlights"
                             aria-label="Servicios para bodas"
                         >
-                            <span>
-                                <CalendarHeart size={18} />
-                                Coordinación personal
-                            </span>
-                            <span>
-                                <MessageCircle size={18} />
-                                Evento personalizado
-                            </span>
+                            {highlights.map((highlight) => {
+                                const Icon = highlightIcons[highlight.icon];
+
+                                return (
+                                    <span key={`${highlight.icon}-${highlight.label}`}>
+                                        <Icon size={18} />
+                                        {highlight.label}
+                                    </span>
+                                );
+                            })}
                         </div>
 
                         <Button
@@ -312,11 +326,12 @@ export default function BodasShowcase() {
                             className="bodas-reservar-button"
                             onClick={() => setIsDrawerOpen(true)}
                         >
-                            RESERVAR
+                            {text.reserve_cta}
                         </Button>
                     </div>
 
                     <BodasCarousel
+                        mediaItems={media}
                         paused={isPreviewOpen}
                         onPreview={openPreview}
                     />
@@ -325,6 +340,7 @@ export default function BodasShowcase() {
                 <BodasReservaDrawer
                     open={isDrawerOpen}
                     onClose={() => setIsDrawerOpen(false)}
+                    text={text}
                 />
             </section>
         </Image.PreviewGroup>

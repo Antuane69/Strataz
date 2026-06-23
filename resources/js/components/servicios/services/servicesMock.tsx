@@ -1,13 +1,12 @@
-import { Flex } from "antd";
-import type { Servicio } from "../interfaces";
+import type { Servicio } from '../interfaces';
 
 export const serviciosMock: Servicio[] = [
     {
         id: 'alberca',
         name: 'Alberca',
-        eyebrow: 'Relajación',
+        eyebrow: 'Relajacion',
         description:
-          'Relájate en nuestra alberca y disfruta de momentos de descanso en un ambiente tranquilo, ideal para refrescarte después de un día de playa.',
+          'Relajate en nuestra alberca y disfruta de momentos de descanso en un ambiente tranquilo, ideal para refrescarte despues de un dia de playa.',
         icon: 'pool',
         accent: '#1f6f79',
         tags: ['Vista al mar', 'Camastros'],
@@ -44,13 +43,13 @@ export const serviciosMock: Servicio[] = [
     },
     {
         id: 'acceso-camastros',
-        name: 'Acceso directo a playa con área de camastros',
+        name: 'Acceso directo a playa con area de camastros',
         eyebrow: 'Mar',
         description:
-            'Disfruta la comodidad de estar a solo unos pasos del mar. Relájate en nuestra área de camastros mientras contemplas la brisa, el sonido de las olas y espectaculares atardeceres.',
+            'Disfruta la comodidad de estar a solo unos pasos del mar. Relajate en nuestra area de camastros mientras contemplas la brisa, el sonido de las olas y espectaculares atardeceres.',
         icon: 'beach',
         accent: '#a33f1d',
-        tags: ['Mar', 'Relajación'],
+        tags: ['Mar', 'Relajacion'],
         media: [
             {
                 type: 'image',
@@ -64,7 +63,7 @@ export const serviciosMock: Servicio[] = [
         name: 'Restaurante de desayunos y lunch "El Patio"',
         eyebrow: 'Comida',
         description:
-            'Comienza tu día con un delicioso desayuno o disfruta de un lunch fresco en un ambiente relajado y acogedor, ideal para complementar tu experiencia frente al mar.',
+            'Comienza tu dia con un delicioso desayuno o disfruta de un lunch fresco en un ambiente relajado y acogedor, ideal para complementar tu experiencia frente al mar.',
         icon: 'food',
         accent: '#235d48',
         tags: ['Desayuno'],
@@ -72,21 +71,21 @@ export const serviciosMock: Servicio[] = [
             {
                 type: 'image',
                 src: '/imagenes/servicios/restaurante_1.jpeg',
-                alt: 'Islas marietas',
+                alt: 'Restaurante El Patio',
             },
             {
                 type: 'image',
                 src: '/imagenes/servicios/el_patio.jpeg',
-                alt: 'Video de prueba de playa',
+                alt: 'Area de restaurante',
             },
         ],
     },
     {
         id: 'masajes',
         name: 'Area de masajes',
-        eyebrow: 'Relajación',
+        eyebrow: 'Relajacion',
         description:
-          'Consiente cuerpo y mente con un momento de relajación. Disfruta de tratamientos diseñados para renovar tu energía y elevar tu bienestar durante tu estancia.',
+          'Consiente cuerpo y mente con un momento de relajacion. Disfruta de tratamientos disenados para renovar tu energia y elevar tu bienestar durante tu estancia.',
         icon: 'sparks',
         accent: '#1f6f79',
         tags: ['Masajes'],
@@ -94,102 +93,90 @@ export const serviciosMock: Servicio[] = [
             {
                 type: 'image',
                 src: '/imagenes/servicios/spa_1.jpeg',
-                alt: 'Deportes',
+                alt: 'Area de masajes',
             },
         ],
     },
     {
         id: 'paddle',
         name: 'Renta de tablas de paddle, surf y kayak',
-        eyebrow: 'Activación física',
+        eyebrow: 'Activacion fisica',
         description:
             'Vive la aventura en el mar con nuestras opciones de renta de equipo. Explora la costa, disfruta las olas y crea experiencias inolvidables en Punta de Mita.',
         icon: 'pool',
         accent: '#8a4b22',
-        tags: ['Paddle', "Surf", "Kayak"],
+        tags: ['Paddle', 'Surf', 'Kayak'],
         media: [
             {
                 type: 'image',
                 src: '/imagenes/servicios/surf_1.jpeg',
-                alt: 'Restaurante',
+                alt: 'Renta de equipo acuatico',
             },
             {
                 type: 'image',
                 src: '/imagenes/servicios/surf_2.jpg',
-                alt: 'Restaurante',
+                alt: 'Equipo para actividades en el mar',
             },
         ],
     },
     {
         id: 'bodas',
-        name: 'Organización de bodas',
+        name: 'Organizacion de bodas',
         eyebrow: 'Delicadeza',
         description:
-            'Haz realidad la boda de tus sueños frente al mar. Nuestro equipo te acompaña en cada detalle para crear una celebración única e inolvidable.',
+            'Haz realidad la boda de tus suenos frente al mar. Nuestro equipo te acompana en cada detalle para crear una celebracion unica e inolvidable.',
         icon: 'boda',
         accent: '#a33f1d',
-        tags: ['Boda de tus sueños'],
+        tags: ['Boda de tus suenos'],
         media: [
             {
                 type: 'image',
                 src: '/imagenes/bodas/bodas_1.jpg',
-                alt: 'Embarcaciones',
+                alt: 'Montaje de boda frente al mar',
             },
             {
                 type: 'image',
                 src: '/imagenes/bodas/bodas_2.jpg',
-                alt: 'Embarcaciones',
+                alt: 'Celebracion de boda',
             },
             {
                 type: 'image',
                 src: '/imagenes/bodas/bodas_3.jpg',
-                alt: 'Embarcaciones',
+                alt: 'Decoracion para boda',
             },
         ],
     },
     {
         id: 'artesania',
-        name: 'Boutique de artesanía y regalos',
+        name: 'Boutique de artesania y regalos',
         eyebrow: 'Regalos',
         description:
-            'Descubre artesanías y productos mexicanos únicos, ideales para llevar un recuerdo especial de tu visita.',
+            'Descubre artesanias y productos mexicanos unicos, ideales para llevar un recuerdo especial de tu visita.',
         icon: 'shop',
         accent: '#235d48',
-        tags: ['Artesanías', "Productos Mexicanos"],
+        tags: ['Artesanias', 'Productos Mexicanos'],
         media: [
             {
                 type: 'image',
                 src: '/imagenes/servicios/artesanias_1.jpg',
-                alt: 'Islas marietas',
+                alt: 'Boutique de artesania y regalos',
             },
         ],
     },
     {
         id: 'transporte',
-        name: 'Concierge y atención personalizada',
+        name: 'Concierge y atencion personalizada',
         eyebrow: 'Recomendaciones',
-        description: (
-          <Flex vertical gap={6}>
-            <span>Nuestro equipo está listo para ayudarte a disfrutar al máximo tu estancia en Punta de Mita.</span>
-            <span> Te apoyamos con: </span>
-            <ul>
-              <li>Recomendaciones locales </li>
-              <li>Reservaciones en restaurantes </li>
-              <li>Tours y actividades </li>
-              <li>Transportación privada </li>
-              <li>Celebraciones especiales </li>
-              <li>Renta de autos o Carritos de golf </li>
-            </ul>
-          </Flex>
-        ),
+        description:
+            'Nuestro equipo esta listo para ayudarte a disfrutar al maximo tu estancia en Punta de Mita.\n\nTe apoyamos con:\n- Recomendaciones locales\n- Reservaciones en restaurantes\n- Tours y actividades\n- Transportacion privada\n- Celebraciones especiales\n- Renta de autos o carritos de golf',
         icon: 'consierge',
         accent: '#235d48',
-        tags: ['Recomendaciones', "Tours", "Celebraciones"],
+        tags: ['Recomendaciones', 'Tours', 'Celebraciones'],
         media: [
             {
                 type: 'image',
                 src: '/imagenes/servicios/concierge.jpg',
-                alt: 'Islas marietas',
+                alt: 'Concierge y atencion personalizada',
             },
         ],
     },

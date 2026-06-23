@@ -1,52 +1,30 @@
-import { ExternalLink, Mail, MapPin, Navigation, Phone } from 'lucide-react';
-import type { ContactInfo } from './interfaces';
-import { arrivalRoutes } from './services/contactosMock';
+import { ExternalLink, Navigation } from 'lucide-react';
+import type { ContactoPageContent } from './interfaces';
+import { mapContactoContent } from './services/mapContactoContent';
 
-const mapsUrl =
-    'https://www.google.com.mx/maps/place/HOTEL+MESON+DE+MITA/@20.7718392,-105.5196837,17z/data=!3m1!4b1!4m8!3m7!1s0x8421134f5a0645e3:0xc48cf5e4f110a5b3!5m2!4m1!1i2!8m2!3d20.7718342!4d-105.517495';
+type ContactoShowcaseProps = {
+    content?: ContactoPageContent | null;
+    locale?: string | null;
+};
 
-const mapEmbedUrl =
-    'https://www.google.com/maps?q=20.7718342,-105.517495&z=17&output=embed';
+export default function ContactoShowcase({
+    content,
+    locale,
+}: ContactoShowcaseProps) {
+    const mappedContent = mapContactoContent(content, locale);
 
-const contactInfo: ContactInfo[] = [
-    {
-        id: 'ubicacion',
-        label: 'Ubicación',
-        lines: ['Ave El Anclote 200', '63734 Punta de Mita, Nayarit.'],
-        href: mapsUrl,
-        external: true,
-        icon: MapPin,
-    },
-    {
-        id: 'telefono',
-        label: 'Teléfono',
-        lines: ['+52 329 291 6330', '+52 329 291 5161'],
-        href: 'tel:+523292916330',
-        icon: Phone,
-    },
-    {
-        id: 'contacto',
-        label: 'Contacto',
-        lines: ['reservaciones@hotelmesondemita.com'],
-        href: 'mailto:reservaciones@hotelmesondemita.com',
-        icon: Mail,
-    },
-];
-
-export default function ContactoShowcase() {
     return (
         <section className="contacto-section">
             <div className="contacto-hero">
-                {/* <p>Contacto</p> */}
-                <h1>Contacto y Ubicación</h1>
-                <span>
-                    Encuéntranos en el corazón de Punta de Mita, a unos pasos de
-                    la playa y de la zona de El Anclote.
-                </span>
+                <h1>{mappedContent.text.hero_title}</h1>
+                <span>{mappedContent.text.hero_body}</span>
             </div>
 
-            <div className="contacto-info-bar" aria-label="Datos de contacto">
-                {contactInfo.map((item) => {
+            <div
+                className="contacto-info-bar"
+                aria-label={mappedContent.text.contact_info_aria_label}
+            >
+                {mappedContent.contactInfo.map((item) => {
                     const Icon = item.icon;
 
                     return (
@@ -77,23 +55,24 @@ export default function ContactoShowcase() {
                 <div className="contacto-map-copy">
                     <p>
                         <Navigation size={18} />
-                        Hotel Mesón de Mita
+                        {mappedContent.text.map_kicker}
                     </p>
-                    <h2>Estamos sobre Ave El Anclote</h2>
-                    <span>
-                        Este mapa marca la ubicación del hotel para que puedas
-                        encontrarnos sin ningun problema.
-                    </span>
-                    <a href={mapsUrl} target="_blank" rel="noreferrer">
-                        Abrir ruta en Google Maps
+                    <h2>{mappedContent.text.map_title}</h2>
+                    <span>{mappedContent.text.map_body}</span>
+                    <a
+                        href={mappedContent.mapsUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        {mappedContent.text.map_cta_label}
                         <ExternalLink size={16} />
                     </a>
                 </div>
 
                 <div className="contacto-map-frame">
                     <iframe
-                        src={mapEmbedUrl}
-                        title="Mapa de Hotel Mesón de Mita"
+                        src={mappedContent.mapEmbedUrl}
+                        title={mappedContent.text.map_iframe_title}
                         loading="lazy"
                         allowFullScreen
                         referrerPolicy="no-referrer-when-downgrade"
@@ -103,15 +82,14 @@ export default function ContactoShowcase() {
 
             <div className="contacto-arrival-section">
                 <div className="contacto-arrival-intro">
-                    <h2>Cómo llegar al hotel</h2>
-                    {/* <span>
-                        Estos bloques dejan lista la estructura para que puedas
-                        cambiar el texto final por las instrucciones oficiales.
-                    </span> */}
+                    <h2>{mappedContent.text.arrival_title}</h2>
+                    {mappedContent.text.arrival_body && (
+                        <span>{mappedContent.text.arrival_body}</span>
+                    )}
                 </div>
 
                 <div className="contacto-arrival-grid">
-                    {arrivalRoutes.map((route) => {
+                    {mappedContent.arrivalRoutes.map((route) => {
                         const Icon = route.icon;
 
                         return (
@@ -135,19 +113,17 @@ export default function ContactoShowcase() {
                                     </span>
                                 )}
 
-                                {route.companias && (
+                                {route.companies.length > 0 && (
                                     <>
                                         <span>
-                                            Compañías aéreas que operan en el
-                                            Aeropuerto Internacional Gustavo
-                                            Díaz Ordaz:
+                                            {mappedContent.text.airlines_intro}
                                         </span>
                                         <ol>
-                                            {route.companias.map((compania) => (
+                                            {route.companies.map((company) => (
                                                 <li
-                                                    key={`${route.id}-${compania}`}
+                                                    key={`${route.id}-${company}`}
                                                 >
-                                                    {compania}
+                                                    {company}
                                                 </li>
                                             ))}
                                         </ol>
@@ -156,7 +132,7 @@ export default function ContactoShowcase() {
 
                                 {route.footer && <span>{route.footer}</span>}
 
-                                {route.steps && (
+                                {route.steps.length > 0 && (
                                     <ol>
                                         {route.steps.map((step) => (
                                             <li key={`${route.id}-${step}`}>

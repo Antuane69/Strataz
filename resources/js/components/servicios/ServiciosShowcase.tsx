@@ -1,21 +1,20 @@
 import { Carousel, Image, Tag } from 'antd';
 import {
     CarFront,
+    ConciergeBell,
     Fish,
-    Gift,
+    Gem,
     ShieldCheck,
     ShoppingBag,
     Sparkles,
     Utensils,
     Volleyball,
     Waves,
-    Gem,
-    ConciergeBell
 } from 'lucide-react';
 import { useState } from 'react';
 import type { ComponentType, CSSProperties } from 'react';
-import type { Servicio, ServicioIcon, ServicioMedia } from './interfaces';
-import { serviciosMock } from './services/servicesMock';
+import type { Servicio, ServicioIcon, ServicioMedia, ServiciosPageContent, ServicioTrustIcon } from './interfaces';
+import { mapServiciosContent } from './services/mapServiciosContent';
 
 const serviceIcons: Record<ServicioIcon, ComponentType<{ size?: number }>> = {
     pool: Waves,
@@ -27,7 +26,13 @@ const serviceIcons: Record<ServicioIcon, ComponentType<{ size?: number }>> = {
     fish: Fish,
     sparks: Sparkles,
     boda: Gem,
-    consierge: ConciergeBell
+    consierge: ConciergeBell,
+};
+
+const trustIcons: Record<ServicioTrustIcon, ComponentType<{ size?: number }>> = {
+    shield: ShieldCheck,
+    pool: Waves,
+    shop: ShoppingBag,
 };
 
 function ServicioMediaItem({
@@ -44,7 +49,7 @@ function ServicioMediaItem({
             <video
                 className={className}
                 src={media.src}
-                poster={media.poster}
+                poster={media.poster ?? undefined}
                 autoPlay={!controls}
                 muted={!controls}
                 loop={!controls}
@@ -62,6 +67,31 @@ function ServicioMediaItem({
             className={className}
             loading="lazy"
         />
+    );
+}
+
+function ServicioDescription({ value }: { value: string }) {
+    const lines = value
+        .split('\n')
+        .map((line) => line.trim())
+        .filter(Boolean);
+    const bulletLines = lines.filter((line) => line.startsWith('- '));
+    const textLines = lines.filter((line) => !line.startsWith('- '));
+
+    return (
+        <>
+            {textLines.map((line) => (
+                <p key={line}>{line}</p>
+            ))}
+
+            {bulletLines.length > 0 && (
+                <ul>
+                    {bulletLines.map((line) => (
+                        <li key={line}>{line.replace(/^- /, '')}</li>
+                    ))}
+                </ul>
+            )}
+        </>
     );
 }
 
@@ -99,17 +129,6 @@ function ServicioCard({
                                     media={media}
                                     className="servicio-media"
                                 />
-                                {/* <span className="servicio-media-overlay">
-                                    {media.type === 'video' ? (
-                                        <Play size={18} />
-                                    ) : (
-                                        <ImageIcon size={18} />
-                                    )}
-                                    Ver{' '}
-                                    {media.type === 'video'
-                                        ? 'video'
-                                        : 'imagen'}
-                                </span> */}
                             </button>
                         </div>
                     ))}
@@ -128,7 +147,7 @@ function ServicioCard({
                 </div>
 
                 <div className="servicio-description">
-                    {servicio.description}
+                    <ServicioDescription value={servicio.description} />
                 </div>
 
                 <div
@@ -144,11 +163,17 @@ function ServicioCard({
     );
 }
 
-export default function ServiciosShowcase() {
+type ServiciosShowcaseProps = {
+  content?: ServiciosPageContent | null;
+  locale?: string | null;
+};
+
+export default function ServiciosShowcase({ content, locale }: ServiciosShowcaseProps = {}) {
     const [previewServicio, setPreviewServicio] = useState<
         Servicio | undefined
     >();
     const [previewIndex, setPreviewIndex] = useState(0);
+    const { servicios, text, trustItems } = mapServiciosContent(content, locale);
 
     const openPreview = (servicio: Servicio, mediaIndex: number) => {
         setPreviewServicio(servicio);
@@ -188,7 +213,7 @@ export default function ServiciosShowcase() {
                             key={`${previewServicio.id}-${media.src}-${current}`}
                             className="servicio-preview-media"
                             src={media.src}
-                            poster={media.poster}
+                            poster={media.poster ?? undefined}
                             controls
                             autoPlay
                             playsInline
@@ -200,34 +225,28 @@ export default function ServiciosShowcase() {
         >
             <section className="servicios-section">
                 <div className="servicios-intro">
-                    {/* <p>Servicios</p> */}
-                    <h1>Servicios</h1>
-                    <span>
-                        Amenidades sencillas, útiles y pensadas para que tu
-                        estancia se sienta cómoda desde que llegas.
-                    </span>
+                    <h1>{text.intro_title}</h1>
+                    <span>{text.intro_body}</span>
                 </div>
 
                 <div
                     className="servicios-trust-row"
                     aria-label="Resumen de servicios"
                 >
-                    <span>
-                        <ShieldCheck size={18} />
-                        Estacionamiento privado
-                    </span>
-                    <span>
-                        <Waves size={18} />
-                        Alberca junto al mar
-                    </span>
-                    <span>
-                        <Gift size={18} />
-                        Souvenirs y artesanías
-                    </span>
+                    {trustItems.map((item) => {
+                        const Icon = trustIcons[item.icon];
+
+                        return (
+                            <span key={`${item.icon}-${item.label}`}>
+                                <Icon size={18} />
+                                {item.label}
+                            </span>
+                        );
+                    })}
                 </div>
 
                 <div className="servicios-grid">
-                    {serviciosMock.map((servicio) => (
+                    {servicios.map((servicio) => (
                         <ServicioCard
                             key={servicio.id}
                             servicio={servicio}

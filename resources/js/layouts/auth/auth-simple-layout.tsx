@@ -9,7 +9,15 @@ export default function AuthSimpleLayout({
     description,
 }: AuthLayoutProps) {
     const { component } = usePage();
-    const isContentEditor = component.startsWith('auth/habitaciones/');
+    const isContentEditor =
+        component.startsWith('auth/habitaciones/') ||
+        component.startsWith('auth/servicios/') ||
+        component.startsWith('auth/bodas/') ||
+        component.startsWith('auth/recomendaciones/') ||
+        component.startsWith('auth/galeria/') ||
+        component.startsWith('auth/faq/') ||
+        component.startsWith('auth/contacto/') ||
+        component.startsWith('auth/promociones/');
 
     if (isContentEditor) {
         return (

@@ -1,4 +1,4 @@
-import type { Recommendation } from "../interfaces";
+import type { Recommendation } from '../interfaces';
 
 export const recommendations: Recommendation[] = [
     {
@@ -8,365 +8,167 @@ export const recommendations: Recommendation[] = [
         image: '/imagenes/recomendaciones/marietas_1.jpg',
         imageAlt: 'Mar azul cerca de Punta de Mita',
         distance: 'Aprox. 10 km',
-        duration: 'Medio día',
-        intro: 'Las Islas Marietas se localizan frente a las costas de Punta de Mita, en la Riviera Nayarit. Es un pequeño archipiélago protegido por dos islas y varios islotes, ideal para quienes buscan naturaleza, mar y paisajes memorables.',
+        duration: 'Medio dia',
+        intro: 'Las Islas Marietas se localizan frente a las costas de Punta de Mita. Es un pequeno archipielago protegido, ideal para quienes buscan naturaleza, mar y paisajes memorables.',
         sections: [
             {
-                title: 'Qué puedes hacer',
+                title: 'Que puedes hacer',
+                paragraphs: [],
                 bullets: [
                     'Practicar snorkel en arrecifes con gran variedad de vida marina.',
-                    'Explorar cuevas y formaciones rocosas con guía autorizado.',
-                    'Disfrutar paseos en lancha con vistas al Pacífico.',
+                    'Explorar cuevas y formaciones rocosas con guia autorizado.',
+                    'Disfrutar paseos en lancha con vistas al Pacifico.',
                 ],
             },
             {
                 title: 'Recomendaciones',
                 paragraphs: [
-                    'Al ser una zona protegida, conviene reservar con anticipación y seguir las indicaciones de conservación durante toda la visita.',
+                    'Al ser una zona protegida, conviene reservar con anticipacion y seguir las indicaciones de conservacion durante toda la visita.',
                 ],
                 bullets: [
-                    'No tirar basura.',
-                    'No tocar ni alimentar fauna silvestre.',
-                    'Usar bloqueador biodegradable.',
+                    'Usa bloqueador biodegradable.',
+                    'No toques ni alimentes fauna silvestre.',
                 ],
             },
         ],
     },
     {
-        id: 'playa-la-lancha',
+        id: 'avistamiento-ballenas',
         title: 'Avistamiento de ballenas',
-        eyebrow: 'Olas tranquilas',
+        eyebrow: 'Temporada especial',
         image: '/imagenes/recomendaciones/ballenas_1.jpg',
-        imageAlt: 'Playa al atardecer en Riviera Nayarit',
-        distance: 'Cerca de Punta de Mita',
-        duration: '2 a 3 horas',
-        intro: 'La Lancha es una de las playas favoritas para surfear cerca de Punta de Mita. Su ambiente relajado y sus olas consistentes la vuelven una gran opción para clases, práctica o una mañana frente al mar.',
+        imageAlt: 'Ballena en la Bahia de Banderas',
+        distance: 'Tours desde la bahia',
+        duration: '2 a 4 horas',
+        intro: 'Durante temporada, la bahia ofrece la posibilidad de ver ballenas jorobadas. Es una experiencia tranquila, emocionante y muy ligada al paisaje marino de la zona.',
         sections: [
             {
-                title: 'Ideal para',
-                bullets: [
-                    'Tomar una clase de surf si estás empezando.',
-                    'Caminar por una playa con ambiente natural.',
-                    'Disfrutar una mañana tranquila antes de volver al hotel.',
+                title: 'Cuando buscarlo',
+                paragraphs: [
+                    'Pregunta por disponibilidad de tours durante tu estancia, ya que depende de temporada y condiciones del mar.',
                 ],
+                bullets: [],
             },
             {
-                title: 'Tip local',
-                paragraphs: [
-                    'Lleva agua, sombrero y sandalias cómodas. El acceso suele sentirse más natural y menos urbano que otras playas de la zona.',
+                title: 'Recomendaciones',
+                paragraphs: [],
+                bullets: [
+                    'Reserva con operadores responsables.',
+                    'Lleva camara, gorra y proteccion solar.',
+                    'Sigue siempre las indicaciones del guia.',
                 ],
             },
         ],
     },
     {
         id: 'el-anclote',
-        title: 'Paseo sobre av Anclote y sus alrededores',
+        title: 'Paseo sobre Av. El Anclote',
         eyebrow: 'Restaurantes y playa',
         image: '/imagenes/recomendaciones/anclote.jpg',
         imageAlt: 'Vista de playa en Punta de Mita',
         distance: 'A unos pasos',
         duration: 'Libre',
-        intro: 'El Anclote es una zona cómoda para caminar, comer frente al mar y sentir el ritmo tranquilo de Punta de Mita. Es una buena opción para una tarde sin prisas.',
+        intro: 'El Anclote es una zona comoda para caminar, comer frente al mar y sentir el ritmo tranquilo de Punta de Mita. Es una buena opcion para una tarde sin prisas.',
         sections: [
             {
-                title: 'Qué hacer',
+                title: 'Que hacer',
+                paragraphs: [],
                 bullets: [
                     'Caminar por la playa al atardecer.',
                     'Probar mariscos y cocina local.',
-                    'Buscar tiendas pequeñas y espacios para tomar café.',
+                    'Buscar tiendas pequenas y espacios para tomar cafe.',
                 ],
             },
             {
                 title: 'Para disfrutarlo mejor',
                 paragraphs: [
-                    'Ve con calma, el encanto está en recorrerlo sin un plan rígido y detenerte donde el ambiente te guste.',
+                    'Ve con calma. El encanto esta en recorrerlo sin un plan rigido y detenerte donde el ambiente te guste.',
                 ],
+                bullets: [],
             },
         ],
     },
     {
-        id: 'playa_anclote',
-        title: 'Playa el Anclote',
-        eyebrow: 'Color y pueblo surf',
+        id: 'playa-el-anclote',
+        title: 'Playa El Anclote',
+        eyebrow: 'Mar tranquilo',
         image: '/imagenes/recomendaciones/playa_anclote.jpg',
-        imageAlt: 'Costa de Riviera Nayarit',
-        distance: 'Aprox. 35 min',
-        duration: 'Medio día',
-        intro: 'Sayulita es un pueblo costero con mucha vida, tiendas, comida, playa y un ambiente bohemio. Funciona muy bien como paseo de medio día desde Punta de Mita.',
+        imageAlt: 'Playa El Anclote en Punta de Mita',
+        distance: 'A unos pasos',
+        duration: 'Libre',
+        intro: 'Playa El Anclote es una de las playas mas accesibles desde el hotel. Su ambiente relajado funciona para nadar, caminar o pasar un rato frente al mar.',
         sections: [
             {
                 title: 'Plan recomendado',
+                paragraphs: [],
                 bullets: [
-                    'Llegar por la mañana para caminar con menos calor.',
-                    'Recorrer tiendas locales y galerías pequeñas.',
-                    'Comer algo casual antes de volver a Punta de Mita.',
+                    'Llegar temprano para disfrutar con menos movimiento.',
+                    'Caminar por la orilla y mirar las embarcaciones.',
+                    'Cerrar con una comida cerca de la playa.',
                 ],
             },
             {
                 title: 'Considera',
                 paragraphs: [
-                    'Suele tener más movimiento que Punta de Mita, así que es ideal si buscas un cambio de energía durante tu estancia.',
+                    'Lleva sandalias comodas, agua y proteccion solar. En temporada alta puede tener mas actividad.',
                 ],
+                bullets: [],
             },
         ],
     },
     {
         id: 'surf',
         title: 'Surf',
-        eyebrow: 'Temporada especial',
+        eyebrow: 'Olas y aventura',
         image: '/imagenes/recomendaciones/surf.jpg',
-        imageAlt: 'Bahía de Punta de Mita',
-        distance: 'Tours desde la bahía',
-        duration: '2 a 4 horas',
-        intro: 'Durante temporada, la bahía ofrece la posibilidad de ver ballenas jorobadas. Es una experiencia tranquila, emocionante y muy ligada al paisaje marino de la zona.',
+        imageAlt: 'Persona surfeando cerca de Punta de Mita',
+        distance: 'Cerca de Punta de Mita',
+        duration: '2 a 3 horas',
+        intro: 'La zona ofrece playas con olas para diferentes niveles. Puedes tomar una clase, practicar con guia o simplemente disfrutar el ambiente surf de la costa.',
         sections: [
             {
-                title: 'Cuándo buscarlo',
-                paragraphs: [
-                    'Pregunta por disponibilidad de tours durante tu estancia, ya que depende de temporada y condiciones del mar.',
+                title: 'Ideal para',
+                paragraphs: [],
+                bullets: [
+                    'Tomar una clase si estas empezando.',
+                    'Practicar en una playa con ambiente natural.',
+                    'Vivir una manana activa frente al mar.',
                 ],
             },
             {
-                title: 'Recomendaciones',
-                bullets: [
-                    'Reservar con operadores responsables.',
-                    'Llevar cámara, gorra y protección solar.',
-                    'Seguir siempre las indicaciones del guía.',
+                title: 'Tip local',
+                paragraphs: [
+                    'Pregunta por condiciones de oleaje y por instructores recomendados antes de salir.',
                 ],
+                bullets: [],
             },
         ],
     },
     {
         id: 'buceo',
-        title: 'Bucea en las cálidas y cristalinas aguas del pacífico',
-        eyebrow: 'Plan sencillo',
+        title: 'Buceo en aguas del Pacifico',
+        eyebrow: 'Vida marina',
         image: '/imagenes/recomendaciones/buceo.jpeg',
-        imageAlt: 'Mar abierto al atardecer',
-        distance: 'Muy cerca',
-        duration: '1 hora',
-        intro: 'A veces el mejor plan no necesita traslado. Una caminata al atardecer, el sonido del mar y una cena tranquila pueden ser suficientes para recordar Punta de Mita.',
+        imageAlt: 'Buceo en aguas cristalinas del Pacifico',
+        distance: 'Tours desde la zona',
+        duration: 'Medio dia',
+        intro: 'Explora aguas calidas y cristalinas con experiencias de snorkel o buceo. Es una gran forma de conocer el lado marino de la Bahia de Banderas.',
         sections: [
             {
-                title: 'Cómo vivirlo',
+                title: 'Como vivirlo',
+                paragraphs: [],
                 bullets: [
-                    'Sal con tiempo para encontrar un buen punto de vista.',
-                    'Lleva ropa ligera y cómoda.',
-                    'Cierra el día con una cena cerca del mar.',
+                    'Reserva con operadores certificados.',
+                    'Confirma si el tour incluye equipo.',
+                    'Lleva traje de bano, toalla y ropa ligera.',
                 ],
             },
             {
                 title: 'Ideal para',
                 paragraphs: [
-                    'Parejas, familias o viajeros que quieren bajar el ritmo y disfrutar el destino sin complicarse.',
+                    'Viajeros que buscan una experiencia de agua mas inmersiva y segura con acompanamiento profesional.',
                 ],
-            },
-        ],
-    },
-        {
-        id: 'atardecer',
-        title: 'Practica pesca deportiva',
-        eyebrow: 'Plan sencillo',
-        image: '/imagenes/galeria/playa_13.jpg',
-        imageAlt: 'Mar abierto al atardecer',
-        distance: 'Muy cerca',
-        duration: '1 hora',
-        intro: 'A veces el mejor plan no necesita traslado. Una caminata al atardecer, el sonido del mar y una cena tranquila pueden ser suficientes para recordar Punta de Mita.',
-        sections: [
-            {
-                title: 'Cómo vivirlo',
-                bullets: [
-                    'Sal con tiempo para encontrar un buen punto de vista.',
-                    'Lleva ropa ligera y cómoda.',
-                    'Cierra el día con una cena cerca del mar.',
-                ],
-            },
-            {
-                title: 'Ideal para',
-                paragraphs: [
-                    'Parejas, familias o viajeros que quieren bajar el ritmo y disfrutar el destino sin complicarse.',
-                ],
-            },
-        ],
-    },
-        {
-        id: 'atardecer',
-        title: 'Caminatas',
-        eyebrow: 'Plan sencillo',
-        image: '/imagenes/galeria/playa_13.jpg',
-        imageAlt: 'Mar abierto al atardecer',
-        distance: 'Muy cerca',
-        duration: '1 hora',
-        intro: 'A veces el mejor plan no necesita traslado. Una caminata al atardecer, el sonido del mar y una cena tranquila pueden ser suficientes para recordar Punta de Mita.',
-        sections: [
-            {
-                title: 'Cómo vivirlo',
-                bullets: [
-                    'Sal con tiempo para encontrar un buen punto de vista.',
-                    'Lleva ropa ligera y cómoda.',
-                    'Cierra el día con una cena cerca del mar.',
-                ],
-            },
-            {
-                title: 'Ideal para',
-                paragraphs: [
-                    'Parejas, familias o viajeros que quieren bajar el ritmo y disfrutar el destino sin complicarse.',
-                ],
-            },
-        ],
-    },
-        {
-        id: 'atardecer',
-        title: 'Tirolesas, paseos en cuatrimoto o rzr y paseos a caballo',
-        eyebrow: 'Plan sencillo',
-        image: '/imagenes/galeria/playa_13.jpg',
-        imageAlt: 'Mar abierto al atardecer',
-        distance: 'Muy cerca',
-        duration: '1 hora',
-        intro: 'A veces el mejor plan no necesita traslado. Una caminata al atardecer, el sonido del mar y una cena tranquila pueden ser suficientes para recordar Punta de Mita.',
-        sections: [
-            {
-                title: 'Cómo vivirlo',
-                bullets: [
-                    'Sal con tiempo para encontrar un buen punto de vista.',
-                    'Lleva ropa ligera y cómoda.',
-                    'Cierra el día con una cena cerca del mar.',
-                ],
-            },
-            {
-                title: 'Ideal para',
-                paragraphs: [
-                    'Parejas, familias o viajeros que quieren bajar el ritmo y disfrutar el destino sin complicarse.',
-                ],
-            },
-        ],
-    },
-        {
-        id: 'atardecer',
-        title: 'Golf',
-        eyebrow: 'Plan sencillo',
-        image: '/imagenes/galeria/playa_13.jpg',
-        imageAlt: 'Mar abierto al atardecer',
-        distance: 'Muy cerca',
-        duration: '1 hora',
-        intro: 'A veces el mejor plan no necesita traslado. Una caminata al atardecer, el sonido del mar y una cena tranquila pueden ser suficientes para recordar Punta de Mita.',
-        sections: [
-            {
-                title: 'Cómo vivirlo',
-                bullets: [
-                    'Sal con tiempo para encontrar un buen punto de vista.',
-                    'Lleva ropa ligera y cómoda.',
-                    'Cierra el día con una cena cerca del mar.',
-                ],
-            },
-            {
-                title: 'Ideal para',
-                paragraphs: [
-                    'Parejas, familias o viajeros que quieren bajar el ritmo y disfrutar el destino sin complicarse.',
-                ],
-            },
-        ],
-    },
-        {
-        id: 'atardecer',
-        title: 'Visita los pueblitos cercanos',
-        eyebrow: 'Plan sencillo',
-        image: '/imagenes/galeria/playa_13.jpg',
-        imageAlt: 'Mar abierto al atardecer',
-        distance: 'Muy cerca',
-        duration: '1 hora',
-        intro: 'A veces el mejor plan no necesita traslado. Una caminata al atardecer, el sonido del mar y una cena tranquila pueden ser suficientes para recordar Punta de Mita.',
-        sections: [
-            {
-                title: 'Cómo vivirlo',
-                bullets: [
-                    'Sal con tiempo para encontrar un buen punto de vista.',
-                    'Lleva ropa ligera y cómoda.',
-                    'Cierra el día con una cena cerca del mar.',
-                ],
-            },
-            {
-                title: 'Ideal para',
-                paragraphs: [
-                    'Parejas, familias o viajeros que quieren bajar el ritmo y disfrutar el destino sin complicarse.',
-                ],
-            },
-        ],
-    },
-        {
-        id: 'atardecer',
-        title: 'Conciéntete con un masaje',
-        eyebrow: 'Plan sencillo',
-        image: '/imagenes/galeria/playa_13.jpg',
-        imageAlt: 'Mar abierto al atardecer',
-        distance: 'Muy cerca',
-        duration: '1 hora',
-        intro: 'A veces el mejor plan no necesita traslado. Una caminata al atardecer, el sonido del mar y una cena tranquila pueden ser suficientes para recordar Punta de Mita.',
-        sections: [
-            {
-                title: 'Cómo vivirlo',
-                bullets: [
-                    'Sal con tiempo para encontrar un buen punto de vista.',
-                    'Lleva ropa ligera y cómoda.',
-                    'Cierra el día con una cena cerca del mar.',
-                ],
-            },
-            {
-                title: 'Ideal para',
-                paragraphs: [
-                    'Parejas, familias o viajeros que quieren bajar el ritmo y disfrutar el destino sin complicarse.',
-                ],
-            },
-        ],
-    },
-        {
-        id: 'atardecer',
-        title: 'Conoce playas semi-vírgenes',
-        eyebrow: 'Plan sencillo',
-        image: '/imagenes/galeria/playa_13.jpg',
-        imageAlt: 'Mar abierto al atardecer',
-        distance: 'Muy cerca',
-        duration: '1 hora',
-        intro: 'A veces el mejor plan no necesita traslado. Una caminata al atardecer, el sonido del mar y una cena tranquila pueden ser suficientes para recordar Punta de Mita.',
-        sections: [
-            {
-                title: 'Cómo vivirlo',
-                bullets: [
-                    'Sal con tiempo para encontrar un buen punto de vista.',
-                    'Lleva ropa ligera y cómoda.',
-                    'Cierra el día con una cena cerca del mar.',
-                ],
-            },
-            {
-                title: 'Ideal para',
-                paragraphs: [
-                    'Parejas, familias o viajeros que quieren bajar el ritmo y disfrutar el destino sin complicarse.',
-                ],
-            },
-        ],
-    },
-        {
-        id: 'atardecer',
-        title: 'Prueba la gastronomía de la zona',
-        eyebrow: 'Plan sencillo',
-        image: '/imagenes/galeria/playa_13.jpg',
-        imageAlt: 'Mar abierto al atardecer',
-        distance: 'Muy cerca',
-        duration: '1 hora',
-        intro: 'A veces el mejor plan no necesita traslado. Una caminata al atardecer, el sonido del mar y una cena tranquila pueden ser suficientes para recordar Punta de Mita.',
-        sections: [
-            {
-                title: 'Cómo vivirlo',
-                bullets: [
-                    'Sal con tiempo para encontrar un buen punto de vista.',
-                    'Lleva ropa ligera y cómoda.',
-                    'Cierra el día con una cena cerca del mar.',
-                ],
-            },
-            {
-                title: 'Ideal para',
-                paragraphs: [
-                    'Parejas, familias o viajeros que quieren bajar el ritmo y disfrutar el destino sin complicarse.',
-                ],
+                bullets: [],
             },
         ],
     },

@@ -12,15 +12,17 @@ import {
     UsersRound,
     Waves,
 } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import type { ComponentType, CSSProperties } from 'react';
 import type {
+    PromocionesPageContent,
+    PromocionesPageText,
     Promotion,
     PromotionCategory,
+    PromotionHighlightIcon,
     PromotionIcon,
-    PromotionTab,
 } from './interface';
-import { promotions } from './services/promocionesMock';
+import { mapPromocionesContent } from './services/mapPromocionesContent';
 
 const promotionIcons: Record<
     PromotionIcon,
@@ -34,16 +36,16 @@ const promotionIcons: Record<
     gift: Gift,
 };
 
-const promotionTabs: PromotionTab[] = [
-    { key: 'todos', label: 'Todas' },
-    { key: 'parejas', label: 'Parejas' },
-    { key: 'familias', label: 'Familias' },
-    { key: 'estancias', label: 'Estancias' },
-    { key: 'experiencias', label: 'Experiencias' },
-    { key: 'eventos', label: 'Eventos' },
-];
+const highlightIcons: Record<PromotionHighlightIcon, ComponentType<{ size?: number }>> = {
+    'badge-percent': BadgePercent,
+    palmtree: Palmtree,
+    phone: Phone,
+};
 
-function getPromotionCount(category: PromotionCategory): number {
+function getPromotionCount(
+    category: PromotionCategory,
+    promotions: Promotion[],
+): number {
     if (category === 'todos') {
         return promotions.length;
     }
@@ -54,6 +56,7 @@ function getPromotionCount(category: PromotionCategory): number {
 
 function getPromotionPriceGroups(
     promotion: Promotion,
+    text: PromocionesPageText,
 ): NonNullable<Promotion['priceGroups']> {
     if (promotion.priceGroups?.length) {
         return promotion.priceGroups;
@@ -63,8 +66,8 @@ function getPromotionPriceGroups(
         {
             prices: [
                 {
-                    label: promotion.dealLabel ?? 'Promocion',
-                    amount: promotion.dealValue ?? promotion.highlight,
+                    label: text.default_price_label,
+                    amount: promotion.highlight,
                 },
             ],
         },
@@ -81,12 +84,18 @@ function formatPriceAmount({
     return prefix ? `${prefix} ${amount}` : amount;
 }
 
-function PromotionCard({ promotion }: { promotion: Promotion }) {
+function PromotionCard({
+    promotion,
+    text,
+}: {
+    promotion: Promotion;
+    text: PromocionesPageText;
+}) {
     const Icon = promotionIcons[promotion.icon];
-    const priceGroups = getPromotionPriceGroups(promotion);
+    const priceGroups = getPromotionPriceGroups(promotion, text);
     const prices = priceGroups.flatMap((group) => group.prices);
     const primaryPrice = prices[0] ?? {
-        label: 'Promocion',
+        label: text.default_price_label,
         amount: promotion.highlight,
     };
     const hasMultiplePrices = prices.length > 1;
@@ -108,7 +117,7 @@ function PromotionCard({ promotion }: { promotion: Promotion }) {
                     <strong>{formatPriceAmount(primaryPrice)}</strong>
                     <small>
                         {hasMultiplePrices
-                            ? `${prices.length} opciones`
+                            ? `${prices.length} ${text.multiple_options_label}`
                             : primaryPrice.label}
                     </small>
                 </div>
@@ -140,10 +149,10 @@ function PromotionCard({ promotion }: { promotion: Promotion }) {
                     aria-label={`Precios de ${promotion.title}`}
                 >
                     <p className="promocion-pricing-heading">
-                        {promotion.priceHeading ??
+                        {promotion.priceHeading ||
                             (hasMultiplePrices
-                                ? 'Opciones disponibles'
-                                : 'Precio')}
+                                ? text.available_options_heading
+                                : text.default_price_heading)}
                     </p>
                     <div className="promocion-price-groups">
                         {priceGroups.map((group, groupIndex) => (
@@ -189,61 +198,51 @@ function PromotionCard({ promotion }: { promotion: Promotion }) {
                         <Tag key={tag}>{tag}</Tag>
                     ))}
                 </div>
-
-                {/* <Button
-                    type={promotion.featured ? 'primary' : 'default'}
-                    size="large"
-                    href="/contacto"
-                    className="promocion-action"
-                    icon={<ChevronRight size={17} />}
-                    iconPosition="end"
-                >
-                    Consultar promoción
-                </Button> */}
             </div>
         </article>
     );
 }
 
-export default function PromocionesShowcase() {
+type PromocionesShowcaseProps = {
+  content?: PromocionesPageContent | null;
+  locale?: string | null;
+};
+
+export default function PromocionesShowcase({ content, locale }: PromocionesShowcaseProps = {}) {
     const [activeCategory, setActiveCategory] =
         useState<PromotionCategory>('todos');
+    const {
+        contact,
+        highlightItems,
+        promotions,
+        tabs,
+        text,
+    } = mapPromocionesContent(content, locale);
 
-    const filteredPromotions = useMemo(() => {
-        if (activeCategory === 'todos') {
-            return promotions;
-        }
-
-        return promotions.filter(
+    const filteredPromotions = activeCategory === 'todos'
+        ? promotions
+        : promotions.filter(
             (promotion) => promotion.category === activeCategory,
         );
-    }, [activeCategory]);
 
     return (
         <section className="promociones-section">
             <div className="promociones-intro">
-                {/* <p>Promociones</p> */}
-                <h1>Promociones</h1>
-                <span>
-                    Promociones de temporada, beneficios por reserva directa y
-                    planes pensados para parejas, familias y celebraciones.
-                    Disfruta de unas vacaciones perfectas en el{' '}
-                    <b>Hotel Mesón de Mita.</b>
-                </span>
+                <h1>{text.intro_title}</h1>
+                <span>{text.intro_body}</span>
             </div>
 
             <div className="promociones-highlight-row">
-                <span>
-                    <BadgePercent size={18} />
-                    Tarifas especiales
-                </span>
-                <span>
-                    <Palmtree size={18} />A pasos de la playa
-                </span>
-                <span>
-                    <Phone size={18} />
-                    Reserva directa
-                </span>
+                {highlightItems.map((item) => {
+                    const Icon = highlightIcons[item.icon];
+
+                    return (
+                        <span key={`${item.icon}-${item.label}`}>
+                            <Icon size={18} />
+                            {item.label}
+                        </span>
+                    );
+                })}
             </div>
 
             <div
@@ -251,7 +250,7 @@ export default function PromocionesShowcase() {
                 role="tablist"
                 aria-label="Filtrar promociones"
             >
-                {promotionTabs.map((tab) => (
+                {tabs.map((tab) => (
                     <button
                         key={tab.key}
                         type="button"
@@ -260,39 +259,39 @@ export default function PromocionesShowcase() {
                         onClick={() => setActiveCategory(tab.key)}
                     >
                         <span>{tab.label}</span>
-                        <strong>{getPromotionCount(tab.key)}</strong>
+                        <strong>{getPromotionCount(tab.key, promotions)}</strong>
                     </button>
                 ))}
             </div>
 
             <div className="promociones-grid">
                 {filteredPromotions.map((promotion) => (
-                    <PromotionCard key={promotion.id} promotion={promotion} />
+                    <PromotionCard
+                        key={promotion.id}
+                        promotion={promotion}
+                        text={text}
+                    />
                 ))}
             </div>
 
             <div className="promociones-contact-strip">
                 <div>
-                    <p>¿Buscas una fecha específica?</p>
-                    <h2>Pregunta por promociones vigentes</h2>
-                    <span>
-                        Las promociones pueden cambiar por temporada, ocupación
-                        y tipo de habitación. Reservaciones puede ayudarte a
-                        encontrar la mejor opción disponible.
-                    </span>
+                    <p>{text.contact_kicker}</p>
+                    <h2>{text.contact_title}</h2>
+                    <span>{text.contact_body}</span>
                 </div>
 
                 <div className="promociones-contact-actions">
                     <Button
                         type="primary"
                         size="large"
-                        href="mailto:reservaciones@hotelmesondemita.com"
+                        href={contact.emailHref}
                         icon={<Mail size={18} style={{ color: 'white' }} />}
                     >
-                        <span className="text-white!">Escribir al hotel</span>
+                        <span className="text-white!">{text.email_cta}</span>
                     </Button>
-                    <Button size="large" href="tel:+523292916330">
-                        Llamar ahora
+                    <Button size="large" href={contact.phoneHref}>
+                        {text.phone_cta}
                     </Button>
                 </div>
             </div>

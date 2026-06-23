@@ -1,9 +1,12 @@
 import { Drawer } from 'antd';
 import { Clock, MapPin, X } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { KeyboardEvent } from 'react';
-import type { Recommendation } from './interfaces';
-import { recommendations } from './services/recomendacionesMock';
+import type {
+    Recommendation,
+    RecomendacionesPageContent,
+} from './interfaces';
+import { mapRecomendacionesContent } from './services/mapRecomendacionesContent';
 
 function RecommendationCard({
     recommendation,
@@ -26,7 +29,7 @@ function RecommendationCard({
             tabIndex={0}
             onClick={() => onSelect(recommendation)}
             onKeyDown={handleKeyDown}
-            aria-label={`Ver recomendación: ${recommendation.title}`}
+            aria-label={`Ver recomendacion: ${recommendation.title}`}
         >
             <div className="recomendacion-card-image-wrap">
                 <img
@@ -35,7 +38,6 @@ function RecommendationCard({
                     className="recomendacion-card-image"
                     loading="lazy"
                 />
-                {/* <span>{recommendation.eyebrow}</span> */}
             </div>
 
             <div className="recomendacion-card-body">
@@ -49,22 +51,35 @@ function RecommendationDrawer({
     recommendation,
     open,
     onClose,
+    scoped = false,
+    getDrawerContainer,
 }: {
     recommendation?: Recommendation;
     open: boolean;
     onClose: () => void;
+    scoped?: boolean;
+    getDrawerContainer?: () => HTMLElement | null;
 }) {
+    const drawerContainer = scoped ? getDrawerContainer?.() : undefined;
+
     return (
         <Drawer
             open={open}
             onClose={onClose}
-            width="min(720px, 100vw)"
+            width={scoped ? 'min(560px, 100%)' : 'min(720px, 100vw)'}
             placement="right"
             destroyOnHidden
+            getContainer={scoped ? drawerContainer ?? false : undefined}
+            rootStyle={scoped ? { position: 'absolute' } : undefined}
+            maskStyle={scoped ? { position: 'absolute' } : undefined}
             closable={false}
             title={null}
-            className="recomendacion-drawer"
-            rootClassName="recomendacion-drawer-root"
+            className={`recomendacion-drawer ${
+                scoped ? 'recomendacion-drawer-scoped' : ''
+            }`}
+            rootClassName={`recomendacion-drawer-root ${
+                scoped ? 'recomendacion-drawer-root-scoped' : ''
+            }`}
         >
             {recommendation && (
                 <div className="recomendacion-drawer-content">
@@ -72,7 +87,7 @@ function RecommendationDrawer({
                         type="button"
                         className="recomendacion-drawer-close"
                         onClick={onClose}
-                        aria-label="Cerrar recomendación"
+                        aria-label="Cerrar recomendacion"
                     >
                         <X size={20} />
                     </button>
@@ -117,11 +132,11 @@ function RecommendationDrawer({
                                 >
                                     <h3>{section.title}</h3>
 
-                                    {section.paragraphs?.map((paragraph) => (
+                                    {section.paragraphs.map((paragraph) => (
                                         <p key={paragraph}>{paragraph}</p>
                                     ))}
 
-                                    {section.bullets && (
+                                    {section.bullets.length > 0 && (
                                         <ul>
                                             {section.bullets.map((bullet) => (
                                                 <li key={bullet}>{bullet}</li>
@@ -138,23 +153,44 @@ function RecommendationDrawer({
     );
 }
 
-export default function RecomendacionesShowcase() {
+type RecomendacionesShowcaseProps = {
+    content?: RecomendacionesPageContent | null;
+    locale?: string | null;
+    drawerScope?: 'page' | 'preview';
+    getDrawerContainer?: () => HTMLElement | null;
+    onDrawerOpenChange?: (open: boolean) => void;
+};
+
+export default function RecomendacionesShowcase({
+    content,
+    locale,
+    drawerScope = 'page',
+    getDrawerContainer,
+    onDrawerOpenChange,
+}: RecomendacionesShowcaseProps) {
     const [selectedRecommendation, setSelectedRecommendation] = useState<
         Recommendation | undefined
     >();
+    const mappedContent = mapRecomendacionesContent(content, locale);
+    const isDrawerOpen = Boolean(selectedRecommendation);
+
+    useEffect(() => {
+        onDrawerOpenChange?.(isDrawerOpen);
+
+        return () => {
+            onDrawerOpenChange?.(false);
+        };
+    }, [isDrawerOpen, onDrawerOpenChange]);
 
     return (
         <section className="recomendaciones-section">
             <div className="recomendaciones-intro">
-                {/* <p>Recomendaciones</p> */}
-                <h1>Recomendaciones</h1>
-                <span>
-                  Punta de Mita es un pueblito bastante pequeño, pero con mucho encanto, te enamoraras de su playa y sus hermosos atardeceres. En Hotel Mesón de Mita queremos asegurarnos de que durante tu estancia aproveches al máximo de todos los atractivos disponibles en la zona y vivas unas vacaciones llenas de bonitas experiencias.
-                </span>
+                <h1>{mappedContent.text.intro_title}</h1>
+                <span>{mappedContent.text.intro_body}</span>
             </div>
 
             <div className="recomendaciones-grid">
-                {recommendations.map((recommendation) => (
+                {mappedContent.recommendations.map((recommendation) => (
                     <RecommendationCard
                         key={recommendation.id}
                         recommendation={recommendation}
@@ -165,8 +201,10 @@ export default function RecomendacionesShowcase() {
 
             <RecommendationDrawer
                 recommendation={selectedRecommendation}
-                open={Boolean(selectedRecommendation)}
+                open={isDrawerOpen}
                 onClose={() => setSelectedRecommendation(undefined)}
+                scoped={drawerScope === 'preview'}
+                getDrawerContainer={getDrawerContainer}
             />
         </section>
     );

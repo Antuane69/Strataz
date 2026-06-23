@@ -1,10 +1,17 @@
 import { Link, usePage } from '@inertiajs/react';
 import {
+    BadgePercent,
     BedDouble,
     BookOpen,
+    CircleHelp,
+    ConciergeBell,
     Folder,
+    Gem,
+    Images,
     LayoutGrid,
+    MapPin,
     Menu,
+    PartyPopper,
     Search,
 } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
@@ -56,6 +63,41 @@ const mainNavItems: NavItem[] = [
         title: 'Habitaciones',
         href: '/admin/contenido/habitaciones',
         icon: BedDouble,
+    },
+    {
+        title: 'Servicios',
+        href: '/admin/contenido/servicios',
+        icon: ConciergeBell,
+    },
+    {
+        title: 'Bodas',
+        href: '/admin/contenido/bodas',
+        icon: Gem,
+    },
+    {
+        title: 'Promociones',
+        href: '/admin/contenido/promociones',
+        icon: BadgePercent,
+    },
+    {
+        title: 'Recomendaciones',
+        href: '/admin/contenido/recomendaciones',
+        icon: PartyPopper,
+    },
+    {
+        title: 'Galeria',
+        href: '/admin/contenido/galeria',
+        icon: Images,
+    },
+    {
+        title: 'FAQ',
+        href: '/admin/contenido/faq',
+        icon: CircleHelp,
+    },
+    {
+        title: 'Contacto',
+        href: '/admin/contenido/contacto',
+        icon: MapPin,
     },
 ];
 
