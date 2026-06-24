@@ -78,7 +78,7 @@ export default function DashboardSidebar({ sports }: { sports: SportItem[] }) {
             <Link href="/iniciar_sesion">
               <Button
                 block
-                className="mt-6 border-green-500/70 bg-transparent text-green-400 hover:!border-green-400 hover:!text-green-300"
+                className="mt-6 border-green-500/70 bg-transparent text-green-400 hover:!border-green-400 hover:!text-green-600"
                 icon={<LoginOutlined />}
               >
                 Iniciar sesión

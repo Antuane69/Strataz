@@ -61,7 +61,7 @@ return;
           </Button>
         </Dropdown>
       ) : (
-        <Link href="/iniciar_sesion" className="hidden h-10 items-center gap-2 rounded-xl border border-white/10 px-4 text-sm text-white/80 transition hover:border-green-500/60 hover:text-green-400 md:flex cursor-pointer">
+        <Link href="/iniciar_sesion" className="hidden h-10 items-center gap-2 rounded-xl border border-white/10 px-4 text-sm !text-white/80 transition hover:!border-green-500/60 hover:!text-green-400 md:flex cursor-pointer">
           <UserOutlined />
           Iniciar sesión
         </Link>

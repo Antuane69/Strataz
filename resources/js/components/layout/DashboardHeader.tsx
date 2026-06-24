@@ -11,8 +11,8 @@ export default function DashboardHeader() {
 
   const esRutaActiva = (ruta: string) => {
     if (ruta === "/") {
-return pathname === "/";
-}
+      return pathname === "/";
+    }
 
     return pathname === ruta || pathname.startsWith(`${ruta}/`);
   };
@@ -32,8 +32,8 @@ return pathname === "/";
                   key={item.label}
                   href={item.ruta}
                   className={[
-                    "relative cursor-pointer text-sm font-medium transition hover:text-green-400",
-                    activo ? "text-green-400" : "text-white/80",
+                    "relative cursor-pointer text-sm font-medium transition hover:!text-green-400",
+                    activo ? "!text-green-400" : "!text-white/80",
                   ].join(" ")}
                 >
                   <Flex align="center" gap={8}>

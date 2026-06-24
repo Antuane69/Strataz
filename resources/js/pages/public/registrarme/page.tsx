@@ -10,6 +10,7 @@ import {
 } from "@ant-design/icons";
 import { Head, Link, router } from "@inertiajs/react";
 import { Button, Form, Input, message } from "antd";
+import { useEffect } from "react";
 import DashboardLogo from "@/components/layout/DashboardLogo";
 
 type RegisterFormValues = {
@@ -21,6 +22,8 @@ type RegisterFormValues = {
 };
 
 export default function RegisterPage() {
+  useAuthPageScrollLock();
+
   const onFinish = (values: RegisterFormValues) => {
     console.log("Datos de registro:", values);
 
@@ -31,11 +34,11 @@ export default function RegisterPage() {
   return (
     <>
       <Head title="Registrarme" />
-      <section className="relative min-h-screen bg-[#070c10] px-5 py-8 text-white">
+      <section className="fixed inset-0 isolate overflow-y-auto overflow-x-hidden bg-[#070c10] px-5 py-8 text-white">
       <div className="pointer-events-none absolute left-[-120px] top-[-120px] h-[340px] w-[340px] rounded-full bg-green-500/10 blur-3xl" />
       <div className="pointer-events-none absolute bottom-[-140px] right-[-140px] h-[360px] w-[360px] rounded-full bg-green-500/10 blur-3xl" />
 
-      <div className="relative mx-auto grid min-h-[calc(100vh-64px)] max-w-7xl grid-cols-1 overflow-hidden rounded-[28px] border border-white/5 bg-[#0b1117] shadow-2xl shadow-black/40 lg:grid-cols-[470px_1fr]">
+      <div className="relative mx-auto grid min-h-[calc(100dvh-64px)] max-w-7xl grid-cols-1 overflow-hidden rounded-[28px] border border-white/5 bg-[#0b1117] shadow-2xl shadow-black/40 lg:grid-cols-[470px_1fr]">
         <div className="flex items-center justify-center px-5 py-10 sm:px-8">
           <div className="w-full max-w-[410px]">
             <div className="mb-8 flex justify-center lg:hidden">
@@ -239,6 +242,21 @@ export default function RegisterPage() {
       </section>
     </>
   );
+}
+
+function useAuthPageScrollLock() {
+  useEffect(() => {
+    const htmlOverflow = document.documentElement.style.overflow;
+    const bodyOverflow = document.body.style.overflow;
+
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.documentElement.style.overflow = htmlOverflow;
+      document.body.style.overflow = bodyOverflow;
+    };
+  }, []);
 }
 
 function Benefit({ text }: { text: string }) {

@@ -8,10 +8,10 @@ export default function DashboardLogo() {
       </div>
 
       <div className="leading-none">
-        <h1 className="text-2xl font-black tracking-wide">TODO</h1>
-        <p className="text-[10px] font-semibold text-white/70">
+        <h1 className="text-1xl font-black tracking-wide">STRATAZ</h1>
+        {/* <p className="text-[10px] font-semibold text-white/70">
           PARA TU APUESTA
-        </p>
+        </p> */}
       </div>
     </div>
   );

@@ -7,11 +7,8 @@ import {
 import { Head } from "@inertiajs/react";
 import { Drawer, Progress, Tag } from "antd";
 import { useMemo, useState } from "react";
-import type {
-  CalendarMatch} from "@/services/calendarioMock";
-import {
-  calendarPageMock,
-} from "@/services/calendarioMock";
+import type { CalendarMatch } from "@/services/calendarioMock";
+import { calendarPageMock } from "@/services/calendarioMock";
 
 const weekDays = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
 
@@ -83,7 +80,7 @@ export default function Page() {
                       onClick={() => setSelectedDate(day.date)}
                     />
                   ) : (
-                    <div key={`blank-${index}`} className="min-h-[150px]" />
+                    <div key={`blank-${index}`} className="min-h-[188px]" />
                   )
                 )}
               </div>
@@ -179,7 +176,7 @@ function CalendarDay({
   return (
     <button
       onClick={onClick}
-      className="min-h-[150px] rounded-2xl border border-white/5 bg-[#111820] p-3 text-left transition hover:border-green-500/50 hover:bg-[#14202a]"
+      className="flex min-h-[188px] flex-col rounded-2xl border border-white/5 bg-[#111820] p-3 text-left transition hover:border-green-500/50 hover:bg-[#14202a]"
     >
       <div className="mb-3 flex items-center justify-between">
         <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/[0.05] text-sm font-bold">
@@ -188,37 +185,49 @@ function CalendarDay({
         <span className="text-xs text-white/45">{matches.length} juegos</span>
       </div>
 
-      {featured && (
-        <div>
-          <Tag color={sportColor(featured.sport)}>{featured.sport}</Tag>
-          <p className="mt-2 max-h-10 overflow-hidden text-sm font-semibold leading-5">
-            {featured.title}
-          </p>
-          <p className="mt-2 flex items-center gap-2 text-xs text-white/45">
-            <ClockCircleOutlined />
-            {featured.time}
-          </p>
+      <div className="flex flex-1 flex-col">
+        <div className="h-6">
+          {featured ? (
+            <Tag color={sportColor(featured.sport)}>{featured.sport}</Tag>
+          ) : (
+            <span className="inline-flex h-[22px]" />
+          )}
         </div>
-      )}
 
-      {matches.length > 1 && (
-        <div className="mt-3 flex flex-wrap gap-1.5">
-          {matches.slice(1, 4).map((match) => (
-            <span
-              key={match.id}
-              className="rounded-md border border-white/10 px-1.5 py-0.5 text-[10px] text-white/55"
-            >
-              {match.sport}
-            </span>
-          ))}
-        </div>
-      )}
-
-      {highCount > 0 && (
-        <p className="mt-3 text-xs font-semibold text-green-400">
-          {highCount} de alta relevancia
+        <p className="mt-2 min-h-10 overflow-hidden text-sm font-semibold leading-5 text-white">
+          {featured?.title ?? "Sin partidos destacados"}
         </p>
-      )}
+
+        <p className="mt-2 flex min-h-5 items-center gap-2 text-xs text-white/45">
+          {featured && (
+            <>
+              <ClockCircleOutlined />
+              {featured.time}
+            </>
+          )}
+        </p>
+
+        <div className="mt-3 min-h-6">
+          {matches.length > 1 && (
+            <div className="flex flex-wrap gap-1.5">
+              {matches.slice(1, 4).map((match) => (
+                <span
+                  key={match.id}
+                  className="rounded-md border border-white/10 px-1.5 py-0.5 text-[10px] text-white/55"
+                >
+                  {match.sport}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="mt-auto border-t border-white/5 pt-3">
+          <p className="min-h-4 text-xs font-semibold text-green-400">
+            {highCount > 0 ? `${highCount} de alta relevancia` : null}
+          </p>
+        </div>
+      </div>
     </button>
   );
 }
@@ -403,12 +412,12 @@ function formatDate(date: string) {
 
 function sportColor(sport: CalendarMatch["sport"]) {
   if (sport === "Futbol") {
-return "green";
-}
+    return "green";
+  }
 
   if (sport === "Tenis") {
-return "gold";
-}
+    return "gold";
+  }
 
   return "blue";
 }

@@ -9,9 +9,12 @@ import {
 } from "@ant-design/icons";
 import { Head, router } from "@inertiajs/react";
 import { Button, Form, Input, message } from "antd";
+import { useEffect } from "react";
 import DashboardLogo from "@/components/layout/DashboardLogo";
 
 export default function LoginPage() {
+  useAuthPageScrollLock();
+
   const onFinish = (values: { email: string; password: string }) => {
     console.log("Datos de login:", values);
     message.success("Login simulado correctamente");
@@ -21,11 +24,11 @@ export default function LoginPage() {
   return (
     <>
       <Head title="Iniciar sesión" />
-      <section className="relative min-h-screen bg-[#070c10] px-5 py-8 text-white">
+      <section className="fixed inset-0 isolate overflow-y-auto overflow-x-hidden bg-[#070c10] px-5 py-8 text-white">
       <div className="pointer-events-none absolute left-[-120px] top-[-120px] h-[340px] w-[340px] rounded-full bg-green-500/10 blur-3xl" />
       <div className="pointer-events-none absolute bottom-[-140px] right-[-140px] h-[360px] w-[360px] rounded-full bg-green-500/10 blur-3xl" />
 
-      <div className="relative mx-auto grid min-h-[calc(100vh-64px)] max-w-7xl grid-cols-1 overflow-hidden rounded-[28px] border border-white/5 bg-[#0b1117] shadow-2xl shadow-black/40 lg:grid-cols-[1fr_470px]">
+      <div className="relative mx-auto grid min-h-[calc(100dvh-64px)] max-w-7xl grid-cols-1 overflow-hidden rounded-[28px] border border-white/5 bg-[#0b1117] shadow-2xl shadow-black/40 lg:grid-cols-[1fr_470px]">
         <aside className="hidden border-r border-white/5 bg-[#080e13] p-8 lg:flex lg:flex-col">
           <DashboardLogo/>
 
@@ -164,6 +167,21 @@ export default function LoginPage() {
       </section>
     </>
   );
+}
+
+function useAuthPageScrollLock() {
+  useEffect(() => {
+    const htmlOverflow = document.documentElement.style.overflow;
+    const bodyOverflow = document.body.style.overflow;
+
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.documentElement.style.overflow = htmlOverflow;
+      document.body.style.overflow = bodyOverflow;
+    };
+  }, []);
 }
 
 function FeatureCard({
