@@ -15,6 +15,11 @@ type PageProps = {
 
 export default function Profile() {
     const { auth } = usePage<PageProps>().props;
+    const user = auth.user;
+
+    if (!user) {
+        return null;
+    }
 
     return (
         <>
@@ -30,10 +35,11 @@ export default function Profile() {
                 />
 
                 <Form
-                    {...ProfileController.update.form()}
+                    action={ProfileController.update()}
                     options={{
                         preserveScroll: true,
                     }}
+                    method="patch"
                     className="space-y-6"
                 >
                     {({ processing, errors }) => (
@@ -44,7 +50,7 @@ export default function Profile() {
                                 <Input
                                     id="name"
                                     className="mt-1 block w-full"
-                                    defaultValue={auth.user.name}
+                                    defaultValue={user.name}
                                     name="name"
                                     required
                                     autoComplete="name"
@@ -64,7 +70,7 @@ export default function Profile() {
                                     id="email"
                                     type="email"
                                     className="mt-1 block w-full"
-                                    defaultValue={auth.user.email}
+                                    defaultValue={user.email}
                                     name="email"
                                     required
                                     autoComplete="username"

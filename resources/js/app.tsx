@@ -15,6 +15,9 @@ createInertiaApp({
         switch (true) {
             case name === 'welcome':
                 return null;
+            case name === 'public/iniciar_sesion/page':
+            case name === 'public/registrarme/page':
+                return null;
             case name.startsWith('public/'):
                 return PublicLayout;
             case name.startsWith('auth/'):
